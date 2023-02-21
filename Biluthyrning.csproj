@@ -13,4 +13,8 @@
     <None Remove="Test\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DAL\" />
+  </ItemGroup>
+
 </Project>
