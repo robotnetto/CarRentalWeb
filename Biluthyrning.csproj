@@ -22,4 +22,11 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Car\" />
+    <Folder Include="Views\CarCategory\" />
+    <Folder Include="Views\Booking\" />
+    <Folder Include="Views\User\" />
+  </ItemGroup>
+
 </Project>
