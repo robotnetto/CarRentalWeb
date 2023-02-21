@@ -7,7 +7,7 @@ namespace Biluthyrning.Data
     {
         public Booking GetById(int id);
         public IEnumerable<Booking> GetAll();  
-        public void Create(Booking booking);
+        public void Add(Booking booking);
         public void Update(Booking booking);
         public void Delete(int id);
     }

@@ -13,30 +13,31 @@ namespace Biluthyrning.Controllers
     public class BookingsController : Controller
     {
         private readonly CarRentalContext _context;
+        private readonly IBooking bookingRep;
 
-        public BookingsController(CarRentalContext context)
+        public BookingsController(CarRentalContext context, IBooking bookingRep)
         {
             _context = context;
+            this.bookingRep = bookingRep;
         }
 
         // GET: Bookings
         public async Task<IActionResult> Index()
         {
               return _context.Bookings != null ? 
-                          View(await _context.Bookings.ToListAsync()) :
+                          View( bookingRep.GetAll()) :
                           Problem("Entity set 'CarRentalContext.Bookings'  is null.");
         }
 
         // GET: Bookings/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
-            if (id == null || _context.Bookings == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var booking = await _context.Bookings
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var booking = bookingRep.GetById(id);
             if (booking == null)
             {
                 return NotFound();
@@ -60,22 +61,21 @@ namespace Biluthyrning.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(booking);
-                await _context.SaveChangesAsync();
+                bookingRep.Add(booking);
                 return RedirectToAction(nameof(Index));
             }
             return View(booking);
         }
 
         // GET: Bookings/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id == null || _context.Bookings == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var booking = await _context.Bookings.FindAsync(id);
+            var booking = bookingRep.GetById(id);
             if (booking == null)
             {
                 return NotFound();
@@ -99,8 +99,7 @@ namespace Biluthyrning.Controllers
             {
                 try
                 {
-                    _context.Update(booking);
-                    await _context.SaveChangesAsync();
+                    bookingRep.Update(booking);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -119,15 +118,14 @@ namespace Biluthyrning.Controllers
         }
 
         // GET: Bookings/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null || _context.Bookings == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var booking = await _context.Bookings
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var booking = bookingRep.GetById(id);
             if (booking == null)
             {
                 return NotFound();
@@ -141,23 +139,31 @@ namespace Biluthyrning.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Bookings == null)
-            {
-                return Problem("Entity set 'CarRentalContext.Bookings'  is null.");
-            }
-            var booking = await _context.Bookings.FindAsync(id);
+            var booking = bookingRep.GetById(id);
             if (booking != null)
             {
-                _context.Bookings.Remove(booking);
+                bookingRep.Delete(id);
+            }
+            else
+            {
+                return Problem("Booking does not exist.");
             }
             
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool BookingExists(int id)
         {
-          return (_context.Bookings?.Any(e => e.Id == id)).GetValueOrDefault();
+            var booking = bookingRep.GetById(id);
+
+            if(booking != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

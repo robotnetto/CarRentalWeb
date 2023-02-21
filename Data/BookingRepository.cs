@@ -1,4 +1,5 @@
 ﻿using Biluthyrning.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Biluthyrning.Data
 {
@@ -10,10 +11,10 @@ namespace Biluthyrning.Data
         {
             this.context = context;
         }
-        public void Create(Booking booking)
+        public void Add(Booking booking)
         {
-            context.Bookings.Add(booking);
-            context.SaveChanges();
+            context.Bookings.AddAsync(booking);
+            context.SaveChangesAsync();
         }
 
         public void Delete(int id)
@@ -25,7 +26,7 @@ namespace Biluthyrning.Data
 
         public IEnumerable<Booking> GetAll()
         {
-            return context.Bookings.OrderBy(s => s.Id);
+            return context.Bookings.OrderBy(b => b.Id);
         }
 
         public Booking GetById(int id)
