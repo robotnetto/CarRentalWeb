@@ -1,3 +1,6 @@
+using Biluthyrning.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace Biluthyrning
 {
     public class Program
@@ -8,6 +11,8 @@ namespace Biluthyrning
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddDbContext<CarRentalContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("AppContext")));
 
             var app = builder.Build();
 
