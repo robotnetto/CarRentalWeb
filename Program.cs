@@ -13,6 +13,8 @@ namespace Biluthyrning
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddDbContext<CarRentalContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("AppContext")));
+            builder.Services.AddScoped<IUser, UserRepository>();
+
 
             var app = builder.Build();
 
