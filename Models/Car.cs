@@ -7,6 +7,7 @@
         public string Model { get; set; } = "";
         public string Color { get; set; } = "";
         public int CarCategoryId { get; set; }
+        public bool IsAvailable { get; set; } = true;
 
     }
 }
