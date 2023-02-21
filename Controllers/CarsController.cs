@@ -13,10 +13,12 @@ namespace Biluthyrning.Controllers
     public class CarsController : Controller
     {
         private readonly ICar carRepo;
+        private readonly CarRentalContext _context;
 
-        public CarsController(ICar carRepo)
+        public CarsController(ICar carRepo, CarRentalContext context)
         {
             this.carRepo = carRepo;
+            this._context = context;
         }
 
         // GET: Cars
