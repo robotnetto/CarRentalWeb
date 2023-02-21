@@ -12,21 +12,17 @@ namespace Biluthyrning.Controllers
 {
     public class BookingsController : Controller
     {
-        private readonly CarRentalContext _context;
         private readonly IBooking bookingRep;
 
-        public BookingsController(CarRentalContext context, IBooking bookingRep)
+        public BookingsController(IBooking bookingRep)
         {
-            _context = context;
             this.bookingRep = bookingRep;
         }
 
         // GET: Bookings
         public async Task<IActionResult> Index()
         {
-              return _context.Bookings != null ? 
-                          View( bookingRep.GetAll()) :
-                          Problem("Entity set 'CarRentalContext.Bookings'  is null.");
+            return View(bookingRep.GetAll());
         }
 
         // GET: Bookings/Details/5
