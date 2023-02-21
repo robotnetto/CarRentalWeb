@@ -22,6 +22,15 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.4" />
 <<<<<<< HEAD
+<<<<<<< HEAD
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+=======
+>>>>>>> 7b42e0d26bba74682eaf6babce57d0b579b846a1
+=======
+>>>>>>> fa5eaac986c9f84fa94b6e4544bc1946edf7cc8f
   </ItemGroup>
 
   <ItemGroup>
