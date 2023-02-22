@@ -1,4 +1,5 @@
 ﻿using Biluthyrning.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Biluthyrning.Data
 {
@@ -30,7 +31,7 @@ namespace Biluthyrning.Data
 
         public CarCategory GetById(int id)
         {
-            return context.Categories.FirstOrDefault(c => c.Id == id);
+            return context.Categories.Include(c => c.Cars).FirstOrDefault(c => c.Id == id);
         }
 
         public void Update(CarCategory carCategory)
