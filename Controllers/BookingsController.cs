@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Biluthyrning.Data;
 using Biluthyrning.Models;
 using Biluthyrning.ViewModels;
+using Azure.Identity;
 
 namespace Biluthyrning.Controllers
 {
@@ -145,6 +146,7 @@ namespace Biluthyrning.Controllers
         // GET: Bookings/Delete/5
         public IActionResult Delete(int id)
         {
+            //TODO: vill vi visa carmodel, carBrand och UserName på Delete sidan också?
             if (id == null)
             {
                 return NotFound();
