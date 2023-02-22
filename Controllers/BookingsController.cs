@@ -42,7 +42,7 @@ namespace Biluthyrning.Controllers
             }
             return View(bookingVMList);
         }
-
+        
         // GET: Bookings/Details/5
         public IActionResult Details(int id)
         {
