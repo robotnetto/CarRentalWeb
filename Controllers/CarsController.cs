@@ -14,11 +14,13 @@ namespace Biluthyrning.Controllers
     {
         private readonly ICar carRepo;
         private readonly CarRentalContext _context;
+        private readonly ICarCategory carCategoryRepo;
 
-        public CarsController(ICar carRepo, CarRentalContext context)
+        public CarsController(ICar carRepo, CarRentalContext context, ICarCategory carCategoryRepo)
         {
             this.carRepo = carRepo;
             this._context = context;
+            this.carCategoryRepo = carCategoryRepo;
         }
 
         // GET: Cars
@@ -49,6 +51,7 @@ namespace Biluthyrning.Controllers
         // GET: Cars/Create
         public IActionResult Create()
         {
+            ViewBag.CarCategoryNameList = new SelectList(carCategoryRepo.GetAll(), "Id", "Name");
             return View();
         }
 
