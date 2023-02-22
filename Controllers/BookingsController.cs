@@ -50,19 +50,30 @@ namespace Biluthyrning.Controllers
             {
                 return NotFound();
             }
+            
+            var bvm = new BookingViewModel();
+            bvm.Id = id;
+            bvm.CarId = bookingRep.GetById(id).CarId;
+            bvm.CarModel = carRep.GetById(bvm.CarId).Model;
+            bvm.CarBrand = carRep.GetById(bvm.CarId).Brand;
+            bvm.StartDate = bookingRep.GetById(id).StartDate;
+            bvm.EndDate = bookingRep.GetById(id).EndDate;
+            bvm.UserName = userRep.GetById(bookingRep.GetById(id).UserId).UserName;
 
-            var booking = bookingRep.GetById(id);
-            if (booking == null)
+            if (bvm == null)
             {
                 return NotFound();
             }
 
-            return View(booking);
+            return View(bvm);
         }
 
         // GET: Bookings/Create
         public IActionResult Create()
         {
+            ViewBag.UserNameList = new SelectList(userRep.GetAll(), "UserId", "UserName");
+            //TODO: Vill vi se ngt annat än bilarnas Id i Booking/Create?
+            ViewBag.CarIdList = new SelectList(carRep.GetAll(), "CarId", "CarId");
             return View();
         }
 
