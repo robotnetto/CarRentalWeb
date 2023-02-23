@@ -139,7 +139,7 @@ namespace Biluthyrning.Controllers
             {
                 return Problem("Entity set 'CarRentalContext.Cars'  is null.");
             }
-            var car = carRepo.GetByIdAsync(id);
+            var car = await carRepo.GetByIdAsync(id);
             if (car != null)
             {
                 await carRepo.DeleteAsync(car);

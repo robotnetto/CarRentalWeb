@@ -34,11 +34,16 @@ namespace Biluthyrning.Controllers
                 var bvm = new BookingViewModel();
                 bvm.Id = item.Id;
                 bvm.CarId = item.CarId;
+
+                bvm.CarModel = carRep.GetByIdAsync(item.CarId).Model;
+                bvm.CarBrand = carRep.GetByIdAsync(item.CarId).Brand;
+
                 bvm.CarModel = await carRep.GetByIdAsync(item.CarId).Model;
                 bvm.CarBrand = await carRep.GetByIdAsync(item.CarId).Brand;
+
                 bvm.StartDate = item.StartDate;
                 bvm.EndDate = item.EndDate;
-                bvm.UserName = userRep.GetById(item.UserId).UserName;
+                bvm.UserName = userRep.GetByIdAsync(item.UserId).UserName;
                 bookingVMList.Add(bvm);
             }
             return View(bookingVMList);
