@@ -16,6 +16,7 @@ namespace Biluthyrning
             builder.Services.AddScoped<IUser, UserRepository>();
             builder.Services.AddScoped<IBooking, BookingRepository>();
             builder.Services.AddScoped<ICar, CarRepository>();
+            builder.Services.AddTransient<ICarCategory, CarCategoryRepository>();
 
 
             var app = builder.Build();

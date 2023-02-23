@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Biluthyrning.Models.Booking>
+﻿@model List<Biluthyrning.ViewModels.BookingViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,16 +13,22 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.CarId)
+                @Html.DisplayNameFor(model => model[0].CarId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.StartDate)
+                @Html.DisplayNameFor(model => model[0].CarModel)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EndDate)
+                @Html.DisplayNameFor(model => model[0].CarBrand)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UserId)
+                @Html.DisplayNameFor(model => model[0].StartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].EndDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].UserName)
             </th>
             <th></th>
         </tr>
@@ -34,13 +40,19 @@
                 @Html.DisplayFor(modelItem => item.CarId)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.CarModel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CarBrand)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.StartDate)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.EndDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UserId)
+                @Html.DisplayFor(modelItem => item.UserName)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

@@ -14,26 +14,27 @@ namespace Biluthyrning.Controllers
     {
         private readonly ICar carRepo;
         private readonly CarRentalContext _context;
+        private readonly ICarCategory carCategoryRepo;
 
-        public CarsController(ICar carRepo, CarRentalContext context)
+        public CarsController(ICar carRepo, CarRentalContext context, ICarCategory carCategoryRepo)
         {
             this.carRepo = carRepo;
             this._context = context;
+            this.carCategoryRepo = carCategoryRepo;
         }
 
         // GET: Cars
         public ActionResult Index()
         {
-              //return carRepo != null ? 
-              //            View(carRepo.GetAll()) :
-              //            Problem("Entity set 'CarRentalContext.Cars'  is null.");
-              return View(carRepo.GetAll());
+              return carRepo != null ? 
+                          View(carRepo.GetAll()) :
+                          Problem("Entity set 'CarRentalContext.Cars'  is null.");
         }
 
         // GET: Cars/Details/5
-        public IActionResult Details(int id)
+        public IActionResult Get (int id)
         {
-            if (id! == null || carRepo == null)
+            if (id == null || carRepo == null)
             {
                 return NotFound();
             }
@@ -50,6 +51,7 @@ namespace Biluthyrning.Controllers
         // GET: Cars/Create
         public IActionResult Create()
         {
+            ViewBag.CarCategoryNameList = new SelectList(carCategoryRepo.GetAll(), "Id", "Name");
             return View();
         }
 
