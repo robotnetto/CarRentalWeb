@@ -51,6 +51,7 @@ namespace Biluthyrning.Controllers
         public async Task <IActionResult> Create()
         {
             ViewBag.CarCategoryNameList = new SelectList(await carCategoryRepo.GetAllAsync(), "Id", "Name");
+            ViewBag.CarCategoryNameList = new SelectList(carCategoryRepo.GetAllAsync(), "Id", "Name");
             return View();
         }
 

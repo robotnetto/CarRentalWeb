@@ -12,32 +12,32 @@ namespace Biluthyrning.Data
             this.context = context;
         }
 
-        public void Create(CarCategory carCategory)
+        public async Task CreateAsync(CarCategory carCategory)
         {
             context.Categories.Add(carCategory);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public void Delete(CarCategory carCategory)
+        public async Task DeleteAsync(CarCategory carCategory)
         {
             context.Categories.Remove(carCategory);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public IEnumerable<CarCategory> GetAll()
+        public async Task<IEnumerable<CarCategory>> GetAllAsync()
         {
-            return context.Categories.OrderBy(c => c.Id);
+            return await context.Categories.OrderBy(c => c.Id).ToListAsync();
         }
 
-        public CarCategory GetById(int id)
+        public async Task<CarCategory> GetByIdAsync(int id)
         {
-            return context.Categories.Include(c => c.Cars).FirstOrDefault(c => c.Id == id);
+            return await context.Categories.Include(c => c.Cars).FirstOrDefaultAsync(c => c.Id == id);
         }
 
-        public void Update(CarCategory carCategory)
+        public async Task UpdateAsync(CarCategory carCategory)
         {
             context.Categories.Update(carCategory);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 }

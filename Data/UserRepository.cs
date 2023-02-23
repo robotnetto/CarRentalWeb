@@ -1,4 +1,5 @@
 ﻿using Biluthyrning.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Biluthyrning.Data
 {
@@ -11,36 +12,37 @@ namespace Biluthyrning.Data
             this.context = context;
         }
 
-        public void Add(User user)
+        public async Task AddAsync(User user)
         {
             context.Users.Add(user);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public void Delete(int? id)
+        public async Task DeleteAsync(int? id)
         {
-            var userToDelete = GetById(id);
+            var userToDelete = await GetByIdAsync(id);
             if (userToDelete != null)
             {
                 context.Users.Remove(userToDelete);
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
         }
 
-        public IEnumerable<User> GetAll()
+        public async Task<IEnumerable<User>> GetAllAsync()
         {
-            return context.Users.OrderBy(x => x.UserId);
+            return await context.Users.OrderBy(x => x.UserId).ToListAsync();
         }
 
-        public User GetById(int? id)
+        public async Task<User> GetByIdAsync(int? id)
         {
-            return context.Users.First(x => x.UserId == id);
+            var tempUser = await context.Users.FirstOrDefaultAsync(x => x.UserId == id);
+            return tempUser;
         }
 
-        public void Update(User user)
+        public async Task UpdateAsync(User user)
         {
             context.Users.Update(user);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 }
