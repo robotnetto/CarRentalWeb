@@ -15,6 +15,7 @@ namespace Biluthyrning
             builder.Services.AddDbContext<CarRentalContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("AppContext")));
             builder.Services.AddScoped<IUser, UserRepository>();
             builder.Services.AddScoped<IBooking, BookingRepository>();
+            builder.Services.AddScoped<ICar, CarRepository>();
 
 
             var app = builder.Build();

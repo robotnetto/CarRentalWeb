@@ -24,15 +24,16 @@ namespace Biluthyrning.Controllers
         // GET: Cars
         public ActionResult Index()
         {
-              return carRepo != null ? 
-                          View(carRepo.GetAll()) :
-                          Problem("Entity set 'CarRentalContext.Cars'  is null.");
+              //return carRepo != null ? 
+              //            View(carRepo.GetAll()) :
+              //            Problem("Entity set 'CarRentalContext.Cars'  is null.");
+              return View(carRepo.GetAll());
         }
 
         // GET: Cars/Details/5
-        public IActionResult (int id)
+        public IActionResult Details(int id)
         {
-            if (id == null || carRepo == null)
+            if (id! == null || carRepo == null)
             {
                 return NotFound();
             }
