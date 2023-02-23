@@ -7,16 +7,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Biluthyrning.Data;
 using Biluthyrning.Models;
+using Biluthyrning.ViewModels;
 
 namespace Biluthyrning.Controllers
 {
     public class UsersController : Controller
     {
         private readonly IUser userRepo;
+        private readonly IBooking bookingRepo;
 
-        public UsersController(IUser userRepo)
+        public UsersController(IUser userRepo, IBooking bookingRepo)
         {
             this.userRepo = userRepo;
+            this.bookingRepo = bookingRepo;
         }
 
         // GET: Users
@@ -34,12 +37,17 @@ namespace Biluthyrning.Controllers
             }
 
             var user = await userRepo.GetByIdAsync(id);
+            var userVM = new UserVM();
+            foreach (var item in await bookingRepo.GetAllAsync())
+            {
+                userVM.Bookings.Add(item);
+            }
             if (user == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View(userVM);
         }
 
         // GET: Users/Create
@@ -159,7 +167,7 @@ namespace Biluthyrning.Controllers
             {
                 return true;
             }
-          
+
         }
     }
 }
