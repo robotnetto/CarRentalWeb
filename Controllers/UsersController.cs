@@ -13,18 +13,16 @@ namespace Biluthyrning.Controllers
     public class UsersController : Controller
     {
         private readonly IUser userRepo;
-        private readonly CarRentalContext _context;
 
-        public UsersController(IUser userRepo , CarRentalContext context)
+        public UsersController(IUser userRepo)
         {
             this.userRepo = userRepo;
-            _context = context;
         }
 
         // GET: Users
         public async Task<IActionResult> Index()
         {
-            return View(userRepo.GetAll());
+            return View(await userRepo.GetAll());
         }
 
         // GET: Users/Details/5
@@ -35,7 +33,7 @@ namespace Biluthyrning.Controllers
                 return NotFound();
             }
 
-            var user = userRepo.GetById(id);
+            var user = await userRepo.GetById(id);
             if (user == null)
             {
                 return NotFound();
@@ -59,7 +57,7 @@ namespace Biluthyrning.Controllers
         {
             if (ModelState.IsValid)
             {
-                userRepo.Add(user);
+                await userRepo.Add(user);
                 return RedirectToAction(nameof(Index));
             }
             return View(user);
@@ -73,7 +71,7 @@ namespace Biluthyrning.Controllers
                 return NotFound();
             }
 
-            var user = userRepo.GetById(id);
+            var user = await userRepo.GetById(id);
             if (user == null)
             {
                 return NotFound();
@@ -97,11 +95,11 @@ namespace Biluthyrning.Controllers
             {
                 try
                 {
-                    userRepo.Update(user);
+                    await userRepo.Update(user);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UserExists(user.UserId))
+                    if (!await UserExists(user.UserId))
                     {
                         return NotFound();
                     }
@@ -123,7 +121,7 @@ namespace Biluthyrning.Controllers
                 return NotFound();
             }
 
-            var user = userRepo.GetById(id);
+            var user = await userRepo.GetById(id);
             if (user == null)
             {
                 return NotFound();
@@ -141,18 +139,27 @@ namespace Biluthyrning.Controllers
             {
                 return Problem("Entity set 'CarRentalContext.Users'  is null.");
             }
-            var user = userRepo.GetById(id);
+            var user = await userRepo.GetById(id);
             if (user != null)
             {
-                userRepo.Delete(id);
+                await userRepo.Delete(id);
             }
 
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UserExists(int id)
+        private async Task<bool> UserExists(int id)
         {
-          return (_context.Users?.Any(e => e.UserId == id)).GetValueOrDefault();
+            var tempUser = await userRepo.GetById(id);
+            if (tempUser == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+          
         }
     }
 }
