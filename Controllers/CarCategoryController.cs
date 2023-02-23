@@ -23,6 +23,7 @@ namespace Biluthyrning.Controllers
         // GET: CarCategoryController/Details/5
         public ActionResult Details(int id)
         {
+
             return View(carCategoryRepo.GetById(id));
         }
 

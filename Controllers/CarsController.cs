@@ -32,7 +32,7 @@ namespace Biluthyrning.Controllers
         }
 
         // GET: Cars/Details/5
-        public IActionResult Get (int id)
+        public IActionResult Details (int id)
         {
             if (id == null || carRepo == null)
             {
