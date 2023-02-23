@@ -51,7 +51,7 @@ namespace Biluthyrning.Controllers
         // GET: Cars/Create
         public IActionResult Create()
         {
-            ViewBag.CarCategoryNameList = new SelectList(carCategoryRepo.GetAll(), "Id", "Name");
+            ViewBag.CarCategoryNameList = new SelectList(carCategoryRepo.GetAllAsync(), "Id", "Name");
             return View();
         }
 

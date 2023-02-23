@@ -4,10 +4,10 @@ namespace Biluthyrning.Data
 {
     public interface ICarCategory
     {
-        public IEnumerable<CarCategory> GetAll();
-        public CarCategory GetById(int id);
-        public void Create(CarCategory carCategory);
-        public void Update(CarCategory carCategory);
-        public void Delete(CarCategory carCategory);
+        public Task<IEnumerable<CarCategory>> GetAllAsync();
+        public Task<CarCategory> GetByIdAsync(int id);
+        public Task CreateAsync(CarCategory carCategory);
+        public Task UpdateAsync(CarCategory carCategory);
+        public Task DeleteAsync(CarCategory carCategory);
     }
 }

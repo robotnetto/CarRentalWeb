@@ -15,20 +15,20 @@ namespace Biluthyrning.Controllers
         }
 
         // GET: CarCategoryController
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(carCategoryRepo.GetAll());
+            return View( await carCategoryRepo.GetAllAsync());
         }
 
         // GET: CarCategoryController/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
 
-            return View(carCategoryRepo.GetById(id));
+            return View( await carCategoryRepo.GetByIdAsync(id));
         }
 
         // GET: CarCategoryController/Create
-        public ActionResult Create()
+        public IActionResult Create()
         {
             return View();
         }
@@ -36,13 +36,13 @@ namespace Biluthyrning.Controllers
         // POST: CarCategoryController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CarCategory carCategory)
+        public async Task<IActionResult> Create(CarCategory carCategory)
         {
             try
             {
                 if(ModelState.IsValid)
                 {
-                    carCategoryRepo.Create(carCategory);
+                    await carCategoryRepo.CreateAsync(carCategory);
                     return RedirectToAction(nameof(Index));
                 }
                 else
@@ -57,14 +57,14 @@ namespace Biluthyrning.Controllers
         }
 
         // GET: CarCategoryController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id == null || carCategoryRepo.GetAll() == null)
+            if (id == null || await carCategoryRepo.GetAllAsync() == null)
             {
                 return NotFound();
             }
 
-            var carCategory = carCategoryRepo.GetById(id);
+            var carCategory = await carCategoryRepo.GetByIdAsync(id);
             if(carCategory == null)
             {
                 return NotFound();
@@ -75,7 +75,7 @@ namespace Biluthyrning.Controllers
         // POST: CarCategoryController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, CarCategory carCategory)
+        public async Task<IActionResult> Edit(int id, CarCategory carCategory)
         {
             if(id != carCategory.Id)
             {
@@ -85,7 +85,7 @@ namespace Biluthyrning.Controllers
             {
                 try
                 {
-                    carCategoryRepo.Update(carCategory);
+                    await carCategoryRepo.UpdateAsync(carCategory);
                 }
                 catch(Exception)
                 {
@@ -97,14 +97,14 @@ namespace Biluthyrning.Controllers
         }
 
         // GET: CarCategoryController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            if(id == null || carCategoryRepo.GetAll() == null)
+            if(id == null || await carCategoryRepo.GetAllAsync() == null)
             {
                 return NotFound();
             }
 
-            var carCategory = carCategoryRepo.GetById(id);
+            var carCategory = await carCategoryRepo.GetByIdAsync(id);
             if(carCategory == null)
             {
                 return NotFound();
@@ -115,14 +115,14 @@ namespace Biluthyrning.Controllers
         // POST: CarCategoryController/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var carCategory = carCategoryRepo.GetById(id);
+            var carCategory = await carCategoryRepo.GetByIdAsync(id);
             if(ModelState.IsValid)
             {
                 try
                 {
-                    carCategoryRepo.Delete(carCategory);
+                    await carCategoryRepo.DeleteAsync(carCategory);
                 }
                 catch (Exception)
                 {
