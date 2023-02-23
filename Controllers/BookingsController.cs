@@ -26,16 +26,16 @@ namespace Biluthyrning.Controllers
         }
 
         // GET: Bookings
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var bookingVMList = new List<BookingViewModel>();
-            foreach (var item in bookingRep.GetAll())
+            foreach (var item in await bookingRep.GetAllAsync())
             {
                 var bvm = new BookingViewModel();
                 bvm.Id = item.Id;
                 bvm.CarId = item.CarId;
-                bvm.CarModel = carRep.GetById(item.CarId).Model;
-                bvm.CarBrand = carRep.GetById(item.CarId).Brand;
+                bvm.CarModel = await carRep.GetByIdAsync(item.CarId).Model;
+                bvm.CarBrand = await carRep.GetByIdAsync(item.CarId).Brand;
                 bvm.StartDate = item.StartDate;
                 bvm.EndDate = item.EndDate;
                 bvm.UserName = userRep.GetById(item.UserId).UserName;
@@ -45,7 +45,7 @@ namespace Biluthyrning.Controllers
         }
         
         // GET: Bookings/Details/5
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
             if (id == null)
             {
@@ -54,12 +54,12 @@ namespace Biluthyrning.Controllers
             
             var bvm = new BookingViewModel();
             bvm.Id = id;
-            bvm.CarId = bookingRep.GetById(id).CarId;
-            bvm.CarModel = carRep.GetById(bvm.CarId).Model;
-            bvm.CarBrand = carRep.GetById(bvm.CarId).Brand;
-            bvm.StartDate = bookingRep.GetById(id).StartDate;
-            bvm.EndDate = bookingRep.GetById(id).EndDate;
-            bvm.UserName = userRep.GetById(bookingRep.GetById(id).UserId).UserName;
+            bvm.CarId = await bookingRep.GetByIdAsync(id).CarId;
+            bvm.CarModel = await carRep.GetByIdAsync(bvm.CarId).Model;
+            bvm.CarBrand = await carRep.GetByIdAsync(bvm.CarId).Brand;
+            bvm.StartDate = await bookingRep.GetByIdAsync(id).StartDate;
+            bvm.EndDate = await bookingRep.GetByIdAsync(id).EndDate;
+            bvm.UserName = await userRep.GetByIdAsync(bookingRep.GetByIdAsync(id).UserId).UserName;
 
             if (bvm == null)
             {
@@ -70,11 +70,11 @@ namespace Biluthyrning.Controllers
         }
 
         // GET: Bookings/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewBag.UserNameList = new SelectList(userRep.GetAll(), "UserId", "UserName");
+            ViewBag.UserNameList = new SelectList(await userRep.GetAllAsync(), "UserId", "UserName");
             //TODO: Vill vi se ngt annat än bilarnas Id i Booking/Create?
-            ViewBag.CarIdList = new SelectList(carRep.GetAll(), "CarId", "CarId");
+            ViewBag.CarIdList = new SelectList(await carRep.GetAllAsync(), "CarId", "CarId");
             return View();
         }
 
@@ -83,25 +83,25 @@ namespace Biluthyrning.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Id,CarId,StartDate,EndDate,UserId")] Booking booking)
+        public async Task<IActionResult> Create([Bind("Id,CarId,StartDate,EndDate,UserId")] Booking booking)
         {
             if (ModelState.IsValid)
             {
-                bookingRep.Add(booking);
+                await bookingRep.AddAsync(booking);
                 return RedirectToAction(nameof(Index));
             }
             return View(booking);
         }
 
         // GET: Bookings/Edit/5
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var booking = bookingRep.GetById(id);
+            var booking = await bookingRep.GetByIdAsync(id);
             if (booking == null)
             {
                 return NotFound();
@@ -114,7 +114,7 @@ namespace Biluthyrning.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("Id,CarId,StartDate,EndDate,UserId")] Booking booking)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,CarId,StartDate,EndDate,UserId")] Booking booking)
         {
             if (id != booking.Id)
             {
@@ -125,7 +125,7 @@ namespace Biluthyrning.Controllers
             {
                 try
                 {
-                    bookingRep.Update(booking);
+                    await bookingRep.UpdateAsync(booking);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -144,7 +144,7 @@ namespace Biluthyrning.Controllers
         }
 
         // GET: Bookings/Delete/5
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             //TODO: vill vi visa carmodel, carBrand och UserName på Delete sidan också?
             if (id == null)
@@ -152,7 +152,7 @@ namespace Biluthyrning.Controllers
                 return NotFound();
             }
 
-            var booking = bookingRep.GetById(id);
+            var booking = await bookingRep.GetByIdAsync(id);
             if (booking == null)
             {
                 return NotFound();
@@ -164,12 +164,12 @@ namespace Biluthyrning.Controllers
         // POST: Bookings/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var booking = bookingRep.GetById(id);
+            var booking = await bookingRep.GetByIdAsync(id);
             if (booking != null)
             {
-                bookingRep.Delete(id);
+                await bookingRep.DeleteAsync(id);
             }
             else
             {
@@ -181,7 +181,7 @@ namespace Biluthyrning.Controllers
 
         private bool BookingExists(int id)
         {
-            var booking = bookingRep.GetById(id);
+            var booking = bookingRep.GetByIdAsync(id);
 
             if(booking != null)
             {

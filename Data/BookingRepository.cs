@@ -11,33 +11,36 @@ namespace Biluthyrning.Data
         {
             this.context = context;
         }
-        public void Add(Booking booking)
+        public async Task AddAsync(Booking booking)
         {
-            context.Bookings.AddAsync(booking);
-            context.SaveChangesAsync();
+            context.Bookings.Add(booking);
+            await context.SaveChangesAsync();
         }
 
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
             var booking = context.Bookings.FirstOrDefault(b => b.Id == id);
-            context.Bookings.Remove(booking);
-            context.SaveChanges();
+            if(booking != null)
+            {
+                context.Bookings.Remove(booking);
+                await context.SaveChangesAsync();
+            }
         }
 
-        public IEnumerable<Booking> GetAll()
+        public async Task<IEnumerable<Booking>> GetAllAsync()
         {
             return context.Bookings.OrderBy(b => b.Id);
         }
 
-        public Booking GetById(int id)
+        public async Task<Booking> GetByIdAsync(int id)
         {
-            return context.Bookings.FirstOrDefault(b => b.Id == id);
+            return await context.Bookings.FirstOrDefaultAsync(b => b.Id == id);
         }
 
-        public void Update(Booking booking)
+        public async Task UpdateAsync(Booking booking)
         {
             context.Bookings.Update(booking);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 }
