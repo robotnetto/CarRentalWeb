@@ -4,11 +4,11 @@ namespace Biluthyrning.Data
 {
     public interface IUser
     {
-        public Task<User> GetById(int? id);
-        public Task<IEnumerable<User>> GetAll();
-        public Task Add(User user);
-        public Task Update(User user);
-        public Task Delete(int? id);
+        public Task<User> GetByIdAsync(int? id);
+        public Task<IEnumerable<User>> GetAllAsync();
+        public Task AddAsync(User user);
+        public Task UpdateAsync(User user);
+        public Task DeleteAsync(int? id);
 
     }
 }

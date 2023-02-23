@@ -22,7 +22,7 @@ namespace Biluthyrning.Controllers
         // GET: Users
         public async Task<IActionResult> Index()
         {
-            return View(await userRepo.GetAll());
+            return View(await userRepo.GetAllAsync());
         }
 
         // GET: Users/Details/5
@@ -33,7 +33,7 @@ namespace Biluthyrning.Controllers
                 return NotFound();
             }
 
-            var user = await userRepo.GetById(id);
+            var user = await userRepo.GetByIdAsync(id);
             if (user == null)
             {
                 return NotFound();
@@ -57,7 +57,7 @@ namespace Biluthyrning.Controllers
         {
             if (ModelState.IsValid)
             {
-                await userRepo.Add(user);
+                await userRepo.AddAsync(user);
                 return RedirectToAction(nameof(Index));
             }
             return View(user);
@@ -71,7 +71,7 @@ namespace Biluthyrning.Controllers
                 return NotFound();
             }
 
-            var user = await userRepo.GetById(id);
+            var user = await userRepo.GetByIdAsync(id);
             if (user == null)
             {
                 return NotFound();
@@ -95,7 +95,7 @@ namespace Biluthyrning.Controllers
             {
                 try
                 {
-                    await userRepo.Update(user);
+                    await userRepo.UpdateAsync(user);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -121,7 +121,7 @@ namespace Biluthyrning.Controllers
                 return NotFound();
             }
 
-            var user = await userRepo.GetById(id);
+            var user = await userRepo.GetByIdAsync(id);
             if (user == null)
             {
                 return NotFound();
@@ -139,10 +139,10 @@ namespace Biluthyrning.Controllers
             {
                 return Problem("Entity set 'CarRentalContext.Users'  is null.");
             }
-            var user = await userRepo.GetById(id);
+            var user = await userRepo.GetByIdAsync(id);
             if (user != null)
             {
-                await userRepo.Delete(id);
+                await userRepo.DeleteAsync(id);
             }
 
             return RedirectToAction(nameof(Index));
@@ -150,7 +150,7 @@ namespace Biluthyrning.Controllers
 
         private async Task<bool> UserExists(int id)
         {
-            var tempUser = await userRepo.GetById(id);
+            var tempUser = await userRepo.GetByIdAsync(id);
             if (tempUser == null)
             {
                 return false;

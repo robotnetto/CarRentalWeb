@@ -12,15 +12,15 @@ namespace Biluthyrning.Data
             this.context = context;
         }
 
-        public async Task Add(User user)
+        public async Task AddAsync(User user)
         {
             context.Users.Add(user);
             await context.SaveChangesAsync();
         }
 
-        public async Task Delete(int? id)
+        public async Task DeleteAsync(int? id)
         {
-            var userToDelete = await GetById(id);
+            var userToDelete = await GetByIdAsync(id);
             if (userToDelete != null)
             {
                 context.Users.Remove(userToDelete);
@@ -28,18 +28,18 @@ namespace Biluthyrning.Data
             }
         }
 
-        public async Task<IEnumerable<User>> GetAll()
+        public async Task<IEnumerable<User>> GetAllAsync()
         {
             return await context.Users.OrderBy(x => x.UserId).ToListAsync();
         }
 
-        public async Task<User> GetById(int? id)
+        public async Task<User> GetByIdAsync(int? id)
         {
             var tempUser = await context.Users.FirstOrDefaultAsync(x => x.UserId == id);
             return tempUser;
         }
 
-        public async Task Update(User user)
+        public async Task UpdateAsync(User user)
         {
             context.Users.Update(user);
             await context.SaveChangesAsync();
