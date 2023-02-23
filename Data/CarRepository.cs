@@ -1,4 +1,5 @@
 ﻿using Biluthyrning.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Biluthyrning.Data
 {
@@ -10,32 +11,32 @@ namespace Biluthyrning.Data
         {
             this.carContext = carContext;
         }
-       public void Create(Car car)
+       public async Task CreateAsync(Car car)
         {
            carContext.Cars.Add(car);
-            carContext.SaveChanges();
+            await carContext.SaveChangesAsync();
         }
 
-       public void Delete(Car car)
+       public async Task DeleteAsync(Car car)
         {
             carContext.Cars.Remove(car);
-            carContext.SaveChanges();
+             await carContext.SaveChangesAsync();
         }
 
-        IEnumerable<Car> ICar.GetAll()
+        public async Task <IEnumerable<Car>> GetAllAsync()
         {
-            return carContext.Cars.OrderBy(c => c.CarId);
+            return await carContext.Cars.OrderBy(c => c.CarId).ToListAsync();
         }
 
-        public Car GetById(int id)
+        public async Task <Car> GetByIdAsync(int id)
         {
-            return carContext.Cars.FirstOrDefault(c => c.CarId == id)!;
+            return await carContext.Cars.FirstOrDefaultAsync(c => c.CarId == id);
         }
 
-       public void Update(Car car)
+       public async Task UpdateAsync(Car car)
         {
             carContext.Update(car);
-            carContext.SaveChanges();
+           await carContext.SaveChangesAsync();
         }
     }
 }

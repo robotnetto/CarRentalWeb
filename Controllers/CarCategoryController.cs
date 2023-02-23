@@ -8,10 +8,12 @@ namespace Biluthyrning.Controllers
     public class CarCategoryController : Controller
     {
         private readonly ICarCategory carCategoryRepo;
+        private readonly ICar carRepo;
 
-        public CarCategoryController(ICarCategory carCategoryRepo)
+        public CarCategoryController(ICarCategory carCategoryRepo, ICar carRepo)
         {
             this.carCategoryRepo = carCategoryRepo;
+            this.carRepo = carRepo;
         }
 
         // GET: CarCategoryController

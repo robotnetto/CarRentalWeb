@@ -34,7 +34,7 @@ namespace Biluthyrning.Controllers
                 var bvm = new BookingViewModel();
                 bvm.Id = item.Id;
                 bvm.CarId = item.CarId;
-                bvm.CarModel = carRep.GetById(item.CarId).Model;
+                bvm.CarModel = carRep.GetByI(item.CarId).Model;
                 bvm.CarBrand = carRep.GetById(item.CarId).Brand;
                 bvm.StartDate = item.StartDate;
                 bvm.EndDate = item.EndDate;

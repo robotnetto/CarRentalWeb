@@ -13,45 +13,44 @@ namespace Biluthyrning.Controllers
     public class CarsController : Controller
     {
         private readonly ICar carRepo;
-        private readonly CarRentalContext _context;
         private readonly ICarCategory carCategoryRepo;
 
-        public CarsController(ICar carRepo, CarRentalContext context, ICarCategory carCategoryRepo)
+        public CarsController(ICar carRepo, ICarCategory carCategoryRepo)
         {
             this.carRepo = carRepo;
-            this._context = context;
+            
             this.carCategoryRepo = carCategoryRepo;
         }
 
         // GET: Cars
-        public ActionResult Index()
+        public async Task <ActionResult> Index()
         {
               return carRepo != null ? 
-                          View(carRepo.GetAll()) :
+                          View(await carRepo.GetAllAsync()) :
                           Problem("Entity set 'CarRentalContext.Cars'  is null.");
         }
 
         // GET: Cars/Details/5
-        public IActionResult Details (int id)
+        public async Task <IActionResult> Details (int id)
         {
             if (id == null || carRepo == null)
             {
                 return NotFound();
             }
 
-            var car = carRepo.GetById(id);
+            var car = await carRepo.GetByIdAsync(id);
             if (car == null)
             {
                 return NotFound();
             }
 
-            return View(car);
+            return View( car);
         }
 
         // GET: Cars/Create
-        public IActionResult Create()
+        public async Task <IActionResult> Create()
         {
-            ViewBag.CarCategoryNameList = new SelectList(carCategoryRepo.GetAll(), "Id", "Name");
+            ViewBag.CarCategoryNameList = new SelectList(await carCategoryRepo.GetAllAsync(), "Id", "Name");
             return View();
         }
 
@@ -60,25 +59,25 @@ namespace Biluthyrning.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("CarId,Model,Brand,Color,CarCategoryId")] Car car)
+        public async Task <IActionResult> Create ([Bind("CarId,Model,Brand,Color,CarCategoryId")] Car car)
         {
             if (ModelState.IsValid)
             {
-                carRepo.Create(car);
+               await carRepo.CreateAsync(car);
                 return RedirectToAction(nameof(Index));
             }
             return View(car);
         }
 
         // GET: Cars/Edit/5
-        public  IActionResult Edit(int id)
+        public async Task <IActionResult> Edit(int id)
         {
-            if (id! == null || carRepo == null)
+            if (id == null || carRepo == null)
             {
                 return NotFound();
             }
 
-            var car = carRepo.GetById(id);
+            var car = await carRepo.GetByIdAsync(id);
             if (car == null)
             {
                 return NotFound();
@@ -91,7 +90,7 @@ namespace Biluthyrning.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("CarId,Model,Brand,Color,CarCategoryId")] Car car)
+        public async Task <IActionResult> Edit(int id, [Bind("CarId,Model,Brand,Color,CarCategoryId")] Car car)
         {
             if (id != car.CarId)
             {
@@ -102,7 +101,7 @@ namespace Biluthyrning.Controllers
             {
                 try
                 {
-                    carRepo.Update(car);
+                    await carRepo.UpdateAsync(car);
                 }
                 catch (Exception)
                 {
@@ -114,36 +113,36 @@ namespace Biluthyrning.Controllers
         }
 
         // GET: Cars/Delete/5
-        public IActionResult Delete(int id)
+        public async Task <IActionResult> Delete(int id)
         {
             if (id == null || carRepo == null)
             {
                 return NotFound();
             }
 
-            var car = carRepo.GetById(id);
+            var car = carRepo.GetByIdAsync(id);
                 
             if (car == null)
             {
                 return NotFound();
             }
 
-            return View(car);
+            return View(await car);
         }
 
         // POST: Cars/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        public async Task <IActionResult> DeleteConfirmed(int id)
         {
             if (carRepo == null)
             {
                 return Problem("Entity set 'CarRentalContext.Cars'  is null.");
             }
-            var car = carRepo.GetById(id);
+            var car = carRepo.GetByIdAsync(id);
             if (car != null)
             {
-                carRepo.Delete(car);
+                await carRepo.DeleteAsync(car);
             }
             
             return RedirectToAction(nameof(Index));
