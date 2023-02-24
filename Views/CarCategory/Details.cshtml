@@ -17,6 +17,33 @@
             @Html.DisplayFor(model => model.Name)
         </dd>
     </dl>
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Cars[0].Model)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Cars[0].Brand)
+                    </th>
+                </tr>
+                @foreach(var item in Model.Cars)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Model)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Brand)
+                        </td>
+                    </tr>
+                }
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
