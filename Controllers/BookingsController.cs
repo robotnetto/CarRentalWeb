@@ -17,12 +17,14 @@ namespace Biluthyrning.Controllers
         private readonly IBooking bookingRep;
         private readonly ICar carRep;
         private readonly IUser userRep;
+        private readonly ICarCategory carCategoryRep;
 
-        public BookingsController(IBooking bookingRep, ICar carRep, IUser userRep)
+        public BookingsController(IBooking bookingRep, ICar carRep, IUser userRep, ICarCategory carCategoryRep)
         {
             this.bookingRep = bookingRep;
             this.carRep = carRep;
             this.userRep = userRep;
+            this.carCategoryRep = carCategoryRep;
         }
 
         // GET: Bookings
@@ -34,17 +36,15 @@ namespace Biluthyrning.Controllers
                 var bvm = new BookingViewModel();
                 var car = await carRep.GetByIdAsync(item.CarId);
                 var user = await userRep.GetByIdAsync(item.UserId);
+                var carCategory = await carCategoryRep.GetByIdAsync(car.CarCategoryId);
                 bvm.Id = item.Id;
                 bvm.CarId = item.CarId;
                 bvm.CarModel = car.Model;
                 bvm.CarBrand = car.Brand;
-
-                bvm.CarModel = car.Model;
-                bvm.CarBrand = car.Brand;
-
                 bvm.StartDate = item.StartDate;
                 bvm.EndDate = item.EndDate;
                 bvm.UserName = user.UserName;
+                bvm.CarCategoryName = carCategory.Name;
                 bookingVMList.Add(bvm);
             }
             return View(bookingVMList);
@@ -62,6 +62,7 @@ namespace Biluthyrning.Controllers
             var booking = await bookingRep.GetByIdAsync(id);
             var car = await carRep.GetByIdAsync(booking.CarId);
             var user = await userRep.GetByIdAsync(booking.UserId);
+            var carCategory = await carCategoryRep.GetByIdAsync(car.CarCategoryId);
             bvm.Id = id;
             bvm.CarId = car.CarId;
             bvm.CarModel = car.Model;
@@ -69,6 +70,7 @@ namespace Biluthyrning.Controllers
             bvm.StartDate = booking.StartDate;
             bvm.EndDate = booking.EndDate;
             bvm.UserName = user.UserName;
+            bvm.CarCategoryName = carCategory.Name;
 
             if (bvm == null)
             {
