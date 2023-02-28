@@ -5,29 +5,29 @@
 }
 <div class="bgstyle">
 
-<h1>Cars</h1>
+<h1 style="padding-top:40px; text-align:center;"> Cars</h1>
 
 <p>
-    <a asp-action="Create">Add new car</a>
+        <a class="btn btn-success btn-sm rounded " asp-action="Create">Add new car</a>
 </p>
-<table class="table table-hover">
+<table class="table table-hover ">
     <thead>
-        <tr class="table-primary">
+            <tr class="table" style="color:aliceblue">
             <th >
-                <h5> @Html.DisplayNameFor(model => model.Model)</h5>
+                    <h4 > @Html.DisplayNameFor(model => model.Model)</h4>
             </th>
             <th>
-                <h5> @Html.DisplayNameFor(model => model.Brand) </h5>
+                <h4> @Html.DisplayNameFor(model => model.Brand) </h4>
             </th>
             <th >
-                <h5> @Html.DisplayNameFor(model => model.Color) </h5>
+                <h4> @Html.DisplayNameFor(model => model.Color) </h4>
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody >
 @foreach (var item in Model) {
-            <tr class="table-light">
+                <tr @*class="table-light background-color: rgba(175, 175, 175, 0.1);"*@>
             <td>
                 @Html.DisplayFor(modelItem => item.Model)
             </td>

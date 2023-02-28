@@ -31,6 +31,9 @@ body {
     background-image: url('../images/carcity2.jpg');
     margin-bottom: 60px;
 }
-.bgstyle{
-    background-color:grey;
+.bgstyle {
+    background-color: rgba(255, 254, 254, 0.833);
+    padding-bottom: 550px;
+    padding-left: 100px;
+    padding-right: 100px;
 }
