@@ -8,9 +8,9 @@
 
 <h4>Booking</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
+<div class="row p-5 justify-content-center" style="background-image: linear-gradient( cadetblue, darkseaGreen); ">
+    <div class="col-md-4 card" style="width: 50%; border-radius: 2em;">
+        <form class="card-body" asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
@@ -34,14 +34,14 @@
                 <span asp-validation-for="UserId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-success mt-2" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-secondary mt-2" asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
