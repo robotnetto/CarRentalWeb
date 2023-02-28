@@ -1,8 +1,37 @@
-﻿@{
+﻿@model Biluthyrning.Models.User
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    @*<a class="btn btn-primary btn-lg rounded w-25" asp-controller="Users" asp-action="Login">Login</a>*@
+
+    <h1 style="color:white">Login</h1>
+    <div class="row justify-content-center">
+
+        <div class="card mt-3 bg-white bg-opacity-75 w-50" style="padding:2em; border-radius:2em;">
+            <div class="col">
+                <form asp-action="Login">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="UserId" />
+                    <input type="hidden" asp-for="IsAdmin" />
+                    <div class="form-group">
+                        <label asp-for="UserName" class="control-label"></label>
+                        <input asp-for="UserName" class="form-control" />
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password" class="control-label"></label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Login" class="w-50 btn btn-success btn-sm rounded mt-1" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </div>
