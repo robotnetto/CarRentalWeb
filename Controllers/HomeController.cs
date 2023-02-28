@@ -9,11 +9,13 @@ namespace Biluthyrning.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IUser userRepo;
+        private readonly IHttpContextAccessor httpContextAccessor;
 
-        public HomeController(ILogger<HomeController> logger, IUser userRepo)
+        public HomeController(ILogger<HomeController> logger, IUser userRepo, IHttpContextAccessor httpContextAccessor)
         {
             _logger = logger;
             this.userRepo = userRepo;
+            this.httpContextAccessor = httpContextAccessor;
         }
 
         public IActionResult Index()
@@ -37,10 +39,14 @@ namespace Biluthyrning.Controllers
                     user = item;
                     if (user.IsAdmin == true)
                     {
+                        CookieOptions option = new CookieOptions();
+                        httpContextAccessor.HttpContext.Response.Cookies.Append("UserType", "Admin", option);
                         return RedirectToAction("Index", "Users");
                     }
                     else
                     {
+                        CookieOptions option = new CookieOptions();
+                        httpContextAccessor.HttpContext.Response.Cookies.Append("UserType", "User", option);
                         return RedirectToAction("Index", "Bookings");
                     }
                 }
