@@ -10,7 +10,7 @@
     <h4>Booking</h4>
     <hr />
     <div class="row p-5 justify-content-center">
-        <div class="col-md-4 card shadow" style="width: 50%; border-radius: 2em;">
+        <div class="col-md-4 card shadow bg-white bg-opacity-75" style="width: 50%; border-radius: 2em;">
             <dl class="row card-body">
                 <dt class="col-sm-5">
                     @Html.DisplayNameFor(model => model.CarId)
@@ -59,6 +59,6 @@
     </div>
 </div>
 <div>
-    <a class="btn btn-secondary mt-2" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
-    <a class="btn btn-secondary mt-2" asp-action="Index">Back to List</a>
+    <a class="btn btn-secondary mt-2 btn-sm rounded" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
+    <a class="btn btn-secondary mt-2 btn-sm rounded" asp-action="Index">Back to List</a>
 </div> 
