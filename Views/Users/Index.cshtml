@@ -8,7 +8,7 @@
 
         <h1 style="color:white">Index</h1>
 
-        <h6 class="card mt-3" style="border-radius: 2em; padding:2em;">
+        <h6 class="card mt-3 bg-white bg-opacity-75" style="border-radius: 2em; padding:2em;">
             Search by username:
             @using (Html.BeginForm())
             {
@@ -26,7 +26,7 @@
     @foreach (var item in Model)
     {
         <div class="col-md-3">
-            <div class="card shadow mt-3" style="border-radius: 2em">
+            <div class="card shadow mt-3 bg-white bg-opacity-75" style="border-radius: 2em">
                 <img class="card-img-top" style="border-radius: 2em" src="~/bubbla.jpg" alt="bubbla">
                 <div class="card-body card-header">
                     <h4 class="card-title text-center">@item.UserName</h4>

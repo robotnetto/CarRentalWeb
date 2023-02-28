@@ -111,7 +111,7 @@ namespace Biluthyrning.Controllers
             {
                 return NotFound();
             }
-            return View();
+            return View(carCategory);
         }
 
         // POST: CarCategoryController/Delete/5
