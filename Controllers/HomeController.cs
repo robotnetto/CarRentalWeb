@@ -20,6 +20,7 @@ namespace Biluthyrning.Controllers
 
         public IActionResult Index()
         {
+            ViewData["UserType"] = Request.Cookies["UserType"];
             return View();
         }
 
