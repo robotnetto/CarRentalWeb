@@ -30,6 +30,7 @@ html {
 body {
     background-image: url('../images/carcity2.jpg');
     margin-bottom: 60px;
+    background-size: cover;
 }
 .bgstyle{
     background-color:grey;
