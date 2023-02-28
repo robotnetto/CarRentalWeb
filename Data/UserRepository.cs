@@ -32,6 +32,11 @@ namespace Biluthyrning.Data
         {
             return await context.Users.OrderBy(x => x.UserId).ToListAsync();
         }
+        public async Task<IEnumerable<User>> GetSearchedAsync(string search)
+        {
+            return await context.Users.Where(x=>x.UserName.Contains(search))
+                .OrderBy(x => x.UserId).ToListAsync();
+        }
 
         public async Task<User> GetByIdAsync(int? id)
         {

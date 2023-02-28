@@ -17,6 +17,16 @@ html {
   min-height: 100%;
 }
 
+.card:hover {
+    transform: scale(1.05);
+    transition: 0.2s;
+}
+.containerOskar {
+    border-radius:10px;
+    border-style:solid;
+    border-color:black;
+}
+
 body {
     background-image: url('../images/carcity2.jpg');
     margin-bottom: 60px;

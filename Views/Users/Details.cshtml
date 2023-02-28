@@ -1,36 +1,75 @@
-﻿@model Biluthyrning.Models.User
+﻿@model Biluthyrning.ViewModels.UserVM
 
 @{
     ViewData["Title"] = "Details";
 }
+<div class="bg-dark containerOskar" style="padding:10px; color:white;">
+    <h1>Details</h1>
 
-<h1>Details</h1>
 
-<div>
-    <h4>User</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Password)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsAdmin)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsAdmin)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.UserId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <div class="row">
+
+        <hr />
+        <div class="col-4">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.UserName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.UserName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Password)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Password)
+            </dd>
+            <dt class="col-sm-2">
+                Role
+            </dt>
+            <dd class="col-sm-10">
+                @if (Model.IsAdmin == true)
+                {
+                    <p>Administrator</p>
+                }
+                else
+                {
+                    <p>User</p>
+                }
+            </dd>
+            <div>
+                <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model?.UserId">Edit</a> |
+                <a class="btn btn-primary" asp-action="Index">Back to List</a>
+            </div>
+        </div>
+        <div class="col-8">
+            <dd class="col-sm-10">
+                <div class="row">
+                    <p>
+                        Bookings
+                        <a class="btn btn-success w-100" asp-controller="Bookings" asp-action="Create">Rent a car!</a>
+                    </p>
+                    
+                    @foreach (var item in Model.Bookings)
+                    {
+                        <div class="card col-lg-4 bg-black" style="border-color:white;">
+                            <div class="card-header bg-dark ">
+                                <p>@item.CarBrand</p>
+                                <p>@item.CarModel</p>
+                            </div>
+                            <div class="card-body">
+                                <p>
+                                    From: @item.StartDate.ToShortDateString()
+                                </p>
+                                <p>
+                                    To: @item.EndDate.ToShortDateString()
+                                    <a class="stretched-link" asp-controller="Bookings" asp-action="Details" asp-route-id="@item.Id"></a>
+                                </p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </dd>
+        </div>
+    </div>
+
 </div>

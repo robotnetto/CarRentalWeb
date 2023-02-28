@@ -4,12 +4,64 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Bookings</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-success" asp-action="Create">Create New Booking</a>
 </p>
-<table class="table">
+<div class="row" style="background-image: linear-gradient( cadetblue, darkseaGreen); ">
+    @foreach (var item in Model)
+    {
+        <div class="col-4">
+            <div class="card m-3 shadow" style="border-radius: 2em">
+                <img class="card-img-top" style="border-radius: 2em"src="~/bubbla.jpg" alt="bubbla">
+                <div class="card-body card-header">
+                    <h4 class="card-title text-center">@item.CarModel</h4>
+                </div>
+                <dl class="row card-body">
+                    <dt class="col-sm-5">
+                        @Html.DisplayNameFor(model => item.CarId)
+                    </dt>
+                    <dd class="col-sm-7">
+                        @Html.DisplayFor(model => item.CarId)
+                    </dd>
+                    <dt class="col-sm-5">
+                        @Html.DisplayNameFor(model => item.CarBrand)
+                    </dt>
+                    <dd class="col-sm-7">
+                        @Html.DisplayFor(model => item.CarBrand)
+                    </dd>
+                    <dt class="col-sm-5">
+                        @Html.DisplayNameFor(model => item.UserName)
+                    </dt>
+                    <dd class="col-sm-7">
+                        @Html.DisplayFor(model => item.UserName)
+                    </dd>
+                    <dt class="col-sm-5">
+                        @Html.DisplayNameFor(model => item.StartDate)
+                    </dt>
+                    <dd class="col-sm-7">
+                        @Html.DisplayFor(model => item.StartDate)
+                    </dd>
+                    <dt class="col-sm-5">
+                        @Html.DisplayNameFor(model => item.EndDate)
+                    </dt>
+                    <dd class="col-sm-7">
+                        @Html.DisplayFor(model => item.EndDate)
+                    </dd>
+                </dl>
+                <div class="card-body">
+                    <a class="btn btn-secondary" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+
+@*<table class="table">
     <thead>
         <tr>
             <th>
@@ -68,4 +120,4 @@
         </tr>
 }
     </tbody>
-</table>
+</table> *@
