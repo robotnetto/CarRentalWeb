@@ -4,43 +4,49 @@
     ViewData["Title"] = "Create";
 }
 
-<h1 class="text-white">Create</h1>
+<div class="row justify-content-center">
+    <div class="card mt-3 w-50 bg-white bg-opacity-75" style="padding:2em; border-radius:2em; ">
 
-<h4 class="text-secondary">New booking</h4>
-<hr />
-<div class="row p-5 justify-content-center">
-    <div class="col-md-4 card shadow" style="width: 50%; border-radius: 2em;">
-        <form class="card-body align-text-center"  asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="CarId" class="control-label"></label>
-                <select asp-for="CarId" class="form-control" asp-items="ViewBag.CarIdList"></select>
-                <span asp-validation-for="CarId" class="text-danger"></span>
+
+        <h1>Create</h1>
+
+        <h4>New Booking</h4>
+        <hr />
+        <div class="row">
+            <div class="col">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="CarId" class="control-label"></label>
+                        <select asp-for="CarId" class="form-control" asp-items="ViewBag.CarIdList"></select>
+                        <span asp-validation-for="CarId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="StartDate" class="control-label"></label>
+                        <input asp-for="StartDate" class="form-control" />
+                        <span asp-validation-for="StartDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EndDate" class="control-label"></label>
+                        <input asp-for="EndDate" class="form-control" />
+                        <span asp-validation-for="EndDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UserId" class="control-label"></label>
+                        <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserNameList"></select>
+                        <span asp-validation-for="UserId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group justify-content-center">
+                        <input type="submit" value="Create" class="btn btn-success mt-2 btn-sm rounded" />
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="StartDate" class="control-label"></label>
-                <input asp-for="StartDate" class="form-control" />
-                <span asp-validation-for="StartDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EndDate" class="control-label"></label>
-                <input asp-for="EndDate" class="form-control" />
-                <span asp-validation-for="EndDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserNameList"></select>
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
-            <div class="form-group justify-content-center">
-                <input type="submit" value="Create" class="btn btn-success mt-2 btn-sm rounded" />
-            </div>
-        </form>
+        </div>
+
+        <div>
+            <a class="btn btn-primary btn-sm rounded mt-2" asp-action="Index">Back to List</a>
+        </div>
     </div>
-</div>
-
-<div>
-    <a class="btn btn-secondary btn-sm rounded mt-2" asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

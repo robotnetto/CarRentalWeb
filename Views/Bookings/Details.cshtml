@@ -4,61 +4,61 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<div class="row justify-content-center">
+    <div class="card shadow bg-white bg-opacity-75 mt-3 w-50" style="padding:2em; border-radius:2em;">
 
-<div>
-    <h4>Booking</h4>
-    <hr />
-    <div class="row p-5 justify-content-center">
-        <div class="col-md-4 card shadow bg-white bg-opacity-75" style="width: 50%; border-radius: 2em;">
-            <dl class="row card-body">
-                <dt class="col-sm-5">
-                    @Html.DisplayNameFor(model => model.CarId)
-                </dt>
-                <dd class="col-sm-7">
-                    @Html.DisplayFor(model => model.CarId)
-                </dd>
-                <dt class="col-sm-5">
-                    @Html.DisplayNameFor(model => model.CarModel)
-                </dt>
-                <dd class="col-sm-7">
-                    @Html.DisplayFor(model => model.CarModel)
-                </dd>
-                <dt class="col-sm-5">
-                    @Html.DisplayNameFor(model => model.CarBrand)
-                </dt>
-                <dd class="col-sm-7">
-                    @Html.DisplayFor(model => model.CarBrand)
-                </dd>
-                <dt class="col-sm-5">
-                    @Html.DisplayNameFor(model => model.CarCategoryName)
-                </dt>
-                <dd class="col-sm-7">
-                    @Html.DisplayFor(model => model.CarCategoryName)
-                </dd>
-                <dt class="col-sm-5">
-                    @Html.DisplayNameFor(model => model.StartDate)
-                </dt>
-                <dd class="col-sm-7">
-                    @Html.DisplayFor(model => model.StartDate)
-                </dd>
-                <dt class="col-sm-5">
-                    @Html.DisplayNameFor(model => model.EndDate)
-                </dt>
-                <dd class="col-sm-7">
-                    @Html.DisplayFor(model => model.EndDate)
-                </dd>
-                <dt class="col-sm-5">
-                    @Html.DisplayNameFor(model => model.UserName)
-                </dt>
-                <dd class="col-sm-7">
-                    @Html.DisplayFor(model => model.UserName)
-                </dd>
-            </dl>
+        <h1>Details</h1>
+        <h4>Booking</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-5">
+
+                @Html.DisplayNameFor(model => model.CarId)
+            </dt>
+            <dd class="col-sm-7">
+                @Html.DisplayFor(model => model.CarId)
+            </dd>
+            <dt class="col-sm-5">
+                @Html.DisplayNameFor(model => model.CarModel)
+            </dt>
+            <dd class="col-sm-7">
+                @Html.DisplayFor(model => model.CarModel)
+            </dd>
+            <dt class="col-sm-5">
+                @Html.DisplayNameFor(model => model.CarBrand)
+            </dt>
+            <dd class="col-sm-7">
+                @Html.DisplayFor(model => model.CarBrand)
+            </dd>
+            <dt class="col-sm-5">
+                @Html.DisplayNameFor(model => model.CarCategoryName)
+            </dt>
+            <dd class="col-sm-7">
+                @Html.DisplayFor(model => model.CarCategoryName)
+            </dd>
+            <dt class="col-sm-5">
+                @Html.DisplayNameFor(model => model.StartDate)
+            </dt>
+            <dd class="col-sm-7">
+                @Html.DisplayFor(model => model.StartDate)
+            </dd>
+            <dt class="col-sm-5">
+                @Html.DisplayNameFor(model => model.EndDate)
+            </dt>
+            <dd class="col-sm-7">
+                @Html.DisplayFor(model => model.EndDate)
+            </dd>
+            <dt class="col-sm-5">
+                @Html.DisplayNameFor(model => model.UserName)
+            </dt>
+            <dd class="col-sm-7">
+                @Html.DisplayFor(model => model.UserName)
+            </dd>
+        </dl>
+
+        <div>
+            <a class="btn btn-secondary mt-2 btn-sm rounded" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
+            <a class="btn btn-secondary mt-2 btn-sm rounded" asp-action="Index">Back to List</a>
         </div>
     </div>
 </div>
-<div>
-    <a class="btn btn-secondary mt-2 btn-sm rounded" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
-    <a class="btn btn-secondary mt-2 btn-sm rounded" asp-action="Index">Back to List</a>
-</div> 
