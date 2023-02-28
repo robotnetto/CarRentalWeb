@@ -15,17 +15,26 @@ namespace Biluthyrning.Controllers
     {
         private readonly IUser userRepo;
         private readonly IBooking bookingRepo;
+        private readonly ICar carRepo;
 
-        public UsersController(IUser userRepo, IBooking bookingRepo)
+        public UsersController(IUser userRepo, IBooking bookingRepo, ICar carRepo)
         {
             this.userRepo = userRepo;
             this.bookingRepo = bookingRepo;
+            this.carRepo = carRepo;
         }
 
         // GET: Users
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string search)
         {
-            return View(await userRepo.GetAllAsync());
+            if (string.IsNullOrWhiteSpace(search))
+            {
+                return View(await userRepo.GetAllAsync());
+            }
+            else
+            {
+                return View(await userRepo.GetSearchedAsync(search));
+            }
         }
 
         // GET: Users/Details/5
@@ -38,9 +47,32 @@ namespace Biluthyrning.Controllers
 
             var user = await userRepo.GetByIdAsync(id);
             var userVM = new UserVM();
-            foreach (var item in await bookingRepo.GetAllAsync())
+
+            userVM.UserId = user.UserId;
+            userVM.UserName = user.UserName;
+            userVM.Password = user.Password;
+            userVM.IsAdmin = user.IsAdmin;
+
+            foreach (var booking in await bookingRepo.GetAllAsync())
             {
-                userVM.Bookings.Add(item);
+                if (booking.UserId == userVM.UserId)
+                {
+                    var bookingVM = new BookingViewModel();
+                    bookingVM.StartDate = booking.StartDate;
+                    bookingVM.EndDate = booking.EndDate;
+                    bookingVM.CarId = booking.CarId;
+                    bookingVM.Id = booking.Id;
+                    foreach (var car in await carRepo.GetAllAsync())
+                    {
+                        if (car.CarId == bookingVM.CarId)
+                        {
+                            bookingVM.CarBrand = car.Brand;
+                            bookingVM.CarModel = car.Model;
+                        }
+                    }
+                    userVM.Bookings.Add(bookingVM);
+                }
+
             }
             if (user == null)
             {

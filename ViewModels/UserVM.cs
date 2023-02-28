@@ -6,7 +6,9 @@ namespace Biluthyrning.ViewModels
     {
         public int UserId { get; set; }
         public string UserName { get; set; } = "";
-        public List<Booking> Bookings { get; set; } = new();
+        public string Password { get; set; } = "";
+        public bool IsAdmin { get; set; }
+        public List<BookingViewModel> Bookings { get; set; } = new();
 
     }
 }
