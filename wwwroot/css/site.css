@@ -18,5 +18,9 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    background-image: url('../images/carcity2.jpg');
+    margin-bottom: 60px;
+}
+.bgstyle{
+    background-color:grey;
 }

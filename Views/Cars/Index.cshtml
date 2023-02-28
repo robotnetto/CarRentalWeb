@@ -3,30 +3,31 @@
 @{
     ViewData["Title"] = "Index";
 }
+<div class="bgstyle">
 
-<h1>Index</h1>
+<h1>Cars</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Add new car</a>
 </p>
-<table class="table">
+<table class="table table-hover">
     <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Model)
+        <tr class="table-primary">
+            <th >
+                <h5> @Html.DisplayNameFor(model => model.Model)</h5>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Brand)
+                <h5> @Html.DisplayNameFor(model => model.Brand) </h5>
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Color)
+            <th >
+                <h5> @Html.DisplayNameFor(model => model.Color) </h5>
             </th>
             <th></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody >
 @foreach (var item in Model) {
-        <tr>
+            <tr class="table-light">
             <td>
                 @Html.DisplayFor(modelItem => item.Model)
             </td>
@@ -37,11 +38,15 @@
                 @Html.DisplayFor(modelItem => item.Color)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.CarId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CarId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CarId">Delete</a>
+                    <a class="btn btn-dark btn-sm rounded" asp-action="Edit" asp-route-id="@item.CarId">Edit</a>
+                    <a class="btn btn-info btn-sm rounded" asp-action="Details" asp-route-id="@item.CarId">Details</a>
+                    <a class="btn btn-danger btn-sm rounded" asp-action="Delete" asp-route-id="@item.CarId">
+                        Delete <i class="bi bi-trash-fill"></i>
+                    </a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+</div>
