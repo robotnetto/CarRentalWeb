@@ -33,12 +33,16 @@
                 <dd class="col-sm-7">
                     @Html.DisplayFor(model => model.EndDate)
                 </dd>
-                <dt class="col-sm-5">
-                    @Html.DisplayNameFor(model => model.UserId)
-                </dt>
-                <dd class="col-sm-7">
-                    @Html.DisplayFor(model => model.UserId)
-                </dd>
+                @if(ViewBag.UserType == "Admin")
+                {
+                    <dt class="col-sm-5">
+                        @Html.DisplayNameFor(model => model.UserId)
+                    </dt>
+                    <dd class="col-sm-7">
+                        @Html.DisplayFor(model => model.UserId)
+                    </dd>
+                }
+                
             </dl>
             <form asp-action="Delete">
                 <input type="hidden" asp-for="Id" />

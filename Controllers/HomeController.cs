@@ -70,6 +70,7 @@ namespace Biluthyrning.Controllers
                     {
                         CookieOptions option = new CookieOptions();
                         httpContextAccessor.HttpContext.Response.Cookies.Append("UserType", "User", option);
+                        httpContextAccessor.HttpContext.Response.Cookies.Append("CurrentUserId", user.UserId.ToString(), option);
                         return RedirectToAction("IndexUser", "Home");
                         //return RedirectToAction("Index", "Bookings");
                     }
@@ -81,6 +82,10 @@ namespace Biluthyrning.Controllers
         public IActionResult Logout()
         {
             Response.Cookies.Append("UserType", "", new CookieOptions()
+            {
+                Expires = DateTime.Now.AddDays(-1)
+            });
+            Response.Cookies.Append("CurrentUserId", "", new CookieOptions()
             {
                 Expires = DateTime.Now.AddDays(-1)
             });

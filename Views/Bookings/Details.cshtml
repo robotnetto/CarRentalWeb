@@ -48,12 +48,16 @@
             <dd class="col-sm-7">
                 @Html.DisplayFor(model => model.EndDate)
             </dd>
-            <dt class="col-sm-5">
-                @Html.DisplayNameFor(model => model.UserName)
-            </dt>
-            <dd class="col-sm-7">
-                @Html.DisplayFor(model => model.UserName)
-            </dd>
+            @if (ViewBag.UserType == "Admin")
+            {
+                <dt class="col-sm-5">
+                    @Html.DisplayNameFor(model => model.UserName)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.UserName)
+                </dd>
+            }
+
         </dl>
 
         <div>
