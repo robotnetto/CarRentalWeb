@@ -7,13 +7,13 @@
 <h1 class= "mt-2"style="color: white;">Bookings</h1>
 
 <p>
-    <a class="btn btn-success" asp-action="Create">Create New Booking</a>
+    <a class="btn btn-success btn-sm rounded" asp-action="Create">Create New Booking</a>
 </p>
 <div class="row">
     @foreach (var item in Model)
     {
         <div class="col-lg-4">
-            <div class="card m-3 shadow" style="border-radius: 2em">
+            <div class="card m-3 shadow bg-white bg-opacity-75" style="border-radius: 2em;">
                 <img class="card-img-top" style="border-radius: 2em"src="~/bubbla.jpg" alt="bubbla">
                 <div class="card-body card-header">
                     <h4 class="card-title text-center">@item.CarModel</h4>
@@ -51,9 +51,9 @@
                     </dd>
                 </dl>
                 <div class="card-body">
-                    <a class="btn btn-secondary" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                    <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a class="btn btn-secondary btn-sm rounded" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    <a class="btn btn-secondary btn-sm rounded" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <a class="btn btn-danger btn-sm rounded" asp-action="Delete" asp-route-id="@item.Id">Delete <i class="bi bi-trash-fill"></i></a>
                 </div>
             </div>
         </div>
