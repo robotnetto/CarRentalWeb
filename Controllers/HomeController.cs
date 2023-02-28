@@ -78,6 +78,16 @@ namespace Biluthyrning.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public IActionResult Logout()
+        {
+            Response.Cookies.Append("UserType", "", new CookieOptions()
+            {
+                Expires = DateTime.Now.AddDays(-1)
+            });
+
+            return RedirectToAction("Index");
+        }
+
         public IActionResult Privacy()
         {
             return View();
