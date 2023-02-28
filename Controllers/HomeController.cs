@@ -21,6 +21,27 @@ namespace Biluthyrning.Controllers
         public IActionResult Index()
         {
             ViewData["UserType"] = Request.Cookies["UserType"];
+            if (ViewData["UserType"] == null)
+            {
+                return View();
+            }
+            else if (ViewData["UserType"] == "Admin")
+            {
+                return RedirectToAction("IndexAdmin");
+            }
+            else
+            {
+                return RedirectToAction("IndexUser");
+            }
+        }
+        public IActionResult IndexAdmin()
+        {
+            ViewData["UserType"] = Request.Cookies["UserType"];
+            return View();
+        }
+        public IActionResult IndexUser()
+        {
+            ViewData["UserType"] = Request.Cookies["UserType"];
             return View();
         }
 
@@ -42,13 +63,15 @@ namespace Biluthyrning.Controllers
                     {
                         CookieOptions option = new CookieOptions();
                         httpContextAccessor.HttpContext.Response.Cookies.Append("UserType", "Admin", option);
-                        return RedirectToAction("Index", "Users");
+                        return RedirectToAction("IndexAdmin", "Home");
+                        //return RedirectToAction("Index", "Users");
                     }
                     else
                     {
                         CookieOptions option = new CookieOptions();
                         httpContextAccessor.HttpContext.Response.Cookies.Append("UserType", "User", option);
-                        return RedirectToAction("Index", "Bookings");
+                        return RedirectToAction("IndexUser", "Home");
+                        //return RedirectToAction("Index", "Bookings");
                     }
                 }
             }

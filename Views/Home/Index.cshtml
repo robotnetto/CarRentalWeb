@@ -11,9 +11,9 @@
 
         <div class="card mt-3 bg-white bg-opacity-75 w-50" style="padding:2em; border-radius:2em;">
             <div class="col">
-                <div>
+                @*<div>
                     <p class="h5">Du är inloggad som @ViewData["UserType"]</p>
-                </div>
+                </div>*@
                 <form asp-action="Login">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="UserId" />
