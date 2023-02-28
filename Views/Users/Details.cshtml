@@ -48,24 +48,50 @@
                         Bookings
                         <a class="btn btn-success w-100" asp-controller="Bookings" asp-action="Create">Rent a car!</a>
                     </p>
-                    
+
                     @foreach (var item in Model.Bookings)
                     {
-                        <div class="card cardHover col-lg-4 bg-black" style="border-color:white;">
-                            <div class="card-header bg-dark ">
-                                <p>@item.CarBrand</p>
-                                <p>@item.CarModel</p>
-                            </div>
-                            <div class="card-body">
-                                <p>
-                                    From: @item.StartDate.ToShortDateString()
-                                </p>
-                                <p>
-                                    To: @item.EndDate.ToShortDateString()
+                        <div class="col-md-6" style="color:black">
+                            <div class="card cardHover shadow mt-3" style="border-radius: 2em">
+                                <img class="card-img-top" style="border-radius: 2em" src="~/bubbla.jpg" alt="bubbla">
+                                <div class="card-body card-header">
+                                    <h4 class="card-title text-center">@item.UserName</h4>
+                                </div>
+                                <dl class="row card-body">
+                                    <dd class="col-sm-6">
+                                        <p>@item.CarBrand</p>
+                                        <p>Startdate: </p>
+                                        <p>@item.StartDate.ToShortDateString()</p>
+
+                                    </dd>
+                                    <dd class="col-sm-6">
+                                        <p>@item.CarModel</p>
+                                        <p>Enddate: </p>
+                                        <p>@item.EndDate.ToShortDateString()</p>
+                                    </dd>
+                                </dl>
+                                <div class="card-body">
                                     <a class="stretched-link" asp-controller="Bookings" asp-action="Details" asp-route-id="@item.Id"></a>
-                                </p>
+
+
+                                </div>
                             </div>
                         </div>
+
+                        @*<div class="card cardHover col-lg-4 bg-black" style="border-color:white;">
+                    <div class="card-header bg-dark ">
+                    <p>@item.CarBrand</p>
+                    <p>@item.CarModel</p>
+                    </div>
+                    <div class="card-body">
+                    <p>
+                    From: @item.StartDate.ToShortDateString()
+                    </p>
+                    <p>
+                    To: @item.EndDate.ToShortDateString()
+                    </p>
+                    </div>
+                    </div>*@
                     }
                 </div>
             </dd>
