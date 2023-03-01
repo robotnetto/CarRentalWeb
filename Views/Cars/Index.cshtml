@@ -7,12 +7,17 @@
     <div class ="col">
         <div class="card shadow-lg" style="border-radius:15px; background-color: rgba(255, 254, 254, 0.900);">
             <h1 style=" text-align:center; padding-top: 10px;"> Cars</h1>
-
+            <form method="get" action="@Url.Action("Index")">
+                <div class="input-group m-3">
+                    <input type="text" name="search" class="form-control rounded m-1" placeholder="Search by brand or model" value="@ViewBag.CarsSearch" aria-label="Search" />
+                    <button class="btn btn-outline-secondary rounded mr-4 "  type="submit">Search</button>>
+                </div>
+            </form>
             <p>
                     <a class="btn btn-success btn-sm rounded mx-3" asp-action="Create">Add new car</a>
             </p>
      </div>
-
+   </div>
    </div>
     <div class="row">
         @foreach (var item in Model)

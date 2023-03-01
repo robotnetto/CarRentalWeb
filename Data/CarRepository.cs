@@ -38,5 +38,11 @@ namespace Biluthyrning.Data
             carContext.Update(car);
            await carContext.SaveChangesAsync();
         }
+        public async Task<IEnumerable<Car>> SearchCarAsync(string search)
+        {
+            return await carContext.Cars.Where
+                (c => c.Model.Contains(search) || c.Brand.Contains(search)).ToListAsync();
+        }
+
     }
 }
