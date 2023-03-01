@@ -67,7 +67,7 @@ namespace Biluthyrning.Controllers
             // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
             [HttpPost]
             [ValidateAntiForgeryToken]
-            public async Task<IActionResult> Create([Bind("CarId,Model,Brand,Color,CarCategoryId")] Car car)
+            public async Task<IActionResult> Create([Bind("CarId,Model,Brand,Color,CarCategoryId,Amount")] Car car)
             {
                 if (ModelState.IsValid)
                 {
@@ -85,7 +85,8 @@ namespace Biluthyrning.Controllers
                     return NotFound();
                 }
 
-                var car = await carRepo.GetByIdAsync(id);
+            ViewBag.CarCategoryNameList = new SelectList(await carCategoryRepo.GetAllAsync(), "Id", "Name");
+            var car = await carRepo.GetByIdAsync(id);
                 if (car == null)
                 {
                     return NotFound();
@@ -98,7 +99,7 @@ namespace Biluthyrning.Controllers
             // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
             [HttpPost]
             [ValidateAntiForgeryToken]
-            public async Task<IActionResult> Edit(int id, [Bind("CarId,Model,Brand,Color,CarCategoryId")] Car car)
+            public async Task<IActionResult> Edit(int id, [Bind("CarId,Model,Brand,Color,CarCategoryId,Amount")] Car car)
             {
                 if (id != car.CarId)
                 {
