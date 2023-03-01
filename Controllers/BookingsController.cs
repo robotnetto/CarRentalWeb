@@ -50,12 +50,11 @@ namespace Biluthyrning.Controllers
                 bvm.UserId= item.UserId;
                 bvm.CarCategoryName = carCategory.Name;
 
-                if (string.IsNullOrWhiteSpace(search) || bvm.UserName.Contains(search))
+                if (string.IsNullOrWhiteSpace(search) || bvm.UserName.Contains(search, StringComparison.OrdinalIgnoreCase))
                 {
                     bookingVMList.Add(bvm);
                 }
-                
-                bookingVMList.Add(bvm);
+    
             }
             return View(bookingVMList);
         }
