@@ -22,7 +22,6 @@
                         <span asp-validation-for="Model" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <div class="form-group">
                             <label asp-for="Brand" class="control-label"></label>
                             <input asp-for="Brand" class="form-control formsstyle" />
                             <span asp-validation-for="Brand" class="text-danger"></span>
@@ -34,12 +33,19 @@
                        <span asp-validation-for="Color" class="text-danger"></span>
                            
                     </div>
+                    <div class="form-group">
+
+                        <label asp-for="Amount" class="control-label"></label>
+                        <input asp-for="Amount" class="form-control" placeholder="Kr"/>
+                        <span asp-validation-for="Amount" class="text-danger"></span>
+
+                    </div>
                         <div class="form-group">
                             <label asp-for="CarCategoryId" class="form-label mt-4"></label>
                             <select asp-for="CarCategoryId" class="form-select" asp-items="ViewBag.CarCategoryNameList"></select>
                         </div>
                     <div class="form-group">
-                        <input type="submit" value="Create" class="btn btn-success btn-sm rounded" />
+                        <input type="submit" value="Create" class="btn btn-success btn-sm rounded m-2" />
                     </div>
                 </form>
             </div>

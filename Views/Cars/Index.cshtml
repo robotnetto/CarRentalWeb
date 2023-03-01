@@ -5,12 +5,12 @@
 }
 <div class="row m-3">
     <div class ="col">
-        <div class="card shadow-lg" style="border-radius:15px; background-color: rgba(255, 254, 254, 0.900);">
+        <div class="card shadow-lg" style="border-radius:15px; background-color: rgba(255, 254, 254, 0.800);">
             <h1 style=" text-align:center; padding-top: 10px;"> Cars</h1>
             <form method="get" action="@Url.Action("Index")">
-                <div class="input-group m-3 w-50">
+                <div class="input-group">
                     <input type="text" name="search" class="form-control rounded m-1" placeholder="Search by brand or model" value="@ViewBag.CarsSearch" aria-label="Search" />
-                    <button class="btn btn-outline-secondary rounded mr-4 "  type="submit">Search</button>
+                    <button class="btn btn-outline-primary rounded "  type="submit">Search</button>
                 </div>
             </form>
             <p>
@@ -24,6 +24,7 @@
         {
             <div class="col-lg-4">
                 <div class="card m-3 shadow" style="border-radius: 2em; background-color: rgba(255, 254, 254, 0.850);">
+                <img class="card-img-top" style="border-radius: 2em" src="~/bubbla.jpg" alt="bubbla">
                     <div class="card-body card-header">
                         <h4 class="card-title text-center">@item.Model</h4>
                     </div>
@@ -39,9 +40,15 @@
                         </dt>
                         <dd class="col-sm-7">
                             @Html.DisplayFor(model => item.Color)
-                        </dd>
+                    </dd>
+                    <dt class="col-sm-5">
+                        @Html.DisplayNameFor(model => item.Amount)
+                    </dt>
+                    <dd class="col-sm-7">
+                        @Html.DisplayFor(model => item.Amount) kr
+                        
+                    </dd>
                         <dd class="col-sm-7" style="padding-bottom: 5px;">
-                          <img style="width: 150px; " src="../Images/Mr-Bean.jpg" alt="Mr.Bean">
                         </dd>
                     </dl>
                     <div class="card-body">
