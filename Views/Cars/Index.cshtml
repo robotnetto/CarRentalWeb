@@ -8,9 +8,9 @@
         <div class="card shadow-lg" style="border-radius:15px; background-color: rgba(255, 254, 254, 0.900);">
             <h1 style=" text-align:center; padding-top: 10px;"> Cars</h1>
             <form method="get" action="@Url.Action("Index")">
-                <div class="input-group m-3">
+                <div class="input-group m-3 w-50">
                     <input type="text" name="search" class="form-control rounded m-1" placeholder="Search by brand or model" value="@ViewBag.CarsSearch" aria-label="Search" />
-                    <button class="btn btn-outline-secondary rounded mr-4 "  type="submit">Search</button>>
+                    <button class="btn btn-outline-secondary rounded mr-4 "  type="submit">Search</button>
                 </div>
             </form>
             <p>
