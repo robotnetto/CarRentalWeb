@@ -14,6 +14,14 @@ else
     <h1 class="mt-2" style="color: white;">Bookings</h1>
 }
 
+<h6 class="card mt-3 bg-white bg-opacity-75" style="border-radius: 2em; padding:2em;">
+    Search by username:
+    @using (Html.BeginForm())
+    {
+        @Html.TextBox("search") <input class="btn btn-primary btn-sm rounded m-1" type="submit" value="Search" />
+    }
+</h6>
+
 <p>
     <a class="btn btn-success btn-sm rounded" asp-action="Create">Create New Booking</a>
 </p>

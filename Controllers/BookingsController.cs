@@ -28,11 +28,12 @@ namespace Biluthyrning.Controllers
         }
 
         // GET: Bookings
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string search)
         {
             ViewBag.UserType = Request.Cookies["UserType"];
             ViewData["CurrentUserId"] = Request.Cookies["CurrentUserId"];
             var bookingVMList = new List<BookingViewModel>();
+
             foreach (var item in await bookingRep.GetAllAsync())
             {
                 var bvm = new BookingViewModel();
@@ -48,6 +49,12 @@ namespace Biluthyrning.Controllers
                 bvm.UserName = user.UserName;
                 bvm.UserId= item.UserId;
                 bvm.CarCategoryName = carCategory.Name;
+
+                if (string.IsNullOrWhiteSpace(search) || bvm.UserName.Contains(search))
+                {
+                    bookingVMList.Add(bvm);
+                }
+                
                 bookingVMList.Add(bvm);
             }
             return View(bookingVMList);
