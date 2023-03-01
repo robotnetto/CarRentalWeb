@@ -3,50 +3,95 @@
 @{
     ViewData["Title"] = "Index";
 }
-<div class="bgstyle">
+<div class="row m-3">
+    <div class ="col">
+        <div class="card shadow-lg" style="border-radius:15px; background-color: rgba(255, 254, 254, 0.900);">
+            <h1 style=" text-align:center; padding-top: 10px;"> Cars</h1>
 
-<h1>Cars</h1>
+            <p>
+                    <a class="btn btn-success btn-sm rounded mx-3" asp-action="Create">Add new car</a>
+            </p>
+     </div>
 
-<p>
-    <a asp-action="Create">Add new car</a>
-</p>
-<table class="table table-hover">
-    <thead>
-        <tr class="table-primary">
-            <th >
-                <h5> @Html.DisplayNameFor(model => model.Model)</h5>
+   </div>
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-4">
+                <div class="card m-3 shadow" style="border-radius: 2em; background-color: rgba(255, 254, 254, 0.850);">
+                    <div class="card-body card-header">
+                        <h4 class="card-title text-center">@item.Model</h4>
+                    </div>
+                    <dl class="row card-body">
+                        <dt class="col-sm-5">
+                            @Html.DisplayNameFor(model => item.Brand)
+                        </dt>
+                        <dd class="col-sm-7">
+                            @Html.DisplayFor(model => item.Brand)
+                        </dd>
+                        <dt class="col-sm-5">
+                            @Html.DisplayNameFor(model => item.Color)
+                        </dt>
+                        <dd class="col-sm-7">
+                            @Html.DisplayFor(model => item.Color)
+                        </dd>
+                        <dd class="col-sm-7" style="padding-bottom: 5px;">
+                          <img style="width: 150px; " src="../Images/Mr-Bean.jpg" alt="Mr.Bean">
+                        </dd>
+                    </dl>
+                    <div class="card-body">
+                       <a class="btn btn-dark btn-sm rounded" asp-action="Edit" asp-route-id="@item.CarId">Edit</a>
+                    <a class="btn btn-info btn-sm rounded" asp-action="Details" asp-route-id="@item.CarId">Details</a>
+                    <a class="btn btn-danger btn-sm rounded" asp-action="Delete" asp-route-id="@item.CarId">
+                        Delete <i class="bi bi-trash-fill"></i>
+                    </a>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+
+@*
+<table class="table table-hover ">
+        <thead >
+            <tr>
+            <th  >
+                    <h4 > @Html.DisplayNameFor(model => model.Model)</h4>
             </th>
             <th>
-                <h5> @Html.DisplayNameFor(model => model.Brand) </h5>
+                <h4> @Html.DisplayNameFor(model => model.Brand) </h4>
             </th>
             <th >
-                <h5> @Html.DisplayNameFor(model => model.Color) </h5>
+                <h4> @Html.DisplayNameFor(model => model.Color) </h4>
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody >
-@foreach (var item in Model) {
-            <tr class="table-light">
-            <td>
-                @Html.DisplayFor(modelItem => item.Model)
+
+  @foreach (var item in Model) {
+                <tr class="table-light background-color: rgba(175, 175, 175, 0.1);">
+          <td>
+                @html.displayfor(modelitem => item.model)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Brand)
+                @html.displayfor(modelitem => item.brand)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Color)
+                @html.displayfor(modelitem => item.color)
             </td>
             <td>
-                    <a class="btn btn-dark btn-sm rounded" asp-action="Edit" asp-route-id="@item.CarId">Edit</a>
-                    <a class="btn btn-info btn-sm rounded" asp-action="Details" asp-route-id="@item.CarId">Details</a>
-                    <a class="btn btn-danger btn-sm rounded" asp-action="Delete" asp-route-id="@item.CarId">
-                        Delete <i class="bi bi-trash-fill"></i>
+                    <a class="btn btn-dark btn-sm rounded" asp-action="edit" asp-route-id="@item.carid">edit</a>
+                    <a class="btn btn-info btn-sm rounded" asp-action="details" asp-route-id="@item.carid">details</a>
+                    <a class="btn btn-danger btn-sm rounded" asp-action="delete" asp-route-id="@item.carid">
+                        delete <i class="bi bi-trash-fill"></i>
                     </a>
             </td>
         </tr>
 }
     </tbody>
-</table>
+  </table>
 
-</div>
+
+</div>*@

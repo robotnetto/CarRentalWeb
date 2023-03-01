@@ -30,6 +30,8 @@ namespace Biluthyrning.Controllers
         // GET: Bookings
         public async Task<IActionResult> Index()
         {
+            ViewBag.UserType = Request.Cookies["UserType"];
+            ViewData["CurrentUserId"] = Request.Cookies["CurrentUserId"];
             var bookingVMList = new List<BookingViewModel>();
             foreach (var item in await bookingRep.GetAllAsync())
             {
@@ -44,6 +46,7 @@ namespace Biluthyrning.Controllers
                 bvm.StartDate = item.StartDate;
                 bvm.EndDate = item.EndDate;
                 bvm.UserName = user.UserName;
+                bvm.UserId= item.UserId;
                 bvm.CarCategoryName = carCategory.Name;
                 bookingVMList.Add(bvm);
             }
@@ -53,6 +56,7 @@ namespace Biluthyrning.Controllers
         // GET: Bookings/Details/5
         public async Task<IActionResult> Details(int id)
         {
+            ViewBag.UserType = Request.Cookies["UserType"];
             if (id == null)
             {
                 return NotFound();
@@ -83,6 +87,9 @@ namespace Biluthyrning.Controllers
         // GET: Bookings/Create
         public async Task<IActionResult> Create()
         {
+            ViewBag.UserType = Request.Cookies["UserType"];
+            ViewBag.CurrentUserId = Request.Cookies["CurrentUserId"];
+
             ViewBag.UserNameList = new SelectList(await userRep.GetAllAsync(), "UserId", "UserName");
             //TODO: Vill vi se ngt annat än bilarnas Id i Booking/Create?
             ViewBag.CarIdList = new SelectList(await carRep.GetAllAsync(), "CarId", "CarId");
@@ -107,6 +114,8 @@ namespace Biluthyrning.Controllers
         // GET: Bookings/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
+            ViewBag.UserType = Request.Cookies["UserType"];
+
             if (id == null)
             {
                 return NotFound();
@@ -157,6 +166,7 @@ namespace Biluthyrning.Controllers
         // GET: Bookings/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
+            ViewBag.UserType = Request.Cookies["UserType"];
             //TODO: vill vi visa carmodel, carBrand och UserName på Delete sidan också?
             if (id == null)
             {

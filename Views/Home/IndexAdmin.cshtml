@@ -1,0 +1,22 @@
+﻿@model Biluthyrning.Models.User
+@{
+    ViewData["Title"] = "Admin Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome Admin</h1>
+
+    <h1 style="color:white">Login to view contents.</h1>
+    <div class="row justify-content-center">
+
+        <div class="card mt-3 bg-white bg-opacity-75 w-50" style="padding:2em; border-radius:2em;">
+            <div class="col">
+                <div>
+                    <p class="h5">Du är inloggad som @ViewData["UserType"]</p>
+                    <a class="w-50 btn btn-success btn-sm rounded mt-2" asp-action="Logout">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

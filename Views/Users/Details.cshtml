@@ -3,30 +3,30 @@
 @{
     ViewData["Title"] = "Details";
 }
-<div class="card mt-3" style="padding:2em; border-radius:2em;">
+<div class="card bg-white bg-opacity-75 mt-3" style="padding:2em; border-radius:2em;">
     <h1>Details</h1>
 
 
     <div class="row">
 
         <hr />
-        <div class="col-4">
-            <dt class="col-sm-2">
+        <div class="col-5">
+            <dt class="col-sm-4">
                 @Html.DisplayNameFor(model => model.UserName)
             </dt>
-            <dd class="col-sm-10">
+            <dd class="col-sm-8">
                 @Html.DisplayFor(model => model.UserName)
             </dd>
-            <dt class="col-sm-2">
+            <dt class="col-sm-4">
                 @Html.DisplayNameFor(model => model.Password)
             </dt>
-            <dd class="col-sm-10">
+            <dd class="col-sm-8">
                 @Html.DisplayFor(model => model.Password)
             </dd>
-            <dt class="col-sm-2">
+            <dt class="col-sm-4">
                 Role
             </dt>
-            <dd class="col-sm-10">
+            <dd class="col-sm-8">
                 @if (Model.IsAdmin == true)
                 {
                     <p>Administrator</p>
@@ -37,61 +37,49 @@
                 }
             </dd>
             <div>
-                <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model?.UserId">Edit</a> |
-                <a class="btn btn-primary" asp-action="Index">Back to List</a>
+                <a class="btn btn-primary btn-sm rounded" asp-action="Edit" asp-route-id="@Model?.UserId">Edit</a> |
+                <a class="btn btn-primary btn-sm rounded" asp-action="Index">Back to List</a>
             </div>
         </div>
-        <div class="col-8">
+        <div class="col-7">
             <dd class="col-sm-10">
                 <div class="row">
                     <p>
                         Bookings
-                        <a class="btn btn-success w-100" asp-controller="Bookings" asp-action="Create">Rent a car!</a>
+                        <a class="btn btn-success w-100 rounded" asp-controller="Bookings" asp-action="Create">Rent a car!</a>
                     </p>
 
-                    @foreach (var item in Model.Bookings)
+                    @if (Model != null && Model.Bookings != null)
                     {
-                        <div class="col-md-6" style="color:black">
-                            <div class="card cardHover shadow mt-3" style="border-radius: 2em">
-                                <img class="card-img-top" style="border-radius: 2em" src="~/bubbla.jpg" alt="bubbla">
-                                <div class="card-body card-header">
-                                    <h4 class="card-title text-center">@item.UserName</h4>
-                                </div>
-                                <dl class="row card-body">
-                                    <dd class="col-sm-6">
-                                        <p>@item.CarBrand</p>
-                                        <p>Startdate: </p>
-                                        <p>@item.StartDate.ToShortDateString()</p>
+                        @foreach (var item in Model.Bookings)
+                        {
+                            <div class="col-md-6" style="color:black">
+                                <div class="card cardHover shadow mt-3 bg-white bg-opacity-75" style="border-radius: 2em">
+                                    <img class="card-img-top" style="border-radius: 2em" src="~/bubbla.jpg" alt="bubbla">
+                                    <div class="card-body card-header">
+                                        <h4 class="card-title text-center">@item.UserName</h4>
+                                    </div>
+                                    <dl class="row card-body">
+                                        <dd class="col-sm-6">
+                                            <p>@item.CarBrand</p>
+                                            <p>Startdate: </p>
+                                            <p>@item.StartDate.ToShortDateString()</p>
 
-                                    </dd>
-                                    <dd class="col-sm-6">
-                                        <p>@item.CarModel</p>
-                                        <p>Enddate: </p>
-                                        <p>@item.EndDate.ToShortDateString()</p>
-                                    </dd>
-                                </dl>
-                                <div class="card-body">
-                                    <a class="stretched-link" asp-controller="Bookings" asp-action="Details" asp-route-id="@item.Id"></a>
+                                        </dd>
+                                        <dd class="col-sm-6">
+                                            <p>@item.CarModel</p>
+                                            <p>Enddate: </p>
+                                            <p>@item.EndDate.ToShortDateString()</p>
+                                        </dd>
+                                    </dl>
+                                    <div class="card-body">
+                                        <a class="stretched-link" asp-controller="Bookings" asp-action="Details" asp-route-id="@item.Id"></a>
 
 
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
-                        @*<div class="card cardHover col-lg-4 bg-black" style="border-color:white;">
-                    <div class="card-header bg-dark ">
-                    <p>@item.CarBrand</p>
-                    <p>@item.CarModel</p>
-                    </div>
-                    <div class="card-body">
-                    <p>
-                    From: @item.StartDate.ToShortDateString()
-                    </p>
-                    <p>
-                    To: @item.EndDate.ToShortDateString()
-                    </p>
-                    </div>
-                    </div>*@
+                        }
                     }
                 </div>
             </dd>

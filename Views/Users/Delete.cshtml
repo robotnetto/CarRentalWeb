@@ -4,7 +4,7 @@
     ViewData["Title"] = "Delete";
 }
 
-<div class="card mt-3" style="padding:10px; border-radius:2em; padding:2em;">
+<div class="card mt-3 bg-white bg-opacity-75" style="padding:10px; border-radius:2em; padding:2em;">
 
     <h1>Delete</h1>
 
@@ -35,8 +35,8 @@
 
         <form asp-action="Delete">
             <input type="hidden" asp-for="UserId" />
-            <input type="submit" value="Delete" class="btn btn-danger" /> |
-            <a class="btn btn-primary" asp-action="Index">Back to List</a>
+            <input type="submit" value="Delete" class="btn btn-danger btn-sm rounded" /> |
+            <a class="btn btn-primary btn-sm rounded" asp-action="Index">Back to List</a>
         </form>
     </div>
 
