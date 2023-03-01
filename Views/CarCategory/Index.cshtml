@@ -8,15 +8,15 @@
 
         <h1>Index</h1>
 
-        <h6 class="card mt-3" style="border-radius: 2em; padding:2em;">
+        <h6 class="card mt-3 bg-white bg-opacity-75" style="border-radius: 2em; padding:2em;">
             Search by category:
             @using (Html.BeginForm())
             {
-                @Html.TextBox("search") <input class="btn btn-primary" type="submit" value="Search" />
+                @Html.TextBox("search") <input class="btn btn-primary btn-sm rounded m-1" type="submit" value="Search" />
             }
         </h6>
         <p>
-            <a class="btn btn-success w-100" asp-action="Create">Create New</a>
+            <a class="btn btn-success w-100 rounded" asp-action="Create">Create New</a>
         </p>
     </div>
 </div>
