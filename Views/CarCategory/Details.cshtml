@@ -4,7 +4,7 @@
     ViewData["Title"] = "Details";
 }
 
-<div class="card mt-3 bg-white" style="padding:2em; border-radius:2em;">
+<div class="card mt-3 bg-white bg-opacity-75" style="padding:2em; border-radius:2em;">
     <h1>Details</h1>
 
     <div class="row">
@@ -27,7 +27,7 @@
                 @foreach (var item in Model.Cars)
                 {
                     <div class="col-md-6" style="color:black">
-                        <div class="card cardHover shadow mt-3" style="border-radius: 2em">
+                        <div class="card cardHover shadow mt-3 bg-white bg-opacity-75" style="border-radius: 2em">
                             <img class="card-img-top" style="border-radius: 2em" src="~/bubbla.jpg" alt="bubbla">
                             <div class="card-body card-header">
                                 <h4 class="card-title text-center">@item.Model</h4>
