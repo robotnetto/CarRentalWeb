@@ -3,33 +3,46 @@
 @{
     ViewData["Title"] = "Index";
 }
+<div class="row mt-3">
+    <div class="col">
 
-<h1>Index</h1>
+        <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+        <h6 class="card mt-3" style="border-radius: 2em; padding:2em;">
+            Search by category:
+            @using (Html.BeginForm())
+            {
+                @Html.TextBox("search") <input class="btn btn-primary" type="submit" value="Search" />
+            }
+        </h6>
+        <p>
+            <a class="btn btn-success w-100" asp-action="Create">Create New</a>
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-lg-4">
+            <div class="card m-3 shadow bg-white bg-opacity-75" style="border-radius: 2em">
+                <div class="card-body card-header">
+                    <h4 class="card-title text-center">@item.Name</h4>
+                </div>
+                <dl class="row card-body">
+                    <dt class="col-sm-5">
+                        @Html.DisplayNameFor(model => model.Name)
+                    </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(modelItem => item.Name)
+                </dd>
+                </dl>
+                <div class="card-body">
+                    <a class="btn btn-secondary btn-sm rounded" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a class="btn btn-secondary btn-sm rounded" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a class="btn btn-danger btn-sm rounded" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

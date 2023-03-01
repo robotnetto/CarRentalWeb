@@ -4,48 +4,57 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<div class="card mt-3 bg-white" style="padding:2em; border-radius:2em;">
+    <h1>Details</h1>
 
-<div>
-    <h4>CarCategory</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-    </dl>
-    <div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Cars[0].Model)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Cars[0].Brand)
-                    </th>
-                </tr>
-                @foreach(var item in Model.Cars)
+    <div class="row">
+        <h4>CarCategory</h4>
+        <hr />
+        <div class="col-5">
+            <dl class="row card-body">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+            </dl>
+        </div>
+
+        <div class="col-7">
+            <h5>Bilar</h5>
+            <div class="row">
+                @foreach (var item in Model.Cars)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Model)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Brand)
-                        </td>
-                    </tr>
+                    <div class="col-md-6" style="color:black">
+                        <div class="card cardHover shadow mt-3" style="border-radius: 2em">
+                            <img class="card-img-top" style="border-radius: 2em" src="~/bubbla.jpg" alt="bubbla">
+                            <div class="card-body card-header">
+                                <h4 class="card-title text-center">@item.Model</h4>
+                            </div>
+                            <dl class="row card-body">
+                                <dd class="col-sm-6">
+                                    <p>Model:</p>
+                                    <p>Brand:</p>
+                                    <p>Color:</p>
+                                </dd>
+                                <dd class="col-sm-6">
+                                    <p>@item.Model</p>
+                                    <p>@item.Brand</p>
+                                    <p>@item.Color</p>
+                                </dd>
+                            </dl>
+                            <div class="card-body">
+                                <a class="stretched-link" asp-controller="Cars" asp-action="Details" asp-route-id="@item.CarId"></a>
+                            </div>
+                        </div>
+                    </div>
                 }
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
+            </div>
+        </div>
     </div>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <div>
+        <a class="btn btn-secondary mt-2 btn-sm rounded" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+        <a class="btn btn-secondary mt-2 btn-sm rounded" asp-action="Index">Back to List</a>
+    </div>
 </div>

@@ -17,9 +17,16 @@ namespace Biluthyrning.Controllers
         }
 
         // GET: CarCategoryController
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string search)
         {
-            return View( await carCategoryRepo.GetAllAsync());
+            if (string.IsNullOrWhiteSpace(search))
+            {
+                return View(await carCategoryRepo.GetAllAsync());
+            }
+            else
+            {
+                return View(await carCategoryRepo.GetSearchedAsync(search));
+            }
         }
 
         // GET: CarCategoryController/Details/5

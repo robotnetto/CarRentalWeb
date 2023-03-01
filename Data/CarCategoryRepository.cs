@@ -28,6 +28,10 @@ namespace Biluthyrning.Data
         {
             return await context.Categories.OrderBy(c => c.Id).ToListAsync();
         }
+        public async Task<IEnumerable<CarCategory>> GetSearchedAsync(string search)
+        {
+            return await context.Categories.Where(c => c.Name.Contains(search)).OrderBy(c => c.Id).ToListAsync();
+        }
 
         public async Task<CarCategory> GetByIdAsync(int id)
         {
