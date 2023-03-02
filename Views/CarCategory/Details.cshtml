@@ -54,7 +54,12 @@
         </div>
     </div>
     <div>
-        <a class="btn btn-secondary mt-2 btn-sm rounded" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+        @if(ViewBag.UserType == "Admin")
+        {
+            <p style="display:inline">
+            <a class="btn btn-secondary mt-2 btn-sm rounded" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+            </p>
+        }
         <a class="btn btn-secondary mt-2 btn-sm rounded" asp-action="Index">Back to List</a>
     </div>
 </div>
