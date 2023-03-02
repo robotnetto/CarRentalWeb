@@ -11,9 +11,6 @@
 
         <div class="card mt-3 bg-white bg-opacity-75 w-50" style="padding:2em; border-radius:2em;">
             <div class="col">
-                @*<div>
-                    <p class="h5">Du är inloggad som @ViewData["UserType"]</p>
-                </div>*@
                 <form asp-action="Login">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="UserId" />
@@ -32,6 +29,11 @@
                         <input type="submit" value="Login" class="w-50 btn btn-success btn-sm rounded mt-2" />
                     </div>
                 </form>
+                
+                <div>
+                    <h4 class="mt-4"> Don't have an account? </h4>
+                    <a class="btn btn-secondary btn-sm rounded" asp-controller="Users" asp-action="Create" >Create new account here</a>
+                </div>
             </div>
         </div>
     </div>
