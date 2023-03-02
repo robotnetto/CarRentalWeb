@@ -50,7 +50,7 @@ namespace Biluthyrning.Controllers
                 bvm.UserId= item.UserId;
                 bvm.CarCategoryName = carCategory.Name;
 
-                if (string.IsNullOrWhiteSpace(search) || bvm.UserName.Contains(search, StringComparison.OrdinalIgnoreCase))
+                if (string.IsNullOrWhiteSpace(search) || bvm.UserName.Contains(search))
                 {
                     bookingVMList.Add(bvm);
                 }
@@ -109,12 +109,13 @@ namespace Biluthyrning.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,CarId,StartDate,EndDate,UserId")] Booking booking)
         {
-            if (ModelState.IsValid)
+            bool validDate = IsValidDate(booking.StartDate, booking.EndDate);
+            if (ModelState.IsValid && validDate)
             {
                 await bookingRep.AddAsync(booking);
                 return RedirectToAction(nameof(Index));
             }
-            return View(booking);
+            return RedirectToAction(nameof(Create));
         }
 
         // GET: Bookings/Edit/5
@@ -218,6 +219,10 @@ namespace Biluthyrning.Controllers
             {
                 return false;
             }
+        }
+        private bool IsValidDate(DateTime startDate, DateTime endDate)
+        {
+            return startDate < endDate && endDate > startDate;
         }
     }
 }
