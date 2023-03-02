@@ -27,21 +27,29 @@ namespace Biluthyrning.Controllers
         // GET: Users
         public async Task<IActionResult> Index(string search)
         {
+
+            ViewBag.UserType = Request.Cookies["UserType"];
+            ViewData["CurrentUserId"] = Request.Cookies["CurrentUserId"];
+
+            var users = await userRepo.GetAllAsync();
+            var userVM = new UserVM();
+            
             if (string.IsNullOrWhiteSpace(search))
             {
                 return View(await userRepo.GetAllAsync());
             }
             else
-            {
+            {                
                 return View(await userRepo.GetSearchedAsync(search));
             }
         }
 
-        
+
 
         // GET: Users/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            ViewBag.UserType = Request.Cookies["UserType"];
             if (id == null || userRepo == null)
             {
                 return NotFound();
@@ -87,6 +95,8 @@ namespace Biluthyrning.Controllers
         // GET: Users/Create
         public IActionResult Create()
         {
+            ViewBag.UserType = Request.Cookies["UserType"];
+            ViewData["CurrentUserId"] = Request.Cookies["CurrentUserId"];
             return View();
         }
 
@@ -108,6 +118,7 @@ namespace Biluthyrning.Controllers
         // GET: Users/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewBag.UserType = Request.Cookies["UserType"];
             if (id == null || userRepo == null)
             {
                 return NotFound();
@@ -158,6 +169,7 @@ namespace Biluthyrning.Controllers
         // GET: Users/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            ViewBag.UserType = Request.Cookies["UserType"];
             if (id == null || userRepo == null)
             {
                 return NotFound();

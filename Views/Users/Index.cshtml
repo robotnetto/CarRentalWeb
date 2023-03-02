@@ -2,59 +2,107 @@
 
 @{
     ViewData["Title"] = "Index";
+    var admin = "Admin";
 }
-<div class="row mt-3">
-    <div class="col">
 
-        <h1 style="color:white">Index</h1>
+@if (ViewBag.UserType == admin)
+{
 
-        <h6 class="card mt-3 bg-white bg-opacity-75" style="border-radius: 2em; padding:2em;">
-            Search by username:
-            @using (Html.BeginForm())
-            {
-                @Html.TextBox("search") <input class="btn btn-primary btn-sm rounded m-1" type="submit" value="Search" />
-            }
-        </h6>
-        <p>
-            <a class="btn btn-success w-100 rounded" asp-action="Create">Create New</a>
-        </p>
-        
+    <div class="row mt-3">
+        <div class="col">
+
+            <h1 style="color:white">Index</h1>
+
+            <h6 class="card mt-3 bg-white bg-opacity-75" style="border-radius: 2em; padding:2em;">
+                Search by username:
+                @using (Html.BeginForm())
+                {
+                    @Html.TextBox("search") <input class="btn btn-primary btn-sm rounded m-1" type="submit" value="Search" />
+                }
+            </h6>
+            <p>
+                <a class="btn btn-success w-100 rounded" asp-action="Create">Create New</a>
+            </p>
+
+        </div>
     </div>
-</div>
 
-<div class="row">
-    @foreach (var item in Model)
-    {
-        <div class="col-md-3">
-            <div class="card shadow mt-3 bg-white bg-opacity-75" style="border-radius: 2em">
-                <img class="card-img-top" style="border-radius: 2em" src="~/bubbla.jpg" alt="bubbla">
-                <div class="card-body card-header">
-                    <h4 class="card-title text-center">@item.UserName</h4>
-                </div>
-                <dl class="row card-body">
-                    <dt class="col-sm-5">
-                        <p>Username: </p>
-                        <p>@item.UserName</p>
-                    </dt>
-                    <dt class="col-sm-5">
-                        <p>Password: </p>
-                        <p>@item.Password</p>
-                    </dt>
-                </dl>
-                <div class="card-body">
-                    <a class="btn btn-primary btn-sm rounded" asp-action="Edit" asp-route-id="@item.UserId">Edit</a> |
-                    <a class="btn btn-primary btn-sm rounded" asp-action="Details" asp-route-id="@item.UserId">Details</a> |
-                    <a class="btn btn-danger btn-sm rounded" asp-action="Delete" asp-route-id="@item.UserId">
-                        Delete <i class="bi bi-trash-fill"></i>
-                    </a>
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-3">
+                <div class="card shadow mt-3 bg-white bg-opacity-75" style="border-radius: 2em">
+                    <img class="card-img-top" style="border-radius: 2em" src="~/bubbla.jpg" alt="bubbla">
+                    <div class="card-body card-header">
+                        <h4 class="card-title text-center">@item.UserName</h4>
+                    </div>
+                    <dl class="row card-body">
+                        <dt class="col-sm-5">
+                            <p>Username: </p>
+                            <p>@item.UserName</p>
+                        </dt>
+                        <dt class="col-sm-5">
+                            <p>Password: </p>
+                            <p>@item.Password</p>
+                        </dt>
+                    </dl>
+                    <div class="card-body">
+                        <a class="btn btn-primary btn-sm rounded" asp-action="Edit" asp-route-id="@item.UserId">Edit</a> |
+                        <a class="btn btn-primary btn-sm rounded" asp-action="Details" asp-route-id="@item.UserId">Details</a> |
+                        <a class="btn btn-danger btn-sm rounded" asp-action="Delete" asp-route-id="@item.UserId">
+                            Delete <i class="bi bi-trash-fill"></i>
+                        </a>
 
+                    </div>
                 </div>
             </div>
+
+        }
+
+    </div>
+}
+else if (ViewBag.UserType == "User")
+{
+    @foreach (var item in Model)
+    {
+        <div class="row mt-3 justify-content-center">
+            @if (item.UserId == Convert.ToInt32(ViewData["CurrentUserId"]))
+            {
+                <div class="card bg-white bg-opacity-75 w-50" style="border-radius:2em; padding:2em;">
+                    <div class="row">
+                        <div class="col">
+                            <h1 style="color:black">Welcome @item.UserName!</h1>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <a class="btn btn-success btn-sm rounded w-100" asp-controller="Bookings" asp-action="Create">Rent a car!</a>
+                            <a class="btn btn-primary btn-sm rounded w-100" asp-controller="Cars" asp-action="Index">View cars in inventory.</a>
+                        </div>
+                        <div class="col-6">
+                            <a class="btn btn-primary btn-sm rounded w-100" asp-action="Details" asp-route-id="@item.UserId">View current bookings.</a>
+                            <a class="btn btn-primary btn-sm rounded w-100" asp-action="Edit" asp-route-id="@item.UserId">Settings.</a>
+                        </div>
+
+                    </div>
+                </div>
+            }
+
         </div>
-
     }
-
-</div>
+}
+else
+{
+    <div class="row mt-3 justify-content-center">
+        <div class="col">
+            <h1 style="color:white">Welcome. Please create an account.</h1>
+            <p>
+                <a class="btn btn-success w-100 rounded" asp-action="Create">Create New</a>
+            </p>
+        </div>
+    </div>
+}
 @*<table class="table" style="color:white">
     <thead>
         <tr>

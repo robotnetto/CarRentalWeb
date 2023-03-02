@@ -2,7 +2,6 @@
 
 @{
     ViewData["Title"] = "Index";
-    var admin = "Admin";
 }
 
 @if(ViewBag.UserType == "Admin")
@@ -36,7 +35,7 @@ else
 <div class="row">
     @foreach (var item in Model)
     {
-        @if (ViewBag.UserType == admin || item.UserId == Convert.ToInt32(ViewData["CurrentUserId"]))
+        @if (ViewBag.UserType == "Admin" || item.UserId == Convert.ToInt32(ViewData["CurrentUserId"]))
         {
 
             <div class="col-lg-4">
