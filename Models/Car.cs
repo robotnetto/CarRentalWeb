@@ -14,7 +14,7 @@ namespace Biluthyrning.Models
         public string Color { get; set; } = "";
         [Required(ErrorMessage ="Please enter the amount")]
         [Display(Name = "Price/Day")]
-        public int Amount { get; set; }
+        public decimal Amount { get; set; }
         [Required]
         public int CarCategoryId { get; set; }
     }
