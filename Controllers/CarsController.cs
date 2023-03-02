@@ -26,6 +26,7 @@ namespace Biluthyrning.Controllers
         // GET: Cars
         public async Task<ActionResult> Index(string search)
         {
+            ViewBag.UserType = Request.Cookies["UserType"];
             ViewBag.CarsSearch = search;
             if (string.IsNullOrWhiteSpace(search))
             {
@@ -41,7 +42,8 @@ namespace Biluthyrning.Controllers
             // GET: Cars/Details/5
             public async Task<IActionResult> Details(int id)
             {
-                if (id == null || carRepo == null)
+             ViewBag.UserType = Request.Cookies["UserType"];
+            if (id == null || carRepo == null)
                 {
                     return NotFound();
                 }

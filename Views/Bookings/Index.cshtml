@@ -15,21 +15,24 @@
             @Html.TextBox("search") <input class="btn btn-primary btn-sm rounded m-1" type="submit" value="Search" />
         }
     </h6>
+    <p>
+        <a class="btn btn-success btn-sm rounded" asp-action="Create">Create New Booking</a>
+    </p>
 }
 else if(ViewBag.UserType == "User")
 {
     <h1 class="mt-2" style="color: white;"> Your Bookings</h1>
+    <p>
+        <a class="btn btn-success btn-sm rounded" asp-action="Create">Create New Booking</a>
+    </p>
 }
 else
 {
     <h1 class="mt-2" style="color: white;">Bookings</h1>
+    <h1 class="text-center" style="color:white">Login to view contents.</h1>
 
 }
 
-
-<p>
-    <a class="btn btn-success btn-sm rounded" asp-action="Create">Create New Booking</a>
-</p>
 <div class="row">
     @foreach (var item in Model)
     {

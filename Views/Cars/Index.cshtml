@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Index";
 }
+
 <div class="row m-3">
     <div class ="col">
         <div class="card shadow-lg" style="border-radius:15px; background-color: rgba(255, 254, 254, 0.800);">
@@ -13,9 +14,13 @@
                     <button class="btn btn-outline-primary rounded "  type="submit">Search</button>
                 </div>
             </form>
-            <p>
-                    <a class="btn btn-success btn-sm rounded mx-3" asp-action="Create">Add new car</a>
-            </p>
+            @if(ViewBag.UserType == "Admin")
+            {
+                <p>
+                        <a class="btn btn-success btn-sm rounded mx-3" asp-action="Create">Add new car</a>
+                </p>
+                
+            }
      </div>
    </div>
    </div>
@@ -52,11 +57,16 @@
                         </dd>
                     </dl>
                     <div class="card-body">
-                       <a class="btn btn-dark btn-sm rounded" asp-action="Edit" asp-route-id="@item.CarId">Edit</a>
-                    <a class="btn btn-info btn-sm rounded" asp-action="Details" asp-route-id="@item.CarId">Details</a>
-                    <a class="btn btn-danger btn-sm rounded" asp-action="Delete" asp-route-id="@item.CarId">
-                        Delete <i class="bi bi-trash-fill"></i>
-                    </a>
+                    @if (ViewBag.UserType == "Admin")
+                    {
+                        <a class="btn btn-dark btn-sm rounded" asp-action="Edit" asp-route-id="@item.CarId">Edit</a>
+                        <a class="btn btn-danger btn-sm rounded" asp-action="Delete" asp-route-id="@item.CarId">
+                            Delete <i class="bi bi-trash-fill"></i>
+                        </a>
+                    }
+                      
+                      <a class="btn btn-info btn-sm rounded" asp-action="Details" asp-route-id="@item.CarId">Details</a>
+                      
                     </div>
                 </div>
             </div>
