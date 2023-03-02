@@ -35,12 +35,13 @@
                 @Html.DisplayFor(model => model.Amount) kr
             </dd>
             
-        </dl>
-
-        <div>
-            <a class="btn btn-secondary mt-2 btn-sm rounded"  asp-action="Edit" asp-route-id="@Model?.CarId">Edit</a> 
-            <a class="btn btn-secondary mt-2 btn-sm rounded" asp-action="Index">Back to List</a>
-        </div>
+        </dl>           
+        @if (ViewBag.UserType == "Admin")
+        {
+             <a class="btn btn-secondary mt-2 btn-sm rounded"  asp-action="Edit" asp-route-id="@Model?.CarId">Edit</a>        
+        } 
+         <a class="btn btn-secondary mt-2 btn-sm rounded" asp-action="Index">Back to List</a>
+       
     </div>
 </div>
 
