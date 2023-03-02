@@ -30,7 +30,7 @@ namespace Biluthyrning.Controllers
 
             ViewBag.UserType = Request.Cookies["UserType"];
             ViewData["CurrentUserId"] = Request.Cookies["CurrentUserId"];
-
+            ViewBag.SearchUser = search;
             var users = await userRepo.GetAllAsync();
             var userVM = new UserVM();
             
