@@ -19,6 +19,7 @@ namespace Biluthyrning.Controllers
         // GET: CarCategoryController
         public async Task<IActionResult> Index(string search)
         {
+            ViewBag.UserType = Request.Cookies["UserType"];
             if (string.IsNullOrWhiteSpace(search))
             {
                 return View(await carCategoryRepo.GetAllAsync());
@@ -32,7 +33,7 @@ namespace Biluthyrning.Controllers
         // GET: CarCategoryController/Details/5
         public async Task<IActionResult> Details(int id)
         {
-
+            ViewBag.UserType = Request.Cookies["UserType"];
             return View( await carCategoryRepo.GetByIdAsync(id));
         }
 

@@ -15,9 +15,12 @@
                 @Html.TextBox("search") <input class="btn btn-primary btn-sm rounded m-1" type="submit" value="Search" />
             }
         </h6>
-        <p>
-            <a class="btn btn-success w-100 rounded" asp-action="Create">Create New</a>
-        </p>
+        @if (ViewBag.UserType == "Admin")
+        {
+            <p>
+                <a class="btn btn-success w-100 rounded" asp-action="Create">Create New</a>
+            </p>
+        }
     </div>
 </div>
 
@@ -38,9 +41,14 @@
                 </dd>
                 </dl>
                 <div class="card-body">
-                    <a class="btn btn-secondary btn-sm rounded" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a class="btn btn-secondary btn-sm rounded" asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a class="btn btn-danger btn-sm rounded" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        <a class="btn btn-secondary btn-sm rounded" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        @if(ViewBag.UserType == "Admin")
+                        {
+                            <p style="display:inline">
+                                <a class="btn btn-secondary btn-sm rounded" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a class="btn btn-danger btn-sm rounded" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </p>
+                        }
                 </div>
             </div>
         </div>
