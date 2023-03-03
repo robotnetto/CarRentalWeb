@@ -49,11 +49,15 @@ namespace Biluthyrning.Controllers
                 bvm.UserName = user.UserName;
                 bvm.UserId= item.UserId;
                 bvm.CarCategoryName = carCategory.Name;
+                bvm.Price = car.Amount;
+                TimeSpan span = bvm.EndDate - bvm.StartDate;
+                bvm.TotalCost = Convert.ToDecimal(span.TotalDays) * bvm.Price;
 
                 if (string.IsNullOrWhiteSpace(search) || bvm.UserName.Contains(search))
                 {
                     bookingVMList.Add(bvm);
                 }
+
     
             }
             return View(bookingVMList);

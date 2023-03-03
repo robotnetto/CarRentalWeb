@@ -11,5 +11,7 @@
         public string UserName { get; set; } = "";
         public int UserId { get; set; }
         public string CarCategoryName { get; set; } = "";
+        public decimal Price { get; set;}
+        public decimal TotalCost { get; set;}
     }
 }
