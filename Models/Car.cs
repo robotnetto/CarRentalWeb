@@ -17,5 +17,6 @@ namespace Biluthyrning.Models
         public decimal Amount { get; set; }
         [Required]
         public int CarCategoryId { get; set; }
+        public bool IsAvailable { get; set; }
     }
 }
