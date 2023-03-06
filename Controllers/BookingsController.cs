@@ -131,9 +131,6 @@ namespace Biluthyrning.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ConfirmBookingVM myBooking)
         {
-            bool validDate = IsValidDate(myBooking.StartDate, myBooking.EndDate);
-            if (ModelState.IsValid && validDate)
-            {
                 var booking = new Booking();
                 booking.StartDate = myBooking.StartDate;
                 booking.EndDate = myBooking.EndDate;
@@ -141,7 +138,6 @@ namespace Biluthyrning.Controllers
                 booking.UserId = myBooking.UserId;
                 await bookingRep.AddAsync(booking);
                 return RedirectToAction(nameof(Index));
-            }
             return RedirectToAction(nameof(Create));
         }
 
@@ -236,13 +232,19 @@ namespace Biluthyrning.Controllers
 
 
 
-        public async Task<IActionResult> SetDates()
+        public async Task<IActionResult> SetDates(bool dateValidation = true)
         {
+            ViewBag.DateValidation = dateValidation;
             ViewBag.UserNameList = new SelectList(await userRep.GetAllAsync(), "UserId", "UserName");
             return View();
         }
         public async Task<IActionResult> SelectCar(ConfirmBookingVM myBooking)
         {
+            bool validDate = IsValidDate(myBooking.StartDate, myBooking.EndDate);
+            if (!validDate)
+            {
+                return RedirectToAction("SetDates", new {dateValidation = false});
+            }
             await AvailableCars(myBooking);
             var user = await userRep.GetByIdAsync(myBooking.UserId);
             myBooking.UserName = user.UserName;
