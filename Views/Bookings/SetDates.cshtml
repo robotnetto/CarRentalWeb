@@ -20,13 +20,17 @@
                         <span asp-validation-for="StartDate" class="text-danger"></span>
                         @if (!ViewBag.DateValidation)
                         {                            
-                        <span class="text-danger">StartDate must be set to before endDate</span>
+                        <span class="text-danger">StartDate must be set to before EndDate</span>
                         }
                     </div>
                     <div class="form-group">
                         <label asp-for="EndDate" class="control-label"></label>
                         <input asp-for="EndDate" class="form-control" />
                         <span asp-validation-for="EndDate" class="text-danger"></span>
+                        @if (!ViewBag.DateValidation)
+                        {
+                            <span class="text-danger">EndDate must be set to after StartDate</span>
+                        }
                     </div>
 
                     <div class="form-group">
