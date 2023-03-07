@@ -44,3 +44,12 @@ body {
     border-style:solid;
     border-color:black;
 }
+.footstyle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 70px;
+}

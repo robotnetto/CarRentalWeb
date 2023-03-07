@@ -13,7 +13,7 @@
 </head>
 <body >
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark bg-opacity-75">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><i class="bi bi-house-fill"></i>Home</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,9 +83,11 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - Biluthyrning - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="footstyle shadow-lg text-muted bg-dark bg-opacity-75 " >
+        <div class="container ">
+            <p style="color:azure; ">
+                &copy; 2023 - Biluthyrning : <a style="color:steelblue"asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </p>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
