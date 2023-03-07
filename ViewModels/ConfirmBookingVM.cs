@@ -22,6 +22,6 @@ namespace Biluthyrning.ViewModels
         public decimal Price { get; set; }
         public decimal TotalCost { get; set; }
         public List<Car> Cars { get; set; } = new();
-        public int CarCategoryId { get; set; } 
+        
     }
 }
