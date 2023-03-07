@@ -77,7 +77,7 @@ else if (ViewBag.UserType == "User")
                     </div>
                     <div class="row">
                         <div class="col-12 text-center">
-                            <a class="btn btn-success btn-sm rounded m-3 w-50" asp-controller="Bookings" asp-action="Create">Rent a car!</a>
+                            <a class="btn btn-success btn-sm rounded m-3 w-50" asp-controller="Bookings" asp-action="SetDates">Rent a car!</a>
                             <a class="btn btn-primary btn-sm rounded m-3 w-50" asp-controller="Cars" asp-action="Index">View cars in inventory</a>
                         
                             <a class="btn btn-primary btn-sm rounded m-3 w-50" asp-action="Details" asp-route-id="@item.UserId">View current bookings</a>

@@ -132,11 +132,6 @@ namespace Biluthyrning.Controllers
         {
             ViewBag.UserType = Request.Cookies["UserType"];
 
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             var booking = await bookingRep.GetByIdAsync(id);
             if (booking == null)
             {
