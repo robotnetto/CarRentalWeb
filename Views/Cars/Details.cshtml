@@ -38,9 +38,9 @@
         </dl>           
         @if (ViewBag.UserType == "Admin")
         {
-             <a class="btn btn-secondary mt-2 btn-sm rounded"  asp-action="Edit" asp-route-id="@Model?.CarId">Edit</a>        
-        } 
-         <a class="btn btn-secondary mt-2 btn-sm rounded" asp-action="Index">Back to List</a>
+             <a class="btn btn-primary mt-2 btn-sm rounded"  asp-action="Edit" asp-route-id="@Model?.CarId">Edit</a>        
+        }
+        <a class="btn btn-primary mt-2 btn-sm rounded" asp-action="Index">Back to List</a>
        
     </div>
 </div>

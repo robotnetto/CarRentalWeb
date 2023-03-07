@@ -13,8 +13,8 @@
         <div class="row">
             <div class="col">
                 <h5>From :@Model.StartDate.ToShortDateString() to: @Model.EndDate.ToShortDateString()</h5>
-                @if (ViewBag.UserType == "Admin")
-                {
+                @if(ViewBag.UserType == "Admin")
+                {    
                     <h5>User: @Model.UserName</h5>
                 }
                 <h5>Brand: @Model.CarBrand</h5>
@@ -31,7 +31,6 @@
         </form>
         <div>
         </div>
-        <a class="btn btn-primary w-25 rounded" asp-controller="Bookings" asp-action="SetDates">Back</a>
     </div>
 </div>
 
