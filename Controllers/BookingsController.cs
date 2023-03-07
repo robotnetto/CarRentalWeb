@@ -233,9 +233,10 @@ namespace Biluthyrning.Controllers
 
         public async Task<IActionResult> SetDates(bool dateValidation = true)
         {
+            var myBooking = new ConfirmBookingVM();
             ViewBag.DateValidation = dateValidation;
             ViewBag.UserNameList = new SelectList(await userRep.GetAllAsync(), "UserId", "UserName");
-            return View();
+            return View(myBooking);
         }
         public async Task<IActionResult> SelectCar(ConfirmBookingVM myBooking)
         {
