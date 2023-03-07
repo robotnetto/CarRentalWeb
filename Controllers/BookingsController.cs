@@ -279,8 +279,8 @@ namespace Biluthyrning.Controllers
             {
                 if (car.CarCategoryId == myBooking.CarId )
                 { 
-                car.IsAvailable = true;
-            }
+                   car.IsAvailable = true;
+                }
             }
             foreach (var booking in bookings)
             {
