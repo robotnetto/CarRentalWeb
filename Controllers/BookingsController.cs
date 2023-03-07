@@ -93,17 +93,6 @@ namespace Biluthyrning.Controllers
             return View(bvm);
         }
 
-        // GET: Bookings/Create
-        public async Task<IActionResult> Create()
-        {
-            ViewBag.UserType = Request.Cookies["UserType"];
-            ViewBag.CurrentUserId = Request.Cookies["CurrentUserId"];
-
-            ViewBag.UserNameList = new SelectList(await userRep.GetAllAsync(), "UserId", "UserName");
-            //TODO: Vill vi se ngt annat än bilarnas Id i Booking/Create?
-            ViewBag.CarIdList = new SelectList(await carRep.GetAllAsync(), "CarId", "CarId");
-            return View();
-        }
 
         // POST: Bookings/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
