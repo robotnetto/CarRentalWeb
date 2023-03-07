@@ -225,10 +225,36 @@ namespace Biluthyrning.Controllers
             ViewBag.UserType = Request.Cookies["UserType"];
             ViewBag.CurrentUserId = Request.Cookies["CurrentUserId"];
 
-            ViewBag.CarCategory = new SelectList( await carCategoryRep.GetAllAsync(), "Id", "Name");
+            ViewBag.CarCategory = new SelectList(await carCategoryRep.GetAllAsync(), "Id", "Name");
 
             return View(myBooking);
         }
+        //public async Task<IActionResult> SetDates(DateTime? startDate, DateTime? endDate)
+        //{
+        //    bool validDate = true;
+        //    if (startDate != null && endDate != null)
+        //    {
+        //        validDate = IsValidDate(startDate, endDate);
+        //        if (!validDate)
+        //        {
+        //            ModelState.AddModelError("startDate", "Startdate must be before EndDate");
+        //            ModelState.AddModelError("EndDate", "Enddate must be after StartDate");
+        //            return View();
+        //        }
+        //    }
+        //    var myBooking = new ConfirmBookingVM();
+        //    ViewBag.DateValidation = validDate;
+        //    ViewBag.UserNameList = new SelectList(await userRep.GetAllAsync(), "UserId", "UserName");
+        //    ViewBag.CarCategory = new SelectList(await carCategoryRep.GetAllAsync(), "Id", "Name");
+        //    ViewBag.UserType = Request.Cookies["UserType"];
+        //    ViewBag.CurrentUserId = Request.Cookies["CurrentUserId"];
+
+        //    ViewBag.CarCategory = new SelectList(await carCategoryRep.GetAllAsync(), "Id", "Name");
+
+        //    return View(myBooking);
+
+        //}
+
         public async Task<IActionResult> SelectCar(ConfirmBookingVM myBooking)
         {
             bool validDate = IsValidDate(myBooking.StartDate, myBooking.EndDate);
@@ -305,7 +331,7 @@ namespace Biluthyrning.Controllers
                 return false;
             }
         }
-        private bool IsValidDate(DateTime startDate, DateTime endDate)
+        private bool IsValidDate(DateTime? startDate, DateTime? endDate)
         {
             return startDate < endDate && endDate > startDate;
         }

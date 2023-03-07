@@ -62,13 +62,15 @@
                     @if (ViewBag.UserType == "Admin")
                     {
                         <a class="btn btn-primary btn-sm rounded" asp-action="Edit" asp-route-id="@item.CarId">Edit</a>
+                    }
+
+                    <a class="btn btn-primary btn-sm rounded" asp-action="Details" asp-route-id="@item.CarId">Details</a>
+                    @if (ViewBag.UserType == "Admin")
+                    {
                         <a class="btn btn-danger btn-sm rounded" asp-action="Delete" asp-route-id="@item.CarId">
                             Delete <i class="bi bi-trash-fill"></i>
                         </a>
                     }
-
-                    <a class="btn btn-primary btn-sm rounded" asp-action="Details" asp-route-id="@item.CarId">Details</a>
-                      
                     </div>
                 </div>
             </div>
