@@ -7,17 +7,19 @@
 <div class="row m-3">
     <div class ="col">
         <div class="card shadow-lg mt-3 px-3" style="border-radius:2em; background-color: rgba(255, 254, 254, 0.800);">
-            <h1 style=" text-align:center; padding-top: 10px;"> Cars</h1>
-            <form method="get" action="@Url.Action("Index")">
-                <div class="input-group">
-                    <input type="text" name="search" class="form-control rounded m-1 shadow-lg p-3  bg-white rounded " placeholder="Search by brand or model" value="@ViewBag.CarsSearch" aria-label="Search" />
-                    <button class="btn btn-outline-primary rounded "  type="submit">Search</button>
-                </div>
-            </form>
+            <h1 class="mt-2" style=" text-align:center; padding-top: 10px;"> Cars</h1>
+            <h6 class="card mt-3 bg-white bg-opacity-75" style="border-radius: 2em; padding:2em;">
+                <form method="get" action="@Url.Action("Index")">
+                    <div class="input-group">
+                        <input type="text" name="search" class="form-control rounded m-1" placeholder="Search by brand or model" value="@ViewBag.CarsSearch" aria-label="Search" />
+                        <button class="btn btn-outline-primary rounded" type="submit">Search</button>
+                    </div>
+                </form>
+            </h6>
             @if(ViewBag.UserType == "Admin")
             {
                 <p>
-                        <a class="btn btn-success btn-sm rounded mx-3" asp-action="Create">Add new car</a>
+                    <a class="btn btn-success btn-sm rounded" asp-action="Create">Cretate new car</a>
                 </p>
                 
             }

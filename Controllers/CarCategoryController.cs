@@ -20,6 +20,7 @@ namespace Biluthyrning.Controllers
         public async Task<IActionResult> Index(string search)
         {
             ViewBag.UserType = Request.Cookies["UserType"];
+            ViewBag.SearchedCategory = search;
             if (string.IsNullOrWhiteSpace(search))
             {
                 return View(await carCategoryRepo.GetAllAsync());
