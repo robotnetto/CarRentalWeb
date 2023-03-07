@@ -238,7 +238,7 @@ namespace Biluthyrning.Controllers
             ViewBag.UserNameList = new SelectList(await userRep.GetAllAsync(), "UserId", "UserName");
             ViewBag.UserType = Request.Cookies["UserType"];
             ViewBag.CurrentUserId = Request.Cookies["CurrentUserId"];
-            return View();
+            return View(myBooking);
         }
         public async Task<IActionResult> SelectCar(ConfirmBookingVM myBooking)
         {
