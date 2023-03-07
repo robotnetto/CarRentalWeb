@@ -233,6 +233,7 @@ namespace Biluthyrning.Controllers
 
         public async Task<IActionResult> SetDates(bool dateValidation = true)
         {
+            var myBooking = new ConfirmBookingVM();
             ViewBag.DateValidation = dateValidation;
             ViewBag.UserNameList = new SelectList(await userRep.GetAllAsync(), "UserId", "UserName");
             ViewBag.UserType = Request.Cookies["UserType"];
