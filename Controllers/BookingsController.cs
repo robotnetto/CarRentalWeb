@@ -229,8 +229,6 @@ namespace Biluthyrning.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
-
         public async Task<IActionResult> SetDates(bool dateValidation = true)
         {
             var myBooking = new ConfirmBookingVM();
@@ -238,6 +236,9 @@ namespace Biluthyrning.Controllers
             ViewBag.UserNameList = new SelectList(await userRep.GetAllAsync(), "UserId", "UserName");
             ViewBag.UserType = Request.Cookies["UserType"];
             ViewBag.CurrentUserId = Request.Cookies["CurrentUserId"];
+
+            ViewBag.CarCategory = new SelectList( await carCategoryRep.GetAllAsync(), "Id", "Name");
+
             return View(myBooking);
         }
         public async Task<IActionResult> SelectCar(ConfirmBookingVM myBooking)
@@ -257,7 +258,6 @@ namespace Biluthyrning.Controllers
         public async Task<IActionResult> ConfirmBooking(ConfirmBookingVM myBooking, string submit)
         {
             ViewBag.UserType = Request.Cookies["UserType"];
-
             myBooking.CarId = Convert.ToInt32(submit);
             var user = await userRep.GetByIdAsync(myBooking.UserId);
             var car = await carRep.GetByIdAsync(myBooking.CarId);
@@ -277,7 +277,10 @@ namespace Biluthyrning.Controllers
             var cars = await carRep.GetAllAsync();
             foreach (var car in cars.ToList())
             {
+                if (car.CarCategoryId == myBooking.CarId )
+                { 
                 car.IsAvailable = true;
+            }
             }
             foreach (var booking in bookings)
             {
