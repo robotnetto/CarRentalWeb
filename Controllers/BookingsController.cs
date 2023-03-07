@@ -235,6 +235,8 @@ namespace Biluthyrning.Controllers
         {
             ViewBag.DateValidation = dateValidation;
             ViewBag.UserNameList = new SelectList(await userRep.GetAllAsync(), "UserId", "UserName");
+            ViewBag.UserType = Request.Cookies["UserType"];
+            ViewBag.CurrentUserId = Request.Cookies["CurrentUserId"];
             return View();
         }
         public async Task<IActionResult> SelectCar(ConfirmBookingVM myBooking)
@@ -253,6 +255,8 @@ namespace Biluthyrning.Controllers
 
         public async Task<IActionResult> ConfirmBooking(ConfirmBookingVM myBooking, string submit)
         {
+            ViewBag.UserType = Request.Cookies["UserType"];
+
             myBooking.CarId = Convert.ToInt32(submit);
             var user = await userRep.GetByIdAsync(myBooking.UserId);
             var car = await carRep.GetByIdAsync(myBooking.CarId);
@@ -275,7 +279,7 @@ namespace Biluthyrning.Controllers
             }
             foreach (var booking in bookings)
             {
-                if (myBooking.StartDate <= booking.EndDate && myBooking.StartDate >= booking.StartDate || myBooking.EndDate >= booking.StartDate && myBooking.EndDate <= booking.EndDate)
+                if (myBooking.StartDate >= booking.EndDate && myBooking.StartDate >= booking.StartDate || myBooking.EndDate >= booking.StartDate && myBooking.EndDate <= booking.EndDate)
                 {
                     foreach (var car in cars)
                     {
