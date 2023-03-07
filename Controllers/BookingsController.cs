@@ -9,6 +9,7 @@ using Biluthyrning.Data;
 using Biluthyrning.Models;
 using Biluthyrning.ViewModels;
 using Azure.Identity;
+using Microsoft.CodeAnalysis.Elfie.Extensions;
 
 namespace Biluthyrning.Controllers
 {
@@ -47,18 +48,22 @@ namespace Biluthyrning.Controllers
                 bvm.StartDate = item.StartDate;
                 bvm.EndDate = item.EndDate;
                 bvm.UserName = user.UserName;
-                bvm.UserId= item.UserId;
+                bvm.UserId = item.UserId;
                 bvm.CarCategoryName = carCategory.Name;
+                bvm.Price = car.Amount;
+                TimeSpan span = bvm.EndDate - bvm.StartDate;
+                bvm.TotalCost = Convert.ToDecimal(span.TotalDays) * bvm.Price;
 
                 if (string.IsNullOrWhiteSpace(search) || bvm.UserName.Contains(search))
                 {
                     bookingVMList.Add(bvm);
                 }
-    
+
+
             }
             return View(bookingVMList);
         }
-        
+
         // GET: Bookings/Details/5
         public async Task<IActionResult> Details(int id)
         {
@@ -67,7 +72,7 @@ namespace Biluthyrning.Controllers
             {
                 return NotFound();
             }
-            
+
             var bvm = new BookingViewModel();
             var booking = await bookingRep.GetByIdAsync(id);
             var car = await carRep.GetByIdAsync(booking.CarId);
@@ -105,17 +110,34 @@ namespace Biluthyrning.Controllers
         // POST: Bookings/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("Id,CarId,StartDate,EndDate,UserId")] Booking booking)
+        //{
+        //    bool validDate = IsValidDate(booking.StartDate, booking.EndDate);
+        //    if (ModelState.IsValid && validDate)
+        //    {
+        //        await bookingRep.AddAsync(booking);
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return RedirectToAction(nameof(Create));
+        //}
+
+
+        // POST: Bookings/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CarId,StartDate,EndDate,UserId")] Booking booking)
+        public async Task<IActionResult> Create(ConfirmBookingVM myBooking)
         {
-            bool validDate = IsValidDate(booking.StartDate, booking.EndDate);
-            if (ModelState.IsValid && validDate)
-            {
-                await bookingRep.AddAsync(booking);
-                return RedirectToAction(nameof(Index));
-            }
-            return RedirectToAction(nameof(Create));
+            var booking = new Booking();
+            booking.StartDate = myBooking.StartDate;
+            booking.EndDate = myBooking.EndDate;
+            booking.CarId = myBooking.CarId;
+            booking.UserId = myBooking.UserId;
+            await bookingRep.AddAsync(booking);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Bookings/Edit/5
@@ -203,15 +225,77 @@ namespace Biluthyrning.Controllers
             {
                 return Problem("Booking does not exist.");
             }
-            
+
             return RedirectToAction(nameof(Index));
+        }
+
+
+
+        public async Task<IActionResult> SetDates(bool dateValidation = true)
+        {
+            var myBooking = new ConfirmBookingVM();
+            ViewBag.DateValidation = dateValidation;
+            ViewBag.UserNameList = new SelectList(await userRep.GetAllAsync(), "UserId", "UserName");
+            return View(myBooking);
+        }
+        public async Task<IActionResult> SelectCar(ConfirmBookingVM myBooking)
+        {
+            bool validDate = IsValidDate(myBooking.StartDate, myBooking.EndDate);
+            if (!validDate)
+            {
+                return RedirectToAction("SetDates", new { dateValidation = false });
+            }
+            await AvailableCars(myBooking);
+            var user = await userRep.GetByIdAsync(myBooking.UserId);
+            myBooking.UserName = user.UserName;
+            ViewBag.AvailableCars = new SelectList(myBooking.Cars, "CarId", "Model");
+            return View(myBooking);
+        }
+
+        public async Task<IActionResult> ConfirmBooking(ConfirmBookingVM myBooking, string submit)
+        {
+            myBooking.CarId = Convert.ToInt32(submit);
+            var user = await userRep.GetByIdAsync(myBooking.UserId);
+            var car = await carRep.GetByIdAsync(myBooking.CarId);
+
+            myBooking.UserName = user.UserName;
+            myBooking.CarBrand = car.Brand;
+            myBooking.CarModel = car.Model;
+            myBooking.Price = car.Amount;
+            myBooking.TotalCost = myBooking.Price * (myBooking.EndDate - myBooking.StartDate).Days;
+            return View(myBooking);
+        }
+
+        private async Task<List<Car>> AvailableCars(ConfirmBookingVM myBooking)
+        {
+            var bookings = await bookingRep.GetAllAsync();
+            var cars = await carRep.GetAllAsync();
+            foreach (var car in cars.ToList())
+            {
+                car.IsAvailable = true;
+            }
+            foreach (var booking in bookings)
+            {
+                if (myBooking.StartDate <= booking.EndDate && myBooking.StartDate >= booking.StartDate || myBooking.EndDate >= booking.StartDate && myBooking.EndDate <= booking.EndDate)
+                {
+                    foreach (var car in cars)
+                    {
+                        if (car.CarId == booking.CarId)
+                        {
+                            car.IsAvailable = false;
+                        }
+                    }
+                }
+            }
+            myBooking.Cars = cars.ToList();
+            return myBooking.Cars;
         }
 
         private bool BookingExists(int id)
         {
             var booking = bookingRep.GetByIdAsync(id);
 
-            if(booking != null)
+            if (booking != null)
             {
                 return true;
             }
