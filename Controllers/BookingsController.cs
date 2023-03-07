@@ -58,8 +58,6 @@ namespace Biluthyrning.Controllers
                 {
                     bookingVMList.Add(bvm);
                 }
-
-
             }
             return View(bookingVMList);
         }
@@ -234,6 +232,7 @@ namespace Biluthyrning.Controllers
             var myBooking = new ConfirmBookingVM();
             ViewBag.DateValidation = dateValidation;
             ViewBag.UserNameList = new SelectList(await userRep.GetAllAsync(), "UserId", "UserName");
+            ViewBag.CarCategory = new SelectList(await carCategoryRep.GetAllAsync(), "Id", "Name");
             ViewBag.UserType = Request.Cookies["UserType"];
             ViewBag.CurrentUserId = Request.Cookies["CurrentUserId"];
 
@@ -277,9 +276,9 @@ namespace Biluthyrning.Controllers
             var cars = await carRep.GetAllAsync();
             foreach (var car in cars.ToList())
             {
-                if (car.CarCategoryId == myBooking.CarId )
-                { 
-                   car.IsAvailable = true;
+                if (myBooking.CarCategoryId == car.CarCategoryId)
+                {
+                    car.IsAvailable = true;
                 }
             }
             foreach (var booking in bookings)
@@ -288,12 +287,15 @@ namespace Biluthyrning.Controllers
                     || myBooking.EndDate >= booking.StartDate && myBooking.EndDate <= booking.EndDate
                     || myBooking.StartDate <= booking.StartDate && myBooking.EndDate >= booking.EndDate)
                 {
+
                     foreach (var car in cars)
                     {
+
                         if (car.CarId == booking.CarId)
                         {
                             car.IsAvailable = false;
                         }
+
                     }
                 }
             }

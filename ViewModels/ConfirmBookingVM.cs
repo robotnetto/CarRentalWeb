@@ -18,6 +18,7 @@ namespace Biluthyrning.ViewModels
         [Required]
         public int UserId { get; set; }
         public string CarCategoryName { get; set; } = "";
+        public int CarCategoryId { get; set; }
         public decimal Price { get; set; }
         public decimal TotalCost { get; set; }
         public List<Car> Cars { get; set; } = new();
