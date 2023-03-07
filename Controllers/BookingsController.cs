@@ -281,7 +281,9 @@ namespace Biluthyrning.Controllers
             }
             foreach (var booking in bookings)
             {
-                if (myBooking.StartDate >= booking.EndDate && myBooking.StartDate >= booking.StartDate || myBooking.EndDate >= booking.StartDate && myBooking.EndDate <= booking.EndDate)
+                if (myBooking.StartDate <= booking.EndDate && myBooking.StartDate >= booking.StartDate
+                    || myBooking.EndDate >= booking.StartDate && myBooking.EndDate <= booking.EndDate
+                    || myBooking.StartDate <= booking.StartDate && myBooking.EndDate >= booking.EndDate)
                 {
                     foreach (var car in cars)
                     {
