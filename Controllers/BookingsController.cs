@@ -260,7 +260,8 @@ namespace Biluthyrning.Controllers
             myBooking.CarBrand = car.Brand;
             myBooking.CarModel = car.Model;
             myBooking.Price = car.Amount;
-            myBooking.TotalCost = myBooking.Price * (myBooking.EndDate - myBooking.StartDate).Days;
+            TimeSpan span = myBooking.EndDate - myBooking.StartDate;
+            myBooking.TotalCost = Convert.ToDecimal(span.TotalDays) * myBooking.Price;
             return View(myBooking);
         }
 
