@@ -68,21 +68,20 @@ else if (ViewBag.UserType == "User")
         <div class="row mt-3 justify-content-center">
             @if (item.UserId == Convert.ToInt32(ViewData["CurrentUserId"]))
             {
-                <div class="card bg-white bg-opacity-75 w-50" style="border-radius:2em; padding:2em;">
+                <div class="card bg-white bg-opacity-75 w-75" style="border-radius:2em; padding:2em;">
                     <div class="row">
                         <div class="col">
-                            <h1>Welcome @item.UserName!</h1>
+                            <h1 class="text-center">Welcome @item.UserName!</h1>
 
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-6">
-                            <a class="btn btn-success btn-sm rounded w-100" asp-controller="Bookings" asp-action="Create">Rent a car!</a>
-                            <a class="btn btn-primary btn-sm rounded w-100" asp-controller="Cars" asp-action="Index">View cars in inventory.</a>
-                        </div>
-                        <div class="col-6">
-                            <a class="btn btn-primary btn-sm rounded w-100" asp-action="Details" asp-route-id="@item.UserId">View current bookings.</a>
-                            <a class="btn btn-primary btn-sm rounded w-100" asp-action="Edit" asp-route-id="@item.UserId">Settings.</a>
+                        <div class="col-12 text-center">
+                            <a class="btn btn-success btn-sm rounded m-3 w-50" asp-controller="Bookings" asp-action="Create">Rent a car!</a>
+                            <a class="btn btn-primary btn-sm rounded m-3 w-50" asp-controller="Cars" asp-action="Index">View cars in inventory</a>
+                        
+                            <a class="btn btn-primary btn-sm rounded m-3 w-50" asp-action="Details" asp-route-id="@item.UserId">View current bookings</a>
+                            <a class="btn btn-primary btn-sm rounded m-3 w-50" asp-action="Edit" asp-route-id="@item.UserId">Settings</a>
                         </div>
 
                     </div>
