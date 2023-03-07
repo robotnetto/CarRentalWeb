@@ -1,0 +1,42 @@
+﻿@model Biluthyrning.ViewModels.ConfirmBookingVM
+@{
+}
+
+<div class="row justify-content-center">
+    <div class="card mt-3 w-50 bg-white bg-opacity-75" style="padding:2em; border-radius:2em; ">
+
+
+        <h1>Step 3</h1>
+
+        <h4>Confirm choices</h4>
+        <hr />
+        <div class="row">
+            <div class="col">
+                <h5>From :@Model.StartDate.ToShortDateString() to: @Model.EndDate.ToShortDateString()</h5>
+                @if(ViewBag.UserType == "Admin")
+                {    
+                    <h5>User: @Model.UserName</h5>
+                }
+                <h5>Brand: @Model.CarBrand</h5>
+                <h5>Model: @Model.CarModel</h5>
+                <h5>Total cost: @Model.TotalCost kr</h5>
+            </div>
+        </div>
+        <form asp-action="Create">
+            <input type="hidden" asp-for="UserId" value="@Model.UserId" />
+            <input type="hidden" asp-for="CarId" value="@Model.CarId" />
+            <input type="hidden" asp-for="StartDate" value="@Model.StartDate" />
+            <input type="hidden" asp-for="EndDate" value="@Model.EndDate" />
+            <button class="btn btn-success btn-sm rounded" type="submit">Confirm booking</button>
+        </form>
+        <div>
+            <a class="btn btn-primary btn-sm rounded mt-2" asp-action="SelectCar">Back</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
