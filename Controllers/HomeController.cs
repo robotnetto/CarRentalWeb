@@ -93,6 +93,11 @@ namespace Biluthyrning.Controllers
             return RedirectToAction("Index");
         }
 
+        public IActionResult Contact()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();
