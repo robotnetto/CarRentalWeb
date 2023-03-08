@@ -4,6 +4,7 @@ using Biluthyrning.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Biluthyrning.Migrations
 {
     [DbContext(typeof(CarRentalContext))]
-    partial class CarRentalContextModelSnapshot : ModelSnapshot
+    [Migration("20230308142422_added bookings list to car model")]
+    partial class addedbookingslisttocarmodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,8 +48,6 @@ namespace Biluthyrning.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CarId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Bookings");
                 });
@@ -138,12 +139,6 @@ namespace Biluthyrning.Migrations
                         .HasForeignKey("CarId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Biluthyrning.Models.User", null)
-                        .WithMany("Bookings")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Biluthyrning.Models.Car", b =>
@@ -163,11 +158,6 @@ namespace Biluthyrning.Migrations
             modelBuilder.Entity("Biluthyrning.Models.CarCategory", b =>
                 {
                     b.Navigation("Cars");
-                });
-
-            modelBuilder.Entity("Biluthyrning.Models.User", b =>
-                {
-                    b.Navigation("Bookings");
                 });
 #pragma warning restore 612, 618
         }

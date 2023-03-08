@@ -197,14 +197,6 @@ namespace Biluthyrning.Controllers
             if (user != null)
             {
                 await userRepo.DeleteAsync(id);
-                var bookings = await bookingRepo.GetAllAsync();
-                foreach (var booking in bookings) 
-                {
-                    if(booking.UserId == id)
-                    {
-                        await bookingRepo.DeleteAsync(booking.Id);
-                    }
-                }
             }
 
             return RedirectToAction(nameof(Index));

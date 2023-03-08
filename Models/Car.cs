@@ -18,5 +18,6 @@ namespace Biluthyrning.Models
         [Required]
         public int CarCategoryId { get; set; }
         public bool IsAvailable { get; set; }
+        public List<Booking> Bookings { get; set; } = new List<Booking>();
     }
 }

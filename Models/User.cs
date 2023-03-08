@@ -10,6 +10,7 @@ namespace Biluthyrning.Models
         [Required, MinLength(8), MaxLength(20)]
         public string Password { get; set; } = "";
         public bool IsAdmin { get; set; } = false;
+        public List<Booking> Bookings { get; set; } = new List<Booking>();
 
     }
 }

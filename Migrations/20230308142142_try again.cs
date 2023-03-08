@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Biluthyrning.Migrations
 {
     /// <inheritdoc />
-    public partial class newbooking : Migration
+    public partial class tryagain : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

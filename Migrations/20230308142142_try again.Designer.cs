@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Biluthyrning.Migrations
 {
     [DbContext(typeof(CarRentalContext))]
-    [Migration("20230307081730_newbooking")]
-    partial class newbooking
+    [Migration("20230308142142_try again")]
+    partial class tryagain
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
