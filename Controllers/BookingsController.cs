@@ -52,7 +52,7 @@ namespace Biluthyrning.Controllers
                 bvm.CarCategoryName = carCategory.Name;
                 bvm.Price = car.Amount;
                 TimeSpan span = bvm.EndDate - bvm.StartDate;
-                bvm.TotalCost = Convert.ToDecimal(span.TotalDays) * bvm.Price;
+                bvm.TotalCost = Math.Round(Convert.ToDecimal(span.TotalDays) * bvm.Price, 2);
 
                 if (string.IsNullOrWhiteSpace(search) || bvm.UserName.Contains(search))
                 {
@@ -276,7 +276,7 @@ namespace Biluthyrning.Controllers
             myBooking.CarModel = car.Model;
             myBooking.Price = car.Amount;
             TimeSpan span = myBooking.EndDate - myBooking.StartDate;
-            myBooking.TotalCost = Convert.ToDecimal(span.TotalDays) * myBooking.Price;
+            myBooking.TotalCost = Math.Round(Convert.ToDecimal(span.TotalDays) * myBooking.Price, 2);
             return View(myBooking);
         }
 
