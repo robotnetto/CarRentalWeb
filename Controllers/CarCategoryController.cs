@@ -1,6 +1,5 @@
 ﻿using Biluthyrning.Data;
 using Biluthyrning.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Biluthyrning.Controllers
