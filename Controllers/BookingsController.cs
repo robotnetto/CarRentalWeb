@@ -56,7 +56,8 @@ namespace Biluthyrning.Controllers
 
                 if (string.IsNullOrWhiteSpace(search) || bvm.UserName.Contains(search))
                 {
-                    if(startDateSearch == null && endDateSearch == null || startDateSearch <= bvm.StartDate && endDateSearch > bvm.StartDate)
+                    if(startDateSearch == null && endDateSearch == null || startDateSearch <= bvm.StartDate && endDateSearch > bvm.StartDate 
+                        || startDateSearch <= bvm.StartDate && endDateSearch == null)
                     bookingVMList.Add(bvm);
                 }
             }
