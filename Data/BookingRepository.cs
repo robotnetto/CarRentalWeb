@@ -42,6 +42,5 @@ namespace Biluthyrning.Data
             context.Bookings.Update(booking);
             await context.SaveChangesAsync();
         }
-       
     }
 }

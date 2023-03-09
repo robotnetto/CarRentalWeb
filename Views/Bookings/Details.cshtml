@@ -6,13 +6,11 @@
 
 <div class="row justify-content-center">
     <div class="card shadow bg-white bg-opacity-75 mt-3 w-50" style="padding:2em; border-radius:2em;">
-
         <h1>Details</h1>
         <h4>Booking</h4>
         <hr />
         <dl class="row">
             <dt class="col-sm-5">
-
                 @Html.DisplayNameFor(model => model.CarId)
             </dt>
             <dd class="col-sm-7">
@@ -57,9 +55,7 @@
                     @Html.DisplayFor(model => model.UserName)
                 </dd>
             }
-
         </dl>
-
         <div>
             <a class="btn btn-primary mt-2 btn-sm rounded" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
             <a class="btn btn-primary mt-2 btn-sm rounded" asp-action="Index">Back to List</a>

@@ -1,5 +1,4 @@
 ﻿using Biluthyrning.Models;
-using System.Runtime.InteropServices;
 
 namespace Biluthyrning.Data
 {

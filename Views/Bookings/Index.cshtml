@@ -19,7 +19,6 @@
                     </form>
                     <form method="get" action="@Url.Action("Index")">
                         <lable>search for bookings starting between: </lable>
-
                         <div class="input-group">
                             <input type="date" name="startDateSearch" class="form-control rounded m-1" placeholder="Search by date" value="@ViewBag.SearchUser" aria-label="Search" />
                             <input type="date" name="endDateSearch" class="form-control rounded m-1" placeholder="Search by date" value="@ViewBag.SearchUser" aria-label="Search" />
@@ -36,7 +35,6 @@
 }
 else if (ViewBag.UserType == "User")
 {
-
     <div class="card shadow-lg mt-3 px-3" style="border-radius:2em; background-color: rgba(255, 254, 254, 0.800);">
         <h1 class="mt-2" style=" text-align:center; padding-top: 10px;">Your Bookings</h1>
         <p>
@@ -48,7 +46,6 @@ else
 {
     <h1 class="mt-2" style="color: white;">Bookings</h1>
     <h1 class="text-center" style="color:white">Login to view contents.</h1>
-
 }
 
 <div class="row">
@@ -56,14 +53,12 @@ else
     {
         @if (ViewBag.UserType == "Admin" || item.UserId == Convert.ToInt32(ViewData["CurrentUserId"]))
         {
-
             <div class="col-lg-4">
                 <div class="card m-3 shadow bg-white bg-opacity-75" style="border-radius: 2em;">
                     <img class="card-img-top" style="border-radius: 2em" src="~/bubbla.jpg" alt="bubbla">
                     <div class="card-body card-header">
                         <h4 class="card-title text-center">@item.CarModel</h4>
                     </div>
-
                     <dl class="row card-body">
                         <dt class="col-sm-5">
                             @Html.DisplayNameFor(model => item.CarId)
@@ -102,7 +97,6 @@ else
                             @Html.DisplayFor(model => item.TotalCost)
                         </dd>
                     </dl>
-
                     <div class="card-body">
                         <a class="btn btn-primary btn-sm rounded" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                         <a class="btn btn-primary btn-sm rounded" asp-action="Details" asp-route-id="@item.Id">Details</a>
@@ -114,64 +108,3 @@ else
     }
 
 </div>
-
-@*<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model[0].CarId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model[0].CarModel)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model[0].CarBrand)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model[0].CarCategoryName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model[0].StartDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model[0].EndDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model[0].UserName)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CarId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CarModel)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CarBrand)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CarCategoryName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table> *@

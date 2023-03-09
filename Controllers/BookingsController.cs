@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Biluthyrning.Data;
 using Biluthyrning.Models;
 using Biluthyrning.ViewModels;
-using Azure.Identity;
-using Microsoft.CodeAnalysis.Elfie.Extensions;
 
 namespace Biluthyrning.Controllers
 {
@@ -105,22 +99,6 @@ namespace Biluthyrning.Controllers
 
             return View(bvm);
         }
-        // POST: Bookings/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("Id,CarId,StartDate,EndDate,UserId")] Booking booking)
-        //{
-        //    bool validDate = IsValidDate(booking.StartDate, booking.EndDate);
-        //    if (ModelState.IsValid && validDate)
-        //    {
-        //        await bookingRep.AddAsync(booking);
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return RedirectToAction(nameof(Create));
-        //}
-
 
         // POST: Bookings/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -167,7 +145,6 @@ namespace Biluthyrning.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SaveEdit(int id, [Bind("Id,CarId,StartDate,EndDate,UserId")] ConfirmBookingVM myBooking)
         {
-
             var booking = await bookingRep.GetByIdAsync(myBooking.Id);
 
             if (ModelState.IsValid)
@@ -200,7 +177,6 @@ namespace Biluthyrning.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             ViewBag.UserType = Request.Cookies["UserType"];
-            //TODO: vill vi visa carmodel, carBrand och UserName på Delete sidan också?
             if (id == null)
             {
                 return NotFound();
@@ -211,7 +187,6 @@ namespace Biluthyrning.Controllers
             {
                 return NotFound();
             }
-
             return View(booking);
         }
 
@@ -229,7 +204,6 @@ namespace Biluthyrning.Controllers
             {
                 return Problem("Booking does not exist.");
             }
-
             return RedirectToAction(nameof(Index));
         }
 
@@ -241,36 +215,11 @@ namespace Biluthyrning.Controllers
             ViewBag.CarCategory = new SelectList(await carCategoryRep.GetAllAsync(), "Id", "Name");
             ViewBag.UserType = Request.Cookies["UserType"];
             ViewBag.CurrentUserId = Request.Cookies["CurrentUserId"];
-
             ViewBag.CarCategory = new SelectList(await carCategoryRep.GetAllAsync(), "Id", "Name");
 
             return View(myBooking);
         }
-        //public async Task<IActionResult> SetDates(DateTime? startDate, DateTime? endDate)
-        //{
-        //    bool validDate = true;
-        //    if (startDate != null && endDate != null)
-        //    {
-        //        validDate = IsValidDate(startDate, endDate);
-        //        if (!validDate)
-        //        {
-        //            ModelState.AddModelError("startDate", "Startdate must be before EndDate");
-        //            ModelState.AddModelError("EndDate", "Enddate must be after StartDate");
-        //            return View();
-        //        }
-        //    }
-        //    var myBooking = new ConfirmBookingVM();
-        //    ViewBag.DateValidation = validDate;
-        //    ViewBag.UserNameList = new SelectList(await userRep.GetAllAsync(), "UserId", "UserName");
-        //    ViewBag.CarCategory = new SelectList(await carCategoryRep.GetAllAsync(), "Id", "Name");
-        //    ViewBag.UserType = Request.Cookies["UserType"];
-        //    ViewBag.CurrentUserId = Request.Cookies["CurrentUserId"];
-
-        //    ViewBag.CarCategory = new SelectList(await carCategoryRep.GetAllAsync(), "Id", "Name");
-
-        //    return View(myBooking);
-
-        //}
+    
         public async Task<IActionResult> SelectCar(ConfirmBookingVM myBooking)
         {
             bool validDate = IsValidDate(myBooking.StartDate, myBooking.EndDate);
@@ -342,30 +291,24 @@ namespace Biluthyrning.Controllers
                             {
                                 car.IsAvailable = false;
                             }
-
                         }
                     }
-
                 }
             }
             else
             {
                 foreach (var booking in bookings.Where(s => s.Id != myBooking.Id))
                 {
-
                     if (myBooking.StartDate <= booking.EndDate && myBooking.StartDate >= booking.StartDate
                         || myBooking.EndDate >= booking.StartDate && myBooking.EndDate <= booking.EndDate
                         || myBooking.StartDate <= booking.StartDate && myBooking.EndDate >= booking.EndDate)
                     {
-
                         foreach (var car in cars)
                         {
-
                             if (car.CarId == booking.CarId)
                             {
                                 car.IsAvailable = false;
                             }
-
                         }
                     }
                 }
@@ -377,7 +320,6 @@ namespace Biluthyrning.Controllers
         private bool BookingExists(int id)
         {
             var booking = bookingRep.GetByIdAsync(id);
-
             if (booking != null)
             {
                 return true;
@@ -405,11 +347,9 @@ namespace Biluthyrning.Controllers
             TimeSpan span = myBooking.EndDate - myBooking.StartDate;
             myBooking.TotalCost = Math.Round(Convert.ToDecimal(span.TotalDays) * myBooking.Price, 2);
             return View(myBooking);
-
         }
         public async Task<IActionResult> EditCar(int id, ConfirmBookingVM myBooking)
         {
-
             if (!ModelState.IsValid)
             {
                 ViewBag.UserType = Request.Cookies["UserType"];
@@ -430,6 +370,5 @@ namespace Biluthyrning.Controllers
             await AvailableCars(myBooking);
             return View(myBooking);
         }
-
     }
 }
