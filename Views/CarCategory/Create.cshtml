@@ -6,9 +6,7 @@
 
 <div class="row justify-content-center">
     <div class="card mt-3 w-50 bg-white bg-opacity-75" style="padding:2em; border-radius:2em; ">
-
         <h1>Create</h1>
-
         <h4>Car category</h4>
         <hr />
         <div class="row">
@@ -29,36 +27,8 @@
         <div>
             <a class="btn btn-primary btn-sm rounded" asp-action="Index">Back to List</a>
         </div>
-
-    </div>
-
-</div>
-
-
-
-@*<h1>Create</h1>
-
-<h4>CarCategory</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>*@
 
 @section Scripts {
     @{
