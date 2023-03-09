@@ -20,12 +20,12 @@ namespace Biluthyrning.Controllers
 
         public IActionResult Index()
         {
-            ViewData["UserType"] = Request.Cookies["UserType"];
+            ViewBag.UserType = Request.Cookies["UserType"];
             if (ViewData["UserType"] == null)
             {
                 return View();
             }
-            else if (ViewData["UserType"] == "Admin")
+            else if (ViewBag.UserType == "Admin")
             {
                 return RedirectToAction("IndexAdmin");
             }
