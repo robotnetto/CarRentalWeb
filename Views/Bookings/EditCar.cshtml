@@ -1,0 +1,63 @@
+﻿@model Biluthyrning.ViewModels.ConfirmBookingVM
+
+<div class="row justify-content-center">
+    <div class="card mt-3 w-50 bg-white bg-opacity-75" style="padding:2em; border-radius:2em; ">
+
+
+        <h1>Step 2</h1>
+
+        <h4>Select a car</h4>
+        <hr />
+        <div class="row">
+            <div class="col">
+                <form asp-action="ConfirmEdit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="UserId" value="@Model.UserId" />
+                    <input type="hidden" asp-for="StartDate" value="@Model.StartDate" />
+                    <input type="hidden" asp-for="EndDate" value="@Model.EndDate" />
+                    <input type="hidden" asp-for="Id" value="@Model.Id" />
+                    <div class="row">
+                        <div class="col">
+                            <h5>From :@Model.StartDate.ToShortDateString() to: @Model.EndDate.ToShortDateString()</h5>
+                            <div class="row">
+                                @if (Model.Cars.Where(x => x.IsAvailable == true).Count() == 0)
+                                {
+                                    <p>Sorry. No cars available.</p>
+                                }
+                                else
+                                {
+                                    @foreach (var item in Model.Cars)
+                                    {
+                                        @if (item.IsAvailable == true)
+                                        {
+                                            <div class="col-3 card mt-3 w-50 bg-white bg-opacity-75" style="padding:2em; border-radius:2em; ">
+                                                <button class="btn" name="submit" value="@item.CarId.ToString()" type="submit">
+                                                    <img class="card-img-top" style="border-radius: 2em" src="~/bubbla.jpg" alt="bubbla">
+                                                    <h6>@item.Brand</h6>
+                                                    <h6>@item.Model</h6>
+                                                    <h6>@item.Amount kr/dygn</h6>
+                                                </button>
+                                            </div>
+
+                                        }
+                                    }
+
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div>
+            <a class="btn btn-primary btn-sm rounded mt-2" asp-action="SetDates">Back</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

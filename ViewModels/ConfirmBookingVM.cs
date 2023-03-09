@@ -6,6 +6,7 @@ namespace Biluthyrning.ViewModels
 {
     public class ConfirmBookingVM
     {
+        public int Id { get; set; } 
         [Required]
         public int CarId { get; set; }
         public string CarModel { get; set; } = "";
@@ -22,5 +23,6 @@ namespace Biluthyrning.ViewModels
         public decimal Price { get; set; }
         public decimal TotalCost { get; set; }
         public List<Car> Cars { get; set; } = new();
+
     }
 }

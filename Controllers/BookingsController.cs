@@ -92,8 +92,6 @@ namespace Biluthyrning.Controllers
 
             return View(bvm);
         }
-
-
         // POST: Bookings/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -131,13 +129,22 @@ namespace Biluthyrning.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             ViewBag.UserType = Request.Cookies["UserType"];
-
+            ViewBag.UserNameList = new SelectList(await userRep.GetAllAsync(), "UserId", "UserName");
+            ViewBag.CarCategory = new SelectList(await carCategoryRep.GetAllAsync(), "Id", "Name");
             var booking = await bookingRep.GetByIdAsync(id);
             if (booking == null)
             {
                 return NotFound();
             }
-            return View(booking);
+
+            var myBooking = new ConfirmBookingVM();
+            myBooking.Id = booking.Id;
+            myBooking.CarId = booking.CarId;
+            myBooking.StartDate = booking.StartDate;
+            myBooking.EndDate = booking.EndDate;
+            myBooking.UserId = booking.UserId;
+            
+            return View(myBooking);
         }
 
         // POST: Bookings/Edit/5
@@ -145,17 +152,19 @@ namespace Biluthyrning.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CarId,StartDate,EndDate,UserId")] Booking booking)
+        public async Task<IActionResult> SaveEdit(int id, [Bind("Id,CarId,StartDate,EndDate,UserId")] ConfirmBookingVM myBooking)
         {
-            if (id != booking.Id)
-            {
-                return NotFound();
-            }
 
+            var booking = await bookingRep.GetByIdAsync(myBooking.Id);
+           
             if (ModelState.IsValid)
             {
                 try
                 {
+                    booking.StartDate = myBooking.StartDate;
+                    booking.EndDate = myBooking.EndDate;
+                    booking.CarId = myBooking.CarId;
+                    booking.UserId = myBooking.UserId;
                     await bookingRep.UpdateAsync(booking);
                 }
                 catch (DbUpdateConcurrencyException)
@@ -249,7 +258,6 @@ namespace Biluthyrning.Controllers
         //    return View(myBooking);
 
         //}
-
         public async Task<IActionResult> SelectCar(ConfirmBookingVM myBooking)
         {
             bool validDate = IsValidDate(myBooking.StartDate, myBooking.EndDate);
@@ -291,21 +299,48 @@ namespace Biluthyrning.Controllers
                     car.IsAvailable = true;
                 }
             }
-            foreach (var booking in bookings)
+            if (myBooking.Id == 0)
             {
-                if (myBooking.StartDate <= booking.EndDate && myBooking.StartDate >= booking.StartDate
-                    || myBooking.EndDate >= booking.StartDate && myBooking.EndDate <= booking.EndDate
-                    || myBooking.StartDate <= booking.StartDate && myBooking.EndDate >= booking.EndDate)
-                {
 
-                    foreach (var car in cars)
+                foreach (var booking in bookings)
+                {
+                    if (myBooking.StartDate <= booking.EndDate && myBooking.StartDate >= booking.StartDate
+                        || myBooking.EndDate >= booking.StartDate && myBooking.EndDate <= booking.EndDate
+                        || myBooking.StartDate <= booking.StartDate && myBooking.EndDate >= booking.EndDate)
                     {
 
-                        if (car.CarId == booking.CarId)
+                        foreach (var car in cars)
                         {
-                            car.IsAvailable = false;
-                        }
 
+                            if (car.CarId == booking.CarId)
+                            {
+                                car.IsAvailable = false;
+                            }
+
+                        }
+                    }
+                
+                }
+            }
+            else
+            {
+                foreach (var booking  in bookings.Where(s => s.Id != myBooking.Id))
+                {
+
+                    if (myBooking.StartDate <= booking.EndDate && myBooking.StartDate >= booking.StartDate
+                        || myBooking.EndDate >= booking.StartDate && myBooking.EndDate <= booking.EndDate
+                        || myBooking.StartDate <= booking.StartDate && myBooking.EndDate >= booking.EndDate)
+                    {
+
+                        foreach (var car in cars)
+                        {
+
+                            if (car.CarId == booking.CarId)
+                            {
+                                car.IsAvailable = false;
+                            }
+
+                        }
                     }
                 }
             }
@@ -330,5 +365,60 @@ namespace Biluthyrning.Controllers
         {
             return startDate < endDate && endDate > startDate;
         }
+        public async Task<IActionResult> ConfirmEdit(ConfirmBookingVM myBooking, string submit)
+        {
+            ViewBag.UserType = Request.Cookies["UserType"];
+            myBooking.CarId = Convert.ToInt32(submit);
+            var user = await userRep.GetByIdAsync(myBooking.UserId);
+            var car = await carRep.GetByIdAsync(myBooking.CarId);
+
+            myBooking.UserName = user.UserName;
+            myBooking.CarBrand = car.Brand;
+            myBooking.CarModel = car.Model;
+            myBooking.Price = car.Amount;
+            TimeSpan span = myBooking.EndDate - myBooking.StartDate;
+            myBooking.TotalCost = Math.Round(Convert.ToDecimal(span.TotalDays) * myBooking.Price, 2);
+            return View(myBooking);
+            
+        }
+        public async Task<IActionResult> EditCar(int id,  ConfirmBookingVM myBooking)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                ViewBag.UserType = Request.Cookies["UserType"];
+                ViewBag.UserNameList = new SelectList(await userRep.GetAllAsync(), "UserId", "UserName");
+                return View(nameof(Edit), myBooking);
+            }
+            var overLappingBookings = await bookingRep.GetOverLappingBookingAsync(myBooking.Id, myBooking.CarId, myBooking.StartDate, myBooking.EndDate);
+            if (overLappingBookings.Any())
+            {
+                ViewBag.UserType = Request.Cookies["UserType"];
+                ViewBag.UserNameList = new SelectList(await userRep.GetAllAsync(), "UserId", "UserName");
+                ViewBag.CarCategory = new SelectList(await carCategoryRep.GetAllAsync(), "Id", "Name");
+                ModelState.AddModelError("", "The selected date range is not available for this car.");
+                return View(nameof(Edit), myBooking);
+            }
+            var valid = IsValidDate(myBooking.StartDate, myBooking.EndDate);
+            if (!valid)
+            {
+                ViewBag.UserType = Request.Cookies["UserType"];
+                ViewBag.UserNameList = new SelectList(await userRep.GetAllAsync(), "UserId", "UserName");
+                ViewBag.CarCategory = new SelectList(await carCategoryRep.GetAllAsync(), "Id", "Name");
+                ModelState.AddModelError("", "Startdate must be set to before enddate");
+                return View(nameof(Edit), myBooking);
+            }
+           
+            
+            myBooking.Id = myBooking.Id;
+            myBooking.CarId = myBooking.CarId;
+            myBooking.StartDate =  myBooking.StartDate;
+            myBooking.EndDate = myBooking.EndDate;
+            myBooking.UserId = myBooking.UserId;
+
+            await AvailableCars(myBooking);
+            return View(myBooking);
+        }
+
     }
 }

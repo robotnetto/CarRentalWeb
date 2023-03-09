@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Biluthyrning.Migrations
 {
     [DbContext(typeof(CarRentalContext))]
-    [Migration("20230308142142_try again")]
-    partial class tryagain
+    [Migration("20230308221743_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,6 +46,10 @@ namespace Biluthyrning.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CarId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Bookings");
                 });
@@ -130,6 +134,21 @@ namespace Biluthyrning.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("Biluthyrning.Models.Booking", b =>
+                {
+                    b.HasOne("Biluthyrning.Models.Car", null)
+                        .WithMany("Bookings")
+                        .HasForeignKey("CarId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Biluthyrning.Models.User", null)
+                        .WithMany("Bookings")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Biluthyrning.Models.Car", b =>
                 {
                     b.HasOne("Biluthyrning.Models.CarCategory", null)
@@ -139,9 +158,19 @@ namespace Biluthyrning.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Biluthyrning.Models.Car", b =>
+                {
+                    b.Navigation("Bookings");
+                });
+
             modelBuilder.Entity("Biluthyrning.Models.CarCategory", b =>
                 {
                     b.Navigation("Cars");
+                });
+
+            modelBuilder.Entity("Biluthyrning.Models.User", b =>
+                {
+                    b.Navigation("Bookings");
                 });
 #pragma warning restore 612, 618
         }

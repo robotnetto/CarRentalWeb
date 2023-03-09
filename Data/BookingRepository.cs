@@ -42,5 +42,13 @@ namespace Biluthyrning.Data
             context.Bookings.Update(booking);
             await context.SaveChangesAsync();
         }
+        public async Task<List<Booking>> GetOverLappingBookingAsync(int bookingId, int carId, DateTime startDate, DateTime endDate)
+        {
+            var overlappingBookings = await context.Bookings
+        .Where(b => b.CarId == carId && b.Id != bookingId && b.StartDate < endDate && b.EndDate > startDate)
+        .ToListAsync();
+
+            return overlappingBookings;
+        }
     }
 }

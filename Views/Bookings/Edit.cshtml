@@ -1,4 +1,4 @@
-﻿@model Biluthyrning.Models.Booking
+﻿@model Biluthyrning.ViewModels.ConfirmBookingVM
 
 @{
     ViewData["Title"] = "Edit";
@@ -7,43 +7,44 @@
 <div class="row justify-content-center">
     <div class="card mt-3 bg-white bg-opacity-75 w-50" style="padding:10px; border-radius:2em; padding:2em;">
         <h1>Edit</h1>
-        <h4>Booking</h4>
+        <h4>Select date</h4>
         <hr />
         <div class="row">
             <div class="col">
-                <form class="card-body" asp-action="Edit">
+                <form class="card-body" asp-action="EditCar">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="Id" />
-                    <div class="form-group">
-                        <label asp-for="CarId" class="control-label"></label>
-                        <input asp-for="CarId" class="form-control" />
-                        <span asp-validation-for="CarId" class="text-danger"></span>
-                    </div>
+                    <input  type="hidden" asp-for="CarId"  />
+                    @if (ViewBag.UserType == "Admin")
+                    {
+                        <div class="form-group">
+                            <label asp-for="UserId" class="control-label">User</label>
+                            <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserNameList"> </select>
+                            <span asp-validation-for="UserId" class="text-danger"></span>
+                        </div>
+                    }
+                    else
+                    {
+                        <input type="hidden" asp-for="UserId" />
+                    }
                     <div class="form-group">
                         <label asp-for="StartDate" class="control-label"></label>
                         <input asp-for="StartDate" class="form-control" />
-                        <span asp-validation-for="StartDate" class="text-danger"></span>
+                        <span asp-validation-for="StartDate" class="text-danger" ></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="EndDate" class="control-label"></label>
                         <input asp-for="EndDate" class="form-control" />
                         <span asp-validation-for="EndDate" class="text-danger"></span>
                     </div>
-                    @if (ViewBag.UserType == "Admin")
-                    {
-                        <div class="form-group">
-                            <label asp-for="UserId" class="control-label"></label>
-                            <input asp-for="UserId" class="form-control" />
-                            <span asp-validation-for="UserId" class="text-danger"></span>
-                        </div>
-                    }
-                    else
-                    {
-                        <input type="hidden" asp-for="UserId"/>
-                    }
+                    <div class="form-group">
+                        <label asp-for="CarCategoryId" class="control-label">User</label>
+                        <select asp-for="CarCategoryId" class="form-control" asp-items="ViewBag.CarCategory"> </select>
+                        <span asp-validation-for="CarCategoryId" class="text-danger"></span>
+                    </div>
 
                     <div class="form-group">
-                        <input type="submit" value="Save" class="btn btn-success btn-sm rounded mt-2" />
+                        <input type="submit" value="Next" class="btn btn-success btn-sm rounded mt-2" />
                     </div>
                 </form>
             </div>
