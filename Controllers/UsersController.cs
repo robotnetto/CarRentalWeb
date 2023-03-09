@@ -27,7 +27,6 @@ namespace Biluthyrning.Controllers
         // GET: Users
         public async Task<IActionResult> Index(string search)
         {
-
             ViewBag.UserType = Request.Cookies["UserType"];
             ViewData["CurrentUserId"] = Request.Cookies["CurrentUserId"];
             ViewBag.SearchUser = search;
@@ -43,8 +42,6 @@ namespace Biluthyrning.Controllers
                 return View(await userRepo.GetSearchedAsync(search));
             }
         }
-
-
 
         // GET: Users/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -82,13 +79,11 @@ namespace Biluthyrning.Controllers
                     }
                     userVM.Bookings.Add(bookingVM);
                 }
-
             }
             if (user == null)
             {
                 return NotFound();
             }
-
             return View(userVM);
         }
 
@@ -198,10 +193,8 @@ namespace Biluthyrning.Controllers
             {
                 await userRepo.DeleteAsync(id);
             }
-
             return RedirectToAction(nameof(Index));
         }
-
         private async Task<bool> UserExists(int id)
         {
             var tempUser = await userRepo.GetByIdAsync(id);
@@ -213,7 +206,6 @@ namespace Biluthyrning.Controllers
             {
                 return true;
             }
-
         }
     }
 }

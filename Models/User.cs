@@ -11,6 +11,5 @@ namespace Biluthyrning.Models
         public string Password { get; set; } = "";
         public bool IsAdmin { get; set; } = false;
         public List<Booking> Bookings { get; set; } = new List<Booking>();
-
     }
 }
