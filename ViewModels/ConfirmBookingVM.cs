@@ -12,9 +12,9 @@ namespace Biluthyrning.ViewModels
         public string CarModel { get; set; } = "";
         public string CarBrand { get; set; } = "";
         [Required]
-        public DateTime StartDate { get; set; } = DateTime.Now;
+        public DateTime StartDate { get; set; } = DateTime.Today;
         [Required]
-        public DateTime EndDate { get; set; } = DateTime.Now.AddDays(1);
+        public DateTime EndDate { get; set; } = DateTime.Today.AddDays(1);
         public string UserName { get; set; } = "";
         [Required]
         public int UserId { get; set; }
