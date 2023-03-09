@@ -55,7 +55,6 @@ namespace Biluthyrning.Controllers
         {
             foreach (var item in await userRepo.GetAllAsync())
             {
-
                 if (item.UserName == user.UserName && item.Password == user.Password)
                 {
                     user = item;
@@ -89,7 +88,6 @@ namespace Biluthyrning.Controllers
             {
                 Expires = DateTime.Now.AddDays(-1)
             });
-
             return RedirectToAction("Index");
         }
 
