@@ -18,9 +18,11 @@
                         </div>
                     </form>
                     <form method="get" action="@Url.Action("Index")">
+                        <lable>search for bookings starting between: </lable>
+
                         <div class="input-group">
                             <input type="date" name="startDateSearch" class="form-control rounded m-1" placeholder="Search by date" value="@ViewBag.SearchUser" aria-label="Search" />
-                            <input type="date" name="endDateSearch" min="startDateSearch" class="form-control rounded m-1" placeholder="Search by date" value="@ViewBag.SearchUser" aria-label="Search" />
+                            <input type="date" name="endDateSearch" class="form-control rounded m-1" placeholder="Search by date" value="@ViewBag.SearchUser" aria-label="Search" />
                             <button class="btn btn-outline-primary rounded" type="submit">Search</button>
                         </div>
                     </form>
