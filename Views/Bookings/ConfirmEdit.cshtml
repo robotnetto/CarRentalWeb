@@ -28,11 +28,11 @@
             <input type="hidden" asp-for="StartDate" value="@Model.StartDate" />
             <input type="hidden" asp-for="EndDate" value="@Model.EndDate" />
             <input type="hidden" asp-for="Id" value="@Model.Id" />
-            <button class="btn btn-success btn-sm rounded" type="submit">Confirm booking</button>
+            <button class="btn btn-success btn-sm rounded" type="submit">Confirm changes</button>
         </form>
         <div>
             <div>
-                <a class="btn btn-primary btn-sm rounded mt-2" asp-action="SetDates">Back</a>
+                <a class="btn btn-primary btn-sm rounded" asp-action="Edit" asp-route-id="@Model.Id">Back</a>
             </div>
         </div>
     </div>
