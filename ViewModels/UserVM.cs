@@ -9,6 +9,5 @@ namespace Biluthyrning.ViewModels
         public string Password { get; set; } = "";
         public bool IsAdmin { get; set; }
         public List<BookingViewModel> Bookings { get; set; } = new();
-
     }
 }

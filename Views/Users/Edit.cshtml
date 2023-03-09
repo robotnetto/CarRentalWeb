@@ -3,15 +3,10 @@
 @{
     ViewData["Title"] = "Edit";
 }
-
 <div class="row justify-content-center">
-
-
     <div class="card mt-3 bg-white bg-opacity-75 w-50" style="padding:10px; border-radius:2em; padding:2em;">
 
-
         <h1>Edit</h1>
-
         <hr />
         <div class="row">
             <div class="col">
@@ -31,11 +26,9 @@
                     @if (ViewBag.UserType == "User")
                     {
                         <input type="hidden" asp-for="IsAdmin" />
-
                     }
                     else
                     {
-
                         <div class="form-group form-check">
                             <label class="form-check-label">
                                 <input class="form-check-input" asp-for="IsAdmin" /> @Html.DisplayNameFor(model => model.IsAdmin)
@@ -48,13 +41,11 @@
                 </form>
             </div>
         </div>
-
         <div>
             <a class="btn btn-danger btn-sm rounded mt-2" asp-action="Delete" asp-route-id="@Model?.UserId">Delete</a>
             <a class="btn btn-primary btn-sm rounded mt-2" asp-action="Index">Back to List</a>
         </div>
     </div>
-
 </div>
 @section Scripts {
     @{
