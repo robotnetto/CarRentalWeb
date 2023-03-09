@@ -10,6 +10,5 @@ namespace Biluthyrning.Data
         public Task AddAsync(Booking booking);
         public Task UpdateAsync(Booking booking);
         public Task DeleteAsync(int id);
-        public Task<List<Booking>> GetOverLappingBookingAsync(int bookingId, int carId, DateTime startDate, DateTime endDate);
-    }
+        
 }

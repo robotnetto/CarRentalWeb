@@ -390,15 +390,7 @@ namespace Biluthyrning.Controllers
                 ViewBag.UserNameList = new SelectList(await userRep.GetAllAsync(), "UserId", "UserName");
                 return View(nameof(Edit), myBooking);
             }
-            var overLappingBookings = await bookingRep.GetOverLappingBookingAsync(myBooking.Id, myBooking.CarId, myBooking.StartDate, myBooking.EndDate);
-            if (overLappingBookings.Any())
-            {
-                ViewBag.UserType = Request.Cookies["UserType"];
-                ViewBag.UserNameList = new SelectList(await userRep.GetAllAsync(), "UserId", "UserName");
-                ViewBag.CarCategory = new SelectList(await carCategoryRep.GetAllAsync(), "Id", "Name");
-                ModelState.AddModelError("", "The selected date range is not available for this car.");
-                return View(nameof(Edit), myBooking);
-            }
+           
             var valid = IsValidDate(myBooking.StartDate, myBooking.EndDate);
             if (!valid)
             {
@@ -408,14 +400,7 @@ namespace Biluthyrning.Controllers
                 ModelState.AddModelError("", "Startdate must be set to before enddate");
                 return View(nameof(Edit), myBooking);
             }
-           
             
-            myBooking.Id = myBooking.Id;
-            myBooking.CarId = myBooking.CarId;
-            myBooking.StartDate =  myBooking.StartDate;
-            myBooking.EndDate = myBooking.EndDate;
-            myBooking.UserId = myBooking.UserId;
-
             await AvailableCars(myBooking);
             return View(myBooking);
         }
