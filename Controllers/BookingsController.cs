@@ -62,7 +62,6 @@ namespace Biluthyrning.Controllers
                         bookingVMList.Add(bvm);
                     }
                         
-                    
                     else if (startDateSearch == null && endDateSearch > bvm.StartDate)
                     {
                         startDateSearch = DateTime.Today;
