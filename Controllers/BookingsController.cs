@@ -144,7 +144,7 @@ namespace Biluthyrning.Controllers
             myBooking.StartDate = booking.StartDate;
             myBooking.EndDate = booking.EndDate;
             myBooking.UserId = booking.UserId;
-            
+
             return View(myBooking);
         }
 
@@ -157,7 +157,7 @@ namespace Biluthyrning.Controllers
         {
 
             var booking = await bookingRep.GetByIdAsync(myBooking.Id);
-           
+
             if (ModelState.IsValid)
             {
                 try
@@ -267,10 +267,23 @@ namespace Biluthyrning.Controllers
                 return RedirectToAction("SetDates", new { dateValidation = false });
             }
             await AvailableCars(myBooking);
-            var user = await userRep.GetByIdAsync(myBooking.UserId);
-            myBooking.UserName = user.UserName;
-            ViewBag.AvailableCars = new SelectList(myBooking.Cars, "CarId", "Model");
-            return View(myBooking);
+            if (myBooking.Cars.Any(x => x.IsAvailable == true))
+            {
+                var user = await userRep.GetByIdAsync(myBooking.UserId);
+                myBooking.UserName = user.UserName;
+                ViewBag.AvailableCars = new SelectList(myBooking.Cars, "CarId", "Model");
+                return View(myBooking);
+            }
+            else
+            {
+                ViewBag.DateValidation = true;
+                ViewBag.UserType = Request.Cookies["UserType"];
+                ViewBag.CurrentUserId = Request.Cookies["CurrentUserId"];
+                ViewBag.UserNameList = new SelectList(await userRep.GetAllAsync(), "UserId", "UserName");
+                ViewBag.CarCategory = new SelectList(await carCategoryRep.GetAllAsync(), "Id", "Name");
+                ModelState.AddModelError("", "No cars available during that time.");
+                return View(nameof(SetDates), myBooking);
+            }
         }
 
         public async Task<IActionResult> ConfirmBooking(ConfirmBookingVM myBooking, string submit)
@@ -320,12 +333,12 @@ namespace Biluthyrning.Controllers
 
                         }
                     }
-                
+
                 }
             }
             else
             {
-                foreach (var booking  in bookings.Where(s => s.Id != myBooking.Id))
+                foreach (var booking in bookings.Where(s => s.Id != myBooking.Id))
                 {
 
                     if (myBooking.StartDate <= booking.EndDate && myBooking.StartDate >= booking.StartDate
@@ -380,9 +393,9 @@ namespace Biluthyrning.Controllers
             TimeSpan span = myBooking.EndDate - myBooking.StartDate;
             myBooking.TotalCost = Math.Round(Convert.ToDecimal(span.TotalDays) * myBooking.Price, 2);
             return View(myBooking);
-            
+
         }
-        public async Task<IActionResult> EditCar(int id,  ConfirmBookingVM myBooking)
+        public async Task<IActionResult> EditCar(int id, ConfirmBookingVM myBooking)
         {
 
             if (!ModelState.IsValid)
@@ -391,15 +404,7 @@ namespace Biluthyrning.Controllers
                 ViewBag.UserNameList = new SelectList(await userRep.GetAllAsync(), "UserId", "UserName");
                 return View(nameof(Edit), myBooking);
             }
-            var overLappingBookings = await bookingRep.GetOverLappingBookingAsync(myBooking.Id, myBooking.CarId, myBooking.StartDate, myBooking.EndDate);
-            if (overLappingBookings.Any())
-            {
-                ViewBag.UserType = Request.Cookies["UserType"];
-                ViewBag.UserNameList = new SelectList(await userRep.GetAllAsync(), "UserId", "UserName");
-                ViewBag.CarCategory = new SelectList(await carCategoryRep.GetAllAsync(), "Id", "Name");
-                ModelState.AddModelError("", "The selected date range is not available for this car.");
-                return View(nameof(Edit), myBooking);
-            }
+           
             var valid = IsValidDate(myBooking.StartDate, myBooking.EndDate);
             if (!valid)
             {
@@ -409,14 +414,7 @@ namespace Biluthyrning.Controllers
                 ModelState.AddModelError("", "Startdate must be set to before enddate");
                 return View(nameof(Edit), myBooking);
             }
-           
             
-            myBooking.Id = myBooking.Id;
-            myBooking.CarId = myBooking.CarId;
-            myBooking.StartDate =  myBooking.StartDate;
-            myBooking.EndDate = myBooking.EndDate;
-            myBooking.UserId = myBooking.UserId;
-
             await AvailableCars(myBooking);
             return View(myBooking);
         }
