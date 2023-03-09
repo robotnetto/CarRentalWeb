@@ -29,7 +29,7 @@ namespace Biluthyrning.Controllers
         }
 
         // GET: Bookings
-        public async Task<IActionResult> Index(string search)
+        public async Task<IActionResult> Index(string search, DateTime? startDateSearch, DateTime? endDateSearch)
         {
             ViewBag.UserType = Request.Cookies["UserType"];
             ViewData["CurrentUserId"] = Request.Cookies["CurrentUserId"];
@@ -56,6 +56,7 @@ namespace Biluthyrning.Controllers
 
                 if (string.IsNullOrWhiteSpace(search) || bvm.UserName.Contains(search))
                 {
+                    if(startDateSearch == null && endDateSearch == null)
                     bookingVMList.Add(bvm);
                 }
             }
