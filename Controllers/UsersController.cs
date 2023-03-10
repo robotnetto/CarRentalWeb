@@ -54,6 +54,8 @@ namespace Biluthyrning.Controllers
             userVM.UserName = user.UserName;
             userVM.Password = user.Password;
             userVM.IsAdmin = user.IsAdmin;
+            userVM.Email = user.Email;
+            userVM.PhoneNr = user.PhoneNr;
 
             foreach (var booking in await bookingRepo.GetAllAsync())
             {
@@ -95,7 +97,7 @@ namespace Biluthyrning.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserId,UserName,Password,IsAdmin")] User user)
+        public async Task<IActionResult> Create([Bind("UserId,UserName,Password,IsAdmin,Email, PhoneNr")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -127,7 +129,7 @@ namespace Biluthyrning.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UserId,UserName,Password,IsAdmin")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("UserId,UserName,Password,IsAdmin,Email,PhoneNr")] User user)
         {
             if (id != user.UserId)
             {

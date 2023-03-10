@@ -91,6 +91,7 @@ namespace Biluthyrning.Controllers
             bvm.EndDate = booking.EndDate;
             bvm.UserName = user.UserName;
             bvm.CarCategoryName = carCategory.Name;
+            bvm.UserId = user.UserId;
 
             if (bvm == null)
             {
