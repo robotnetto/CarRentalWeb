@@ -82,7 +82,7 @@ else
                             @Html.DisplayNameFor(model => item.StartDate)
                         </dt>
                         <dd class="col-sm-7">
-                            @Html.DisplayFor(model => item.StartDate)
+                            <p>@item.StartDate.ToString("g") </p>
                         </dd>
                         <dt class="col-sm-5">
                             @Html.DisplayNameFor(model => item.EndDate)
