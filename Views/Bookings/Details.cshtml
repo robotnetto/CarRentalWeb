@@ -5,7 +5,8 @@
 }
 
 <div class="row justify-content-center">
-    <div class="card shadow bg-white bg-opacity-75 mt-3 w-50" style="padding:2em; border-radius:2em;">
+    <div class="w-50 card shadow-lg mt-3 px-3" style="padding: 2em; border-radius:2em; background-color: rgba(255, 254, 254, 0.800);">
+
         <h1>Details</h1>
         <h4>Booking</h4>
         <hr />
@@ -29,7 +30,7 @@
                 @Html.DisplayFor(model => model.CarBrand)
             </dd>
             <dt class="col-sm-5">
-                @Html.DisplayNameFor(model => model.CarCategoryName)
+                Car Category
             </dt>
             <dd class="col-sm-7">
                 @Html.DisplayFor(model => model.CarCategoryName)
@@ -49,7 +50,7 @@
             @if (ViewBag.UserType == "Admin")
             {
                 <dt class="col-sm-5">
-                    @Html.DisplayNameFor(model => model.UserName)
+                    Username
                 </dt>
                 <dd class="col-sm-7">
                     <a asp-controller="Users" asp-action="Details" asp-route-id="@Model?.UserId">@Model.UserName</a>                    
