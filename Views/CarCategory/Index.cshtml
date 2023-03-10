@@ -21,6 +21,18 @@
                     <a class="btn btn-success btn-sm rounded" asp-action="Create">Create New Category</a>
                 </p>
             }
+            <div class="mb-3 bg-white bg-opacity-75" style="border-radius: 2em; padding:2em;">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi dolor leo, luctus id rhoncus quis, faucibus in augue. Proin nec facilisis arcu, sed pellentesque nisl. 
+                    Donec mollis ornare ullamcorper. Quisque sed eleifend dolor, ut tempor diam. Pellentesque dolor arcu, malesuada sit amet ante vel, iaculis pharetra ipsum. 
+                    Pellentesque nibh orci, imperdiet eu dui nec, mollis sodales odio.
+                    Cras pellentesque fringilla dolor vitae laoreet. Sed vestibulum magna nec tortor venenatis, in porttitor felis euismod. 
+                    Nulla facilisi. Nulla facilisi. Proin vestibulum fringilla enim, at sagittis quam luctus fringilla. 
+                    Phasellus vulputate felis id neque congue, vitae vulputate urna ullamcorper. Nullam venenatis hendrerit convallis. 
+                    Etiam sed ligula vel dui vulputate pellentesque. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. 
+                    Fusce vulputate convallis feugiat.
+                </p>
+            </div>
         </div>
     </div>
 </div>
@@ -28,7 +40,7 @@
     @foreach (var item in Model)
     {
         <div class="col-lg-4">
-            <div class="card m-3 shadow bg-white bg-opacity-75" style="border-radius: 2em">
+            <div class="card mt-3 shadow bg-white bg-opacity-75" style="border-radius: 2em">
                 <img class="card-img-top" style="border-radius: 2em" src="~/bubbla.jpg" alt="bubbla">
                 <div class="card-body card-header">
                     <h4 class="card-title text-center">@item.Name</h4>
