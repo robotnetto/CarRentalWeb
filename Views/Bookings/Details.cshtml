@@ -38,13 +38,13 @@
                 @Html.DisplayNameFor(model => model.StartDate)
             </dt>
             <dd class="col-sm-7">
-                @Html.DisplayFor(model => model.StartDate)
+                @Model.StartDate.ToString("g")
             </dd>
             <dt class="col-sm-5">
                 @Html.DisplayNameFor(model => model.EndDate)
             </dt>
             <dd class="col-sm-7">
-                @Html.DisplayFor(model => model.EndDate)
+                @Model.EndDate.ToString("g")
             </dd>
             @if (ViewBag.UserType == "Admin")
             {

@@ -370,5 +370,10 @@ namespace Biluthyrning.Controllers
             await AvailableCars(myBooking);
             return View(myBooking);
         }
+
+        public async Task<IActionResult> Info()
+        {
+            return View();
+        }
     }
 }

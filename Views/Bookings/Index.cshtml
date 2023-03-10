@@ -28,6 +28,8 @@
                 </h6>
                 <p>
                     <a class="btn btn-success btn-sm rounded" asp-action="SetDates">Create New Booking</a>
+                    <a class="align-left btn btn-primary btn-sm rounded" asp-action="Info">How does it work?</a>
+
                 </p>
             </div>
         </div>
@@ -38,14 +40,18 @@ else if (ViewBag.UserType == "User")
     <div class="card shadow-lg mt-3 px-3" style="border-radius:2em; background-color: rgba(255, 254, 254, 0.800);">
         <h1 class="mt-2" style=" text-align:center; padding-top: 10px;">Your Bookings</h1>
         <p>
-            <a class="btn btn-success btn-sm rounded m-2" asp-action="SetDates">Create New Booking</a>
+            <a class="btn btn-success btn-sm rounded" asp-action="SetDates">Create New Booking</a>
+            <a class="btn btn-primary btn-sm rounded" asp-action="Info">How does it work?</a>
         </p>
     </div>
 }
 else
 {
+    //TODO: make card here
     <h1 class="mt-2" style="color: white;">Bookings</h1>
     <h1 class="text-center" style="color:white">Login to view contents.</h1>
+    <a class="align-left btn btn-success btn-sm rounded" asp-action="Info">How does it work?</a>
+
 }
 
 <div class="row">
@@ -88,7 +94,7 @@ else
                             @Html.DisplayNameFor(model => item.EndDate)
                         </dt>
                         <dd class="col-sm-7">
-                            @Html.DisplayFor(model => item.EndDate)
+                            <p>@item.EndDate.ToString("g") </p>
                         </dd>
                         <dt class="col-sm-5">
                             @Html.DisplayNameFor(model => item.TotalCost)
