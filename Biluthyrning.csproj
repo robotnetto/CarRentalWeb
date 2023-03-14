@@ -14,10 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\bubbla.jpg" />
-    <None Include="wwwroot\sedan.jpg" />
-    <None Include="wwwroot\sportsCar.jpg" />
-    <None Include="wwwroot\oldCar.jpg" />
+    <None Include="wwwroot\Images\bubbla.jpg" />
+    <None Include="wwwroot\Images\sedan.jpg" />
+    <None Include="wwwroot\Images\sportsCar.jpg" />
+    <None Include="wwwroot\Images\oldCar.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,10 +30,6 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.4" />
 
 
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\Images\" />
   </ItemGroup>
 
   
