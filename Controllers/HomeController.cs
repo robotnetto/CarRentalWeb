@@ -34,14 +34,22 @@ namespace Biluthyrning.Controllers
                 return RedirectToAction("IndexUser");
             }
         }
-        public IActionResult IndexAdmin()
+        public async Task<IActionResult> IndexAdmin()
         {
             ViewData["UserType"] = Request.Cookies["UserType"];
+            ViewData["CurrentUserId"] = Request.Cookies["CurrentUserId"];
+            int userId = Convert.ToInt32(ViewData["CurrentUserId"]);
+            var user = await userRepo.GetByIdAsync(userId);
+            ViewBag.UserName = user.UserName;
             return View();
         }
-        public IActionResult IndexUser()
+        public async Task<IActionResult> IndexUser()
         {
             ViewData["UserType"] = Request.Cookies["UserType"];
+            ViewData["CurrentUserId"] = Request.Cookies["CurrentUserId"];
+            int userId = Convert.ToInt32(ViewData["CurrentUserId"]);
+            var user = await userRepo.GetByIdAsync(userId);
+            ViewBag.UserName = user.UserName;
             return View();
         }
 
@@ -62,6 +70,7 @@ namespace Biluthyrning.Controllers
                     {
                         CookieOptions option = new CookieOptions();
                         httpContextAccessor.HttpContext.Response.Cookies.Append("UserType", "Admin", option);
+                        httpContextAccessor.HttpContext.Response.Cookies.Append("CurrentUserId", user.UserId.ToString(), option);
                         return RedirectToAction("IndexAdmin", "Home");
                         //return RedirectToAction("Index", "Users");
                     }
