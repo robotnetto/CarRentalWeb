@@ -10,15 +10,20 @@
     <div class="row mt-3">
         <div class="col">
             <div class="card shadow-lg mt-3 px-3" style="border-radius:2em; background-color: rgba(255, 254, 254, 0.800);">
-                <h1 class="mt-2" style=" text-align:center; padding-top: 10px;">Users</h1>
-                <h6 class="card mt-3 bg-white bg-opacity-75" style="border-radius: 2em; padding:2em;">
-                    <form method="get" action="@Url.Action("Index")">
-                        <div class="input-group">
-                            <input type="text" name="search" class="form-control rounded m-1" placeholder="Search by username" value="@ViewBag.SearchUser" aria-label="Search" />
-                            <button class="btn btn-outline-primary rounded " type="submit">Search</button>
-                        </div>
-                    </form>
-                </h6>
+                <div class="d-flex justify-content-between align-items-end w-100">
+                    <h1 class="mt-2 text-center align-self-md-center">Users</h1>
+                    <p class="lead">Search by username.</p>
+                    <div class=" mt-1 bg-grey bg-opacity-75" style="border-radius: 1em; padding: 0.5em;">
+                        <form method="get" action="@Url.Action("Index")">
+                            <div class="input-group">
+                                <input type="text" name="search" class="form-control rounded" placeholder="Search" value="@ViewBag.SearchUser" aria-label="Search" />
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-primary rounded" type="submit"><i class="bi bi-search"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
                 <p>
                     <a class="btn btn-success btn-sm rounded" asp-action="Create">Create New User</a>
                 </p>
@@ -121,12 +126,12 @@ else
 {
     <div class="row mt-3 justify-content-center">
         <div class="col">
-                <div class="card bg-white bg-opacity-75" style="border-radius:2em; padding:2em;">
-                    <h1>Welcome. Please create an account.</h1>
-                    <p>
-                        <a class="btn btn-success w-100 rounded" asp-action="Create">Create New</a>
-                    </p>
-                </div>
+            <div class="card bg-white bg-opacity-75" style="border-radius:2em; padding:2em;">
+                <h1>Welcome. Please create an account.</h1>
+                <p>
+                    <a class="btn btn-success w-100 rounded" asp-action="Create">Create New</a>
+                </p>
+            </div>
         </div>
     </div>
 }
