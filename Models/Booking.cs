@@ -10,10 +10,10 @@ namespace Biluthyrning.Models
         [Required]
         public int CarId { get; set; }
         [Required]
-        [Display(Name = "Start Date")]
+        [Display(Name = "Start date")]
         public DateTime StartDate { get; set; }
         [Required]
-        [Display(Name = "End date")]
+        [Display(Name = "Return date")]
         public DateTime EndDate { get; set; }
         [Required]
         [Display(Name = "User Id")]
