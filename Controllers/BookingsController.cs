@@ -106,7 +106,7 @@ namespace Biluthyrning.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ConfirmBookingVM myBooking)
+        public async Task<IActionResult> Create(BookingViewModel myBooking)
         {
             var booking = new Booking();
             booking.StartDate = myBooking.StartDate;
@@ -129,7 +129,7 @@ namespace Biluthyrning.Controllers
                 return NotFound();
             }
 
-            var myBooking = new ConfirmBookingVM();
+            var myBooking = new BookingViewModel();
             myBooking.Id = booking.Id;
             myBooking.CarId = booking.CarId;
             myBooking.StartDate = booking.StartDate;
@@ -144,7 +144,7 @@ namespace Biluthyrning.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SaveEdit(int id, [Bind("Id,CarId,StartDate,EndDate,UserId")] ConfirmBookingVM myBooking)
+        public async Task<IActionResult> SaveEdit(int id, [Bind("Id,CarId,StartDate,EndDate,UserId")] BookingViewModel myBooking)
         {
             var booking = await bookingRep.GetByIdAsync(myBooking.Id);
 
@@ -210,7 +210,7 @@ namespace Biluthyrning.Controllers
 
         public async Task<IActionResult> SetDates(bool dateValidation = true)
         {
-            var myBooking = new ConfirmBookingVM();
+            var myBooking = new BookingViewModel();
             ViewBag.DateValidation = dateValidation;
             ViewBag.UserNameList = new SelectList(await userRep.GetAllAsync(), "UserId", "UserName");
             ViewBag.CarCategory = new SelectList(await carCategoryRep.GetAllAsync(), "Id", "Name");
@@ -221,7 +221,7 @@ namespace Biluthyrning.Controllers
             return View(myBooking);
         }
     
-        public async Task<IActionResult> SelectCar(ConfirmBookingVM myBooking)
+        public async Task<IActionResult> SelectCar(BookingViewModel myBooking)
         {
             bool validDate = IsValidDate(myBooking.StartDate, myBooking.EndDate);
             if (!validDate)
@@ -248,7 +248,7 @@ namespace Biluthyrning.Controllers
             }
         }
 
-        public async Task<IActionResult> ConfirmBooking(ConfirmBookingVM myBooking, string submit)
+        public async Task<IActionResult> ConfirmBooking(BookingViewModel myBooking, string submit)
         {
             ViewBag.UserType = Request.Cookies["UserType"];
             myBooking.CarId = Convert.ToInt32(submit);
@@ -264,7 +264,7 @@ namespace Biluthyrning.Controllers
             return View(myBooking);
         }
 
-        private async Task<List<Car>> AvailableCars(ConfirmBookingVM myBooking)
+        private async Task<List<Car>> AvailableCars(BookingViewModel myBooking)
         {
             var bookings = await bookingRep.GetAllAsync();
             var cars = await carRep.GetAllAsync();
@@ -334,7 +334,7 @@ namespace Biluthyrning.Controllers
         {
             return startDate < endDate && endDate > startDate;
         }
-        public async Task<IActionResult> ConfirmEdit(ConfirmBookingVM myBooking, string submit)
+        public async Task<IActionResult> ConfirmEdit(BookingViewModel myBooking, string submit)
         {
             ViewBag.UserType = Request.Cookies["UserType"];
             myBooking.CarId = Convert.ToInt32(submit);
@@ -349,7 +349,7 @@ namespace Biluthyrning.Controllers
             myBooking.TotalCost = Math.Round(Convert.ToDecimal(span.TotalDays) * myBooking.Price, 2);
             return View(myBooking);
         }
-        public async Task<IActionResult> EditCar(int id, ConfirmBookingVM myBooking)
+        public async Task<IActionResult> EditCar(int id, BookingViewModel myBooking)
         {
             if (!ModelState.IsValid)
             {
