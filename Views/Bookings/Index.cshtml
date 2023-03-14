@@ -46,10 +46,16 @@ else if (ViewBag.UserType == "User")
 }
 else
 {
-    <div class="card shadow-lg mt-3 px-3" style="border-radius:2em; background-color: rgba(255, 254, 254, 0.800);">
-        <h1 class="mt-2">Bookings</h1>
-        <h1 class="text-center">Login to view contents</h1>
-        <a class="btn btn-success btn-sm rounded mb-2" asp-action="Info">How does it work?</a>
+    <div class="row mt-3">
+        <div class="col">
+            <div class="card shadow-lg mt-3" style="border-radius:2em; padding: 2em; background-color: rgba(255, 254, 254, 0.800);">
+                <h1>Login to view bookings</h1>
+                <p>
+                    <a class="btn btn-success btn-sm rounded" asp-controller="Home" asp-action="Index">Login</a>
+                    <a class="btn btn-primary btn-sm rounded" asp-action="Info">How does it work?</a>
+                </p>
+            </div>
+        </div>
     </div>
 }
 
