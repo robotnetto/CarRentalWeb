@@ -5,60 +5,72 @@
 }
 
 <div class="row m-3">
-    <div class ="col">
-        <div class="card shadow-lg mt-3 px-3" style="border-radius:2em; background-color: rgba(255, 254, 254, 0.800);">
-            <h1 class="mt-2" style=" text-align:center; padding-top: 10px;"> Cars</h1>
-            <h6 class="card mt-3 bg-white bg-opacity-75" style="border-radius: 2em; padding:2em;">
+    <div class="card shadow-lg mt-1 px-2" style="border-radius: 1em; background-color: rgba(255, 254, 254, 0.750);">
+
+        <div class="d-flex justify-content-between align-items-end w-100">
+            <h1 class="mt-2 text-center align-self-md-center">Cars <i class="bi bi-car-front"></i></h1>
+            <div class=" mt-1 bg-grey bg-opacity-75" style="border-radius: 1em; padding: 0.5em;">
                 <form method="get" action="@Url.Action("Index")">
                     <div class="input-group">
-                        <input type="text" name="search" class="form-control rounded m-1" placeholder="Search by brand or model" value="@ViewBag.CarsSearch" aria-label="Search" />
-                        <button class="btn btn-outline-primary rounded" type="submit">Search</button>
+                        <input type="text" name="search" class="form-control rounded" placeholder="Search" value="@ViewBag.CarsSearch" aria-label="Search" />
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-primary rounded" type="submit"><i class="bi bi-search"></i></button>
+                        </div>
                     </div>
                 </form>
-            </h6>
-            @if(ViewBag.UserType == "Admin")
-            {
-                <p>
-                    <a class="btn btn-success btn-sm rounded" asp-action="Create">Cretate new car</a>
-                </p>
-                
-            }
-     </div>
-   </div>
-   </div>
-    <div class="row">
-        @foreach (var item in Model)
-        {
-            <div class="col-lg-4">
-                <div class="card m-3 shadow" style="border-radius: 2em; background-color: rgba(255, 254, 254, 0.850);">
+            </div>
+        </div>
+       
+        <div class="row justify-content-between ">
+            <div class="col-md-6 text-left">
+                @if (ViewBag.UserType == "Admin")
+                {
+                    <p>
+                        <a class="btn btn-success btn-sm rounded" asp-action="Create">Create new car</a>
+                    </p>
+                }
+            </div>
+
+           
+        </div>
+
+    </div>
+</div>
+
+
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4">
+            <div class="card m-3 shadow" style="border-radius: 2em; background-color: rgba(255, 254, 254, 0.850);">
                 <img class="card-img-top" style="border-radius: 2em" src="~/bubbla.jpg" alt="bubbla">
-                    <div class="card-body card-header">
-                        <h4 class="card-title text-center">@item.Model</h4>
-                    </div>
-                    <dl class="row card-body">
-                        <dt class="col-sm-5">
-                            @Html.DisplayNameFor(model => item.Brand)
-                        </dt>
-                        <dd class="col-sm-7">
-                            @Html.DisplayFor(model => item.Brand)
-                        </dd>
-                        <dt class="col-sm-5">
-                            @Html.DisplayNameFor(model => item.Color)
-                        </dt>
-                        <dd class="col-sm-7">
-                            @Html.DisplayFor(model => item.Color)
+                <div class="card-body card-header">
+                    <h4 class="card-title text-center">@item.Model</h4>
+                </div>
+                <dl class="row card-body">
+                    <dt class="col-sm-5">
+                        @Html.DisplayNameFor(model => item.Brand)
+                    </dt>
+                    <dd class="col-sm-7">
+                        @Html.DisplayFor(model => item.Brand)
+                    </dd>
+                    <dt class="col-sm-5">
+                        @Html.DisplayNameFor(model => item.Color)
+                    </dt>
+                    <dd class="col-sm-7">
+                        @Html.DisplayFor(model => item.Color)
                     </dd>
                     <dt class="col-sm-5">
                         @Html.DisplayNameFor(model => item.Amount)
                     </dt>
                     <dd class="col-sm-7">
                         @Html.DisplayFor(model => item.Amount) kr
-                        
+
                     </dd>
-                        <dd class="col-sm-7" style="padding-bottom: 5px;">
-                        </dd>
-                    </dl>
-                    <div class="card-body">
+
+                </dl>
+                <div class="card-body">
                     @if (ViewBag.UserType == "Admin")
                     {
                         <a class="btn btn-primary btn-sm rounded" asp-action="Edit" asp-route-id="@item.CarId">Edit</a>
@@ -71,53 +83,9 @@
                             Delete <i class="bi bi-trash-fill"></i>
                         </a>
                     }
-                    </div>
                 </div>
             </div>
-        }
+        </div>
+    }
 
-    </div>
-
-@*
-<table class="table table-hover ">
-        <thead >
-            <tr>
-            <th  >
-                    <h4 > @Html.DisplayNameFor(model => model.Model)</h4>
-            </th>
-            <th>
-                <h4> @Html.DisplayNameFor(model => model.Brand) </h4>
-            </th>
-            <th >
-                <h4> @Html.DisplayNameFor(model => model.Color) </h4>
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody >
-
-  @foreach (var item in Model) {
-                <tr class="table-light background-color: rgba(175, 175, 175, 0.1);">
-          <td>
-                @html.displayfor(modelitem => item.model)
-            </td>
-            <td>
-                @html.displayfor(modelitem => item.brand)
-            </td>
-            <td>
-                @html.displayfor(modelitem => item.color)
-            </td>
-            <td>
-                    <a class="btn btn-dark btn-sm rounded" asp-action="edit" asp-route-id="@item.carid">edit</a>
-                    <a class="btn btn-info btn-sm rounded" asp-action="details" asp-route-id="@item.carid">details</a>
-                    <a class="btn btn-danger btn-sm rounded" asp-action="delete" asp-route-id="@item.carid">
-                        delete <i class="bi bi-trash-fill"></i>
-                    </a>
-            </td>
-        </tr>
-}
-    </tbody>
-  </table>
-
-
-</div>*@
+</div>
