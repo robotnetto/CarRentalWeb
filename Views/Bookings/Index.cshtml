@@ -46,11 +46,11 @@ else if (ViewBag.UserType == "User")
 }
 else
 {
-    //TODO: make card here
-    <h1 class="mt-2" style="color: white;">Bookings</h1>
-    <h1 class="text-center" style="color:white">Login to view contents.</h1>
-    <a class="align-left btn btn-success btn-sm rounded" asp-action="Info">How does it work?</a>
-
+    <div class="card shadow-lg mt-3 px-3" style="border-radius:2em; background-color: rgba(255, 254, 254, 0.800);">
+        <h1 class="mt-2">Bookings</h1>
+        <h1 class="text-center">Login to view contents</h1>
+        <a class="btn btn-success btn-sm rounded mb-2" asp-action="Info">How does it work?</a>
+    </div>
 }
 
 <div class="row">
