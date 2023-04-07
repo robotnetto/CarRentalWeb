@@ -49,7 +49,14 @@ namespace Biluthyrning.Controllers
             ViewData["CurrentUserId"] = Request.Cookies["CurrentUserId"];
             int userId = Convert.ToInt32(ViewData["CurrentUserId"]);
             var user = await userRepo.GetByIdAsync(userId);
-            ViewBag.UserName = user.UserName;
+            if ( user != null)
+            {
+              ViewBag.UserName = user.UserName;
+            }
+            else
+            {
+                ViewBag.Username = "User not found";
+            }
             return View();
         }
 

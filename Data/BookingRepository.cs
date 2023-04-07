@@ -29,7 +29,7 @@ namespace Biluthyrning.Data
 
         public async Task<IEnumerable<Booking>> GetAllAsync()
         {
-            return context.Bookings.OrderByDescending(b => b.StartDate);
+            return await context.Bookings.OrderByDescending(b => b.StartDate).ToListAsync();
         }
 
         public async Task<Booking> GetByIdAsync(int id)

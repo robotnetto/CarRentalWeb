@@ -1,48 +1,62 @@
 ﻿using Biluthyrning.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Newtonsoft.Json;
 
 namespace Biluthyrning.Data
 {
     public class UserRepository : IUser
     {
-        private readonly CarRentalContext context;
+        private readonly HttpClient client;
 
-        public UserRepository(CarRentalContext context)
+        public UserRepository(HttpClient client)
         {
-            this.context = context;
+            this.client = client;
+            //client.BaseAddress = new Uri("https://localhost:7203/");
         }
         public async Task AddAsync(User user)
         {
-            context.Users.Add(user);
-            await context.SaveChangesAsync();
+            var postResponse = await client.PostAsJsonAsync("/api/User", user);
+            postResponse.EnsureSuccessStatusCode();
+          
         }
         public async Task DeleteAsync(int? id)
         {
-            var userToDelete = await GetByIdAsync(id);
-            if (userToDelete != null)
-            {
-                context.Users.Remove(userToDelete);
-                await context.SaveChangesAsync();
-            }
+            var deleteResponse = await client.DeleteAsync($"/api/User/{id}");
+            deleteResponse.EnsureSuccessStatusCode();
         }
         public async Task<IEnumerable<User>> GetAllAsync()
         {
-            return await context.Users.OrderBy(x => x.UserId).ToListAsync();
+            var getResponse = await client.GetAsync("/api/User");
+            getResponse.EnsureSuccessStatusCode();
+            var result = await getResponse.Content.ReadAsStringAsync();
+            var users = JsonConvert.DeserializeObject<IEnumerable<User>>(result);
+            return users;
         }
         public async Task<IEnumerable<User>> GetSearchedAsync(string search)
         {
-            return await context.Users.Where(x=>x.UserName.Contains(search))
-                .OrderBy(x => x.UserId).ToListAsync();
+            var serachResponse = await client.GetAsync($"/api/User/search?search={search}");
+            serachResponse.EnsureSuccessStatusCode();
+            var result = await serachResponse.Content.ReadAsStringAsync();
+            var searchResult = JsonConvert.DeserializeObject<IEnumerable<User>>(result);
+            return searchResult;
         }
         public async Task<User> GetByIdAsync(int? id)
         {
-            var tempUser = await context.Users.FirstOrDefaultAsync(x => x.UserId == id);
-            return tempUser;
+            var getResponse = await client.GetAsync($"/api/User/{id}");
+            getResponse.EnsureSuccessStatusCode();
+            var result = await getResponse.Content.ReadAsStringAsync();
+            var idResult = JsonConvert.DeserializeObject<User>(result);
+            return idResult;
+            
         }
         public async Task UpdateAsync(User user)
         {
-            context.Users.Update(user);
-            await context.SaveChangesAsync();
+            var userId = user.UserId;
+            var updateResponse = await client.PutAsJsonAsync($"/api/User/{userId}", user);
+            updateResponse.EnsureSuccessStatusCode();
+
         }
     }
 }
