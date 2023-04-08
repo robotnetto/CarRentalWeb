@@ -13,7 +13,7 @@ namespace Biluthyrning.Data
         public UserRepository(HttpClient client)
         {
             this.client = client;
-            //client.BaseAddress = new Uri("https://localhost:7203/");
+            client.BaseAddress = new Uri("https://localhost:7203/");
         }
         public async Task AddAsync(User user)
         {

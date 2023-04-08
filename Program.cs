@@ -19,7 +19,7 @@ namespace Biluthyrning
             builder.Services.AddScoped<ICar, CarRepository>();
             builder.Services.AddScoped<ICarCategory, CarCategoryRepository>();
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            builder.Services.AddHttpClient<MyHttpClient>(client => client.BaseAddress = new Uri("https://localhost:7203/"));
+            builder.Services.AddHttpClient();
 
             var app = builder.Build();
 
