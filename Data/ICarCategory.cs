@@ -9,6 +9,6 @@ namespace Biluthyrning.Data
         public Task<CarCategory> GetByIdAsync(int id);
         public Task CreateAsync(CarCategory carCategory);
         public Task UpdateAsync(CarCategory carCategory);
-        public Task DeleteAsync(CarCategory carCategory);
+        public Task DeleteAsync(int id);
     }
 }

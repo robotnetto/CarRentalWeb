@@ -1,46 +1,54 @@
 ﻿using Biluthyrning.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
+using Newtonsoft.Json;
+using System.Net.Http;
 
 namespace Biluthyrning.Data
 {
     public class BookingRepository : IBooking
     {
-        private readonly CarRentalContext context;
+        
+        private readonly HttpClient client;
 
-        public BookingRepository(CarRentalContext context)
+        public BookingRepository(IHttpClientFactory httpClientFactory)
         {
-            this.context = context;
+            client = httpClientFactory.CreateClient("RemoteApi");
         }
         public async Task AddAsync(Booking booking)
         {
-            context.Bookings.Add(booking);
-            await context.SaveChangesAsync();
+            var postResponse = await client.PostAsJsonAsync("/api/Booking", booking);
+            postResponse.EnsureSuccessStatusCode();
         }
 
         public async Task DeleteAsync(int id)
         {
-            var booking = context.Bookings.FirstOrDefault(b => b.Id == id);
-            if(booking != null)
-            {
-                context.Bookings.Remove(booking);
-                await context.SaveChangesAsync();
-            }
+            var deleteResponse = await client.DeleteAsync($"/api/Booking/{id}");
+            deleteResponse.EnsureSuccessStatusCode();
         }
 
         public async Task<IEnumerable<Booking>> GetAllAsync()
         {
-            return await context.Bookings.OrderByDescending(b => b.StartDate).ToListAsync();
+            var getResponse = await client.GetAsync("/api/Booking");
+            getResponse.EnsureSuccessStatusCode();
+            var result = await getResponse.Content.ReadFromJsonAsync<IEnumerable<Booking>>();
+            return result;
+
         }
 
         public async Task<Booking> GetByIdAsync(int id)
         {
-            return await context.Bookings.FirstOrDefaultAsync(b => b.Id == id);
+            var getResponse = await client.GetAsync($"/api/Booking/{id}");
+            getResponse.EnsureSuccessStatusCode();
+            var result = await getResponse.Content.ReadFromJsonAsync<Booking>();
+            return result;
         }
 
         public async Task UpdateAsync(Booking booking)
         {
-            context.Bookings.Update(booking);
-            await context.SaveChangesAsync();
+            var putResponse = await client.PutAsJsonAsync($"/api/Booking/{booking.Id}", booking);
+            putResponse.EnsureSuccessStatusCode();
+            
         }
     }
 }

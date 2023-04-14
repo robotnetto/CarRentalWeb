@@ -9,7 +9,7 @@ namespace Biluthyrning.Data
         Task<IEnumerable<Car>> SearchCarAsync(string search); 
         Task CreateAsync (Car car);
         Task UpdateAsync (Car car);
-        Task DeleteAsync (Car car);
+        Task DeleteAsync (int id);
 
     }
 }

@@ -109,7 +109,7 @@ namespace Biluthyrning.Controllers
         // GET: CarCategoryController/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            if(id == null || await carCategoryRepo.GetAllAsync() == null)
+            if(id == null || carCategoryRepo == null)
             {
                 return NotFound();
             }
@@ -127,20 +127,18 @@ namespace Biluthyrning.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var carCategory = await carCategoryRepo.GetByIdAsync(id);
-            if(ModelState.IsValid)
+            if( carCategoryRepo == null)
             {
-                try
-                {
-                    await carCategoryRepo.DeleteAsync(carCategory);
-                }
-                catch (Exception)
-                {
-                    return View();
-                }
-                return RedirectToAction(nameof(Index));
+                return Problem("Entity set 'CarRentalContext.CarCategory'  is null.");
             }
-            return View(carCategory);
+            var carCategory = await carCategoryRepo.GetByIdAsync(id);
+            if (carCategory != null)
+            {
+                await carCategoryRepo.DeleteAsync(id);
+
+            }
+            return RedirectToAction(nameof(Index));
+            
         }
     }
 }

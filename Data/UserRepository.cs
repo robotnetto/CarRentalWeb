@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
+using System.Net;
 
 namespace Biluthyrning.Data
 {
@@ -10,10 +11,9 @@ namespace Biluthyrning.Data
     {
         private readonly HttpClient client;
 
-        public UserRepository(HttpClient client)
+        public UserRepository(IHttpClientFactory httpClientFactory )
         {
-            this.client = client;
-            client.BaseAddress = new Uri("https://localhost:7203/");
+            client = httpClientFactory.CreateClient("RemoteApi");
         }
         public async Task AddAsync(User user)
         {
@@ -30,31 +30,27 @@ namespace Biluthyrning.Data
         {
             var getResponse = await client.GetAsync("/api/User");
             getResponse.EnsureSuccessStatusCode();
-            var result = await getResponse.Content.ReadAsStringAsync();
-            var users = JsonConvert.DeserializeObject<IEnumerable<User>>(result);
-            return users;
+            var result = await getResponse.Content.ReadFromJsonAsync<IEnumerable<User>>();
+            return result;
         }
         public async Task<IEnumerable<User>> GetSearchedAsync(string search)
         {
-            var serachResponse = await client.GetAsync($"/api/User/search?search={search}");
-            serachResponse.EnsureSuccessStatusCode();
-            var result = await serachResponse.Content.ReadAsStringAsync();
-            var searchResult = JsonConvert.DeserializeObject<IEnumerable<User>>(result);
-            return searchResult;
+            var searchResponse = await client.GetAsync($"/api/User/search?search={search}");
+            searchResponse.EnsureSuccessStatusCode();
+            var result = await searchResponse.Content.ReadFromJsonAsync<IEnumerable<User>>();
+            return result;
         }
         public async Task<User> GetByIdAsync(int? id)
         {
             var getResponse = await client.GetAsync($"/api/User/{id}");
             getResponse.EnsureSuccessStatusCode();
-            var result = await getResponse.Content.ReadAsStringAsync();
-            var idResult = JsonConvert.DeserializeObject<User>(result);
-            return idResult;
+            var result = await getResponse.Content.ReadFromJsonAsync<User>();
+            return result;
             
         }
         public async Task UpdateAsync(User user)
         {
-            var userId = user.UserId;
-            var updateResponse = await client.PutAsJsonAsync($"/api/User/{userId}", user);
+            var updateResponse = await client.PutAsJsonAsync($"/api/User/{user.UserId}", user);
             updateResponse.EnsureSuccessStatusCode();
 
         }

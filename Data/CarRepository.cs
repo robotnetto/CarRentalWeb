@@ -1,47 +1,58 @@
 ﻿using Biluthyrning.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Http;
 
 namespace Biluthyrning.Data
 {
     public class CarRepository : ICar
     {
-        private readonly CarRentalContext carContext;
+        private readonly HttpClient client;
 
-        public CarRepository(CarRentalContext carContext)
+        public CarRepository( IHttpClientFactory httpClientFactory)
         {
-            this.carContext = carContext;
+            client = httpClientFactory.CreateClient("RemoteApi");
         }
        public async Task CreateAsync(Car car)
         {
-           carContext.Cars.Add(car);
-            await carContext.SaveChangesAsync();
+            var postResponse = await client.PostAsJsonAsync($"/api/Car/", car);
+            postResponse.EnsureSuccessStatusCode();
         }
 
-       public async Task DeleteAsync(Car car)
+       public async Task DeleteAsync(int id)
         {
-            carContext.Cars.Remove(car);
-             await carContext.SaveChangesAsync();
+            
+            var deleteResponse = await client.DeleteAsync($"/api/Car/{id}");
+            deleteResponse.EnsureSuccessStatusCode();
         }
 
         public async Task <IEnumerable<Car>> GetAllAsync()
         {
-            return await carContext.Cars.OrderBy(c => c.CarId).ToListAsync();
+            var getResponse = await client.GetAsync("/api/Car/");
+            getResponse.EnsureSuccessStatusCode();
+            var result = await getResponse.Content.ReadFromJsonAsync<IEnumerable<Car>>();
+            return result;
         }
 
         public async Task <Car> GetByIdAsync(int id)
         {
-            return await carContext.Cars.FirstOrDefaultAsync(c => c.CarId == id);
+            var getResponse = await client.GetAsync($"/api/Car/{id}");
+            getResponse.EnsureSuccessStatusCode();
+            var result = await getResponse.Content.ReadFromJsonAsync<Car>();
+            return result;
         }
 
        public async Task UpdateAsync(Car car)
         {
-            carContext.Update(car);
-           await carContext.SaveChangesAsync();
+            var updateResponse = await client.PutAsJsonAsync($"/api/Car/{car.CarId}", car);
+            updateResponse.EnsureSuccessStatusCode();
+            
         }
         public async Task<IEnumerable<Car>> SearchCarAsync(string search)
         {
-            return await carContext.Cars.Where
-                (c => c.Model.Contains(search) || c.Brand.Contains(search)).ToListAsync();
+            var searchResponse = await client.GetAsync($"/api/Car/search?search={search}");
+            searchResponse.EnsureSuccessStatusCode();
+            var result = await searchResponse.Content.ReadFromJsonAsync<IEnumerable<Car>>();
+            return result;
         }
 
     }

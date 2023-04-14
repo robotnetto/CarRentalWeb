@@ -1,47 +1,61 @@
 ﻿using Biluthyrning.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace Biluthyrning.Data
 {
     public class CarCategoryRepository : ICarCategory
     {
-        private readonly CarRentalContext context;
+        private readonly HttpClient client;
 
-        public CarCategoryRepository(CarRentalContext context)
+
+        public CarCategoryRepository(IHttpClientFactory httpClientFactory )
         {
-            this.context = context;
+            //this.client = client;
+            //client.BaseAddress = new Uri("https://localhost:7203/");
+            client = httpClientFactory.CreateClient("RemoteApi");
         }
 
         public async Task CreateAsync(CarCategory carCategory)
         {
-            context.Categories.Add(carCategory);
-            await context.SaveChangesAsync();
+            var postResponse = await client.PostAsJsonAsync("/api/CarCategory", carCategory);
+            postResponse.EnsureSuccessStatusCode();
         }
 
-        public async Task DeleteAsync(CarCategory carCategory)
+        public async Task DeleteAsync(int id)
         {
-            context.Categories.Remove(carCategory);
-            await context.SaveChangesAsync();
+            var deleResponse = await client.DeleteAsync($"/api/CarCategory/{id}");
+            deleResponse.EnsureSuccessStatusCode();
         }
 
         public async Task<IEnumerable<CarCategory>> GetAllAsync()
         {
-            return await context.Categories.OrderBy(c => c.Id).ToListAsync();
+            var getResponse = await client.GetAsync("/api/CarCategory");
+            getResponse.EnsureSuccessStatusCode();
+            var result = await getResponse.Content.ReadFromJsonAsync<IEnumerable<CarCategory>>();
+            return result;
         }
         public async Task<IEnumerable<CarCategory>> GetSearchedAsync(string search)
         {
-            return await context.Categories.Where(c => c.Name.Contains(search)).OrderBy(c => c.Id).ToListAsync();
+            var searchResponse = await client.GetAsync($"/api/CarCategory/search?search={search}");
+            searchResponse.EnsureSuccessStatusCode();
+            var result = await searchResponse.Content.ReadFromJsonAsync<IEnumerable<CarCategory>>();
+            return result;
         }
 
-        public async Task<CarCategory> GetByIdAsync(int id)
+        public async Task <CarCategory> GetByIdAsync(int id)
         {
-            return await context.Categories.Include(c => c.Cars).FirstOrDefaultAsync(c => c.Id == id);
+            var getIdResponse = await client.GetAsync($"/api/CarCategory/{id}");
+            getIdResponse.EnsureSuccessStatusCode();
+            var result = await getIdResponse.Content.ReadFromJsonAsync<CarCategory>();
+            return result;
         }
 
         public async Task UpdateAsync(CarCategory carCategory)
         {
-            context.Categories.Update(carCategory);
-            await context.SaveChangesAsync();
+            var updateResponse = await client.PutAsJsonAsync($"/api/CarCategory/{carCategory.Id}", carCategory);
+            updateResponse.EnsureSuccessStatusCode();
         }
     }
 }

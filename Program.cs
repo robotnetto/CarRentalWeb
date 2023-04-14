@@ -13,13 +13,13 @@ namespace Biluthyrning
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            builder.Services.AddDbContext<CarRentalContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("AppContext")));
+            //builder.Services.AddDbContext<CarRentalContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("AppContext")));
             builder.Services.AddScoped<IUser, UserRepository>();
             builder.Services.AddScoped<IBooking, BookingRepository>();
             builder.Services.AddScoped<ICar, CarRepository>();
             builder.Services.AddScoped<ICarCategory, CarCategoryRepository>();
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            builder.Services.AddHttpClient();
+            builder.Services.AddHttpClient("RemoteApi", client => client.BaseAddress = new Uri("https://localhost:7203/"));
 
             var app = builder.Build();
 

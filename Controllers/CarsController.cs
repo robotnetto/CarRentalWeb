@@ -131,14 +131,14 @@ namespace Biluthyrning.Controllers
                     return NotFound();
                 }
 
-                var car = carRepo.GetByIdAsync(id);
+                var car = await carRepo.GetByIdAsync(id);
 
                 if (car == null)
                 {
                     return NotFound();
                 }
 
-                return View(await car);
+                return View( car);
             }
 
             // POST: Cars/Delete/5
@@ -153,7 +153,7 @@ namespace Biluthyrning.Controllers
                 var car = await carRepo.GetByIdAsync(id);
                 if (car != null)
                 {
-                    await carRepo.DeleteAsync(car);
+                    await carRepo.DeleteAsync(id);
                 }
 
                 return RedirectToAction(nameof(Index));
