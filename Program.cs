@@ -1,6 +1,8 @@
 using Biluthyrning.Data;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Packaging.Signing;
 using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace Biluthyrning
 {
@@ -19,7 +21,12 @@ namespace Biluthyrning
             builder.Services.AddScoped<ICar, CarRepository>();
             builder.Services.AddScoped<ICarCategory, CarCategoryRepository>();
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            builder.Services.AddHttpClient("RemoteApi", client => client.BaseAddress = new Uri("https://localhost:7203/"));
+            var accesToken = builder.Configuration["BearerToken"];
+            builder.Services.AddHttpClient("RemoteApi", client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:7203/");
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accesToken);
+            }); 
 
             var app = builder.Build();
 
